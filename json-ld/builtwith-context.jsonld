@@ -1,0 +1,226 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "bw": "https://api.builtwith.com/vocab#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Technology": "bw:Technology",
+    "Domain": "bw:Domain",
+    "TechGroup": "bw:TechGroup",
+    "TechCategory": "bw:TechCategory",
+    "Relationship": "bw:Relationship",
+    "Identifier": "bw:Identifier",
+    "ChangeEvent": "bw:ChangeEvent",
+    "TrendCoverage": "bw:TrendCoverage",
+    "DomainMeta": "bw:DomainMeta",
+    "TrustScore": "bw:TrustScore",
+
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "domain": {
+      "@id": "bw:domain",
+      "@type": "xsd:string"
+    },
+    "lookup": {
+      "@id": "bw:lookup",
+      "@type": "xsd:string"
+    },
+    "tag": {
+      "@id": "bw:tag",
+      "@type": "xsd:string"
+    },
+    "categories": {
+      "@id": "bw:categories",
+      "@container": "@set"
+    },
+    "firstDetected": {
+      "@id": "bw:firstDetected",
+      "@type": "xsd:dateTime"
+    },
+    "lastDetected": {
+      "@id": "bw:lastDetected",
+      "@type": "xsd:dateTime"
+    },
+    "live": {
+      "@id": "bw:live",
+      "@type": "xsd:boolean"
+    },
+    "liveCount": {
+      "@id": "bw:liveCount",
+      "@type": "xsd:integer"
+    },
+    "deadCount": {
+      "@id": "bw:deadCount",
+      "@type": "xsd:integer"
+    },
+    "technologies": {
+      "@id": "bw:technologies",
+      "@container": "@set"
+    },
+    "paths": {
+      "@id": "bw:paths",
+      "@container": "@set"
+    },
+    "groups": {
+      "@id": "bw:groups",
+      "@container": "@set"
+    },
+    "results": {
+      "@id": "bw:results",
+      "@container": "@set"
+    },
+    "nextOffset": {
+      "@id": "bw:nextOffset",
+      "@type": "xsd:string"
+    },
+    "spend": {
+      "@id": "bw:spend",
+      "@type": "xsd:decimal"
+    },
+    "revenue": {
+      "@id": "bw:revenue",
+      "@type": "xsd:decimal"
+    },
+    "followers": {
+      "@id": "bw:followers",
+      "@type": "xsd:integer"
+    },
+    "employees": {
+      "@id": "bw:employees",
+      "@type": "xsd:integer"
+    },
+    "country": {
+      "@id": "bw:country",
+      "@type": "xsd:string"
+    },
+    "vertical": {
+      "@id": "bw:vertical",
+      "@type": "xsd:string"
+    },
+    "companyName": {
+      "@id": "bw:companyName",
+      "@type": "xsd:string"
+    },
+    "identifiers": {
+      "@id": "bw:identifiers",
+      "@container": "@set"
+    },
+    "identifierType": {
+      "@id": "bw:identifierType",
+      "@type": "xsd:string"
+    },
+    "identifierValue": {
+      "@id": "bw:identifierValue",
+      "@type": "xsd:string"
+    },
+    "matches": {
+      "@id": "bw:matches",
+      "@container": "@set"
+    },
+    "overlap": {
+      "@id": "bw:overlap",
+      "@type": "xsd:boolean"
+    },
+    "changeType": {
+      "@id": "bw:changeType",
+      "@type": "xsd:string"
+    },
+    "importance": {
+      "@id": "bw:importance",
+      "@type": "xsd:string"
+    },
+    "whyThisMatters": {
+      "@id": "bw:whyThisMatters",
+      "@type": "xsd:string"
+    },
+    "summary": {
+      "@id": "bw:summary",
+      "@type": "xsd:string"
+    },
+    "events": {
+      "@id": "bw:events",
+      "@container": "@set"
+    },
+    "coverage": {
+      "@id": "bw:coverage"
+    },
+    "tenK": {
+      "@id": "bw:tenK",
+      "@type": "xsd:integer"
+    },
+    "hundredK": {
+      "@id": "bw:hundredK",
+      "@type": "xsd:integer"
+    },
+    "mil": {
+      "@id": "bw:mil",
+      "@type": "xsd:integer"
+    },
+    "internet": {
+      "@id": "bw:internet",
+      "@type": "xsd:integer"
+    },
+    "isPremium": {
+      "@id": "bw:isPremium",
+      "@type": "xsd:string"
+    },
+    "trendsLink": {
+      "@id": "bw:trendsLink",
+      "@type": "@id"
+    },
+    "apiKey": {
+      "@id": "bw:apiKey",
+      "@type": "xsd:string"
+    },
+    "apiCredit": {
+      "@id": "bw:apiCredit",
+      "@type": "xsd:integer"
+    },
+    "trustScore": {
+      "@id": "bw:trustScore",
+      "@type": "xsd:decimal"
+    },
+    "recommendation": {
+      "@id": "bw:recommendation"
+    },
+    "stars": {
+      "@id": "bw:stars",
+      "@type": "xsd:integer"
+    },
+    "matchScore": {
+      "@id": "bw:matchScore",
+      "@type": "xsd:decimal"
+    },
+    "keywords": {
+      "@id": "bw:keywords",
+      "@container": "@set"
+    },
+    "redirectInbound": {
+      "@id": "bw:redirectInbound",
+      "@container": "@set"
+    },
+    "redirectOutbound": {
+      "@id": "bw:redirectOutbound",
+      "@container": "@set"
+    },
+    "jobId": {
+      "@id": "bw:jobId",
+      "@type": "xsd:string"
+    },
+    "jobStatus": {
+      "@id": "bw:jobStatus",
+      "@type": "xsd:string"
+    }
+  }
+}

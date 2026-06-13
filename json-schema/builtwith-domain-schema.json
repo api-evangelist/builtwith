@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.builtwith.com/schemas/domain-result",
+  "title": "BuiltWith Domain API Result",
+  "description": "Schema for the BuiltWith Domain API response, containing technology stack data for one or more domains.",
+  "type": "object",
+  "properties": {
+    "Results": {
+      "type": "array",
+      "description": "Array of domain results",
+      "items": {
+        "$ref": "#/$defs/DomainResultItem"
+      }
+    }
+  },
+  "required": ["Results"],
+  "$defs": {
+    "DomainResultItem": {
+      "type": "object",
+      "properties": {
+        "Result": {
+          "$ref": "#/$defs/Result"
+        }
+      },
+      "required": ["Result"]
+    },
+    "Result": {
+      "type": "object",
+      "properties": {
+        "Lookup": {
+          "type": "string",
+          "description": "The queried domain",
+          "example": "example.com"
+        },
+        "Meta": {
+          "$ref": "#/$defs/DomainMeta"
+        },
+        "Paths": {
+          "type": "array",
+          "description": "Sub-domains and paths scanned",
+          "items": {
+            "$ref": "#/$defs/Path"
+          }
+        }
+      },
+      "required": ["Lookup"]
+    },
+    "DomainMeta": {
+      "type": "object",
+      "description": "Company and contact metadata for the domain",
+      "properties": {
+        "CompanyName": {
+          "type": "string"
+        },
+        "Vertical": {
+          "type": "string",
+          "description": "Industry vertical classification"
+        },
+        "Telephones": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "Emails": {
+          "type": "array",
+          "items": { "type": "string", "format": "email" }
+        },
+        "City": {
+          "type": "string"
+        },
+        "State": {
+          "type": "string"
+        },
+        "Postcode": {
+          "type": "string"
+        },
+        "Country": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code"
+        },
+        "Names": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "Path": {
+      "type": "object",
+      "properties": {
+        "Domain": {
+          "type": "string",
+          "description": "Sub-domain or path scanned"
+        },
+        "Technologies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Technology"
+          }
+        }
+      }
+    },
+    "Technology": {
+      "type": "object",
+      "description": "A detected web technology",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "description": "Technology name",
+          "example": "WordPress"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Link": {
+          "type": "string",
+          "format": "uri"
+        },
+        "Tag": {
+          "type": "string",
+          "description": "Primary technology category tag",
+          "example": "cms"
+        },
+        "Categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TechCategory"
+          }
+        },
+        "FirstDetected": {
+          "type": "integer",
+          "description": "Unix timestamp in milliseconds of first detection"
+        },
+        "LastDetected": {
+          "type": "integer",
+          "description": "Unix timestamp in milliseconds of last detection"
+        },
+        "Live": {
+          "type": "boolean",
+          "description": "Whether the technology is currently active"
+        },
+        "Attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Attribute"
+          }
+        }
+      },
+      "required": ["Name"]
+    },
+    "TechCategory": {
+      "type": "object",
+      "properties": {
+        "Category": {
+          "type": "string",
+          "example": "CMS"
+        }
+      }
+    },
+    "Attribute": {
+      "type": "object",
+      "description": "Additional structured attribute for a technology",
+      "properties": {
+        "Field": {
+          "type": "string"
+        },
+        "Value": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,468 @@
+openapi: 3.0.3
+info:
+  title: BuiltWith Domain API
+  description: >
+    Current and historical website technology information for single or multiple
+    domains. Supports JSON, XML, and CSV response formats. Provides technology
+    stack detection, metadata, attributes, and bulk processing capabilities
+    across 491.9 million domains and 115,907 tracked web technologies.
+  version: v22
+  contact:
+    name: BuiltWith Support
+    url: https://builtwith.com/contact
+  termsOfService: https://builtwith.com/terms
+  license:
+    name: Commercial
+    url: https://builtwith.com/plans
+externalDocs:
+  description: BuiltWith Domain API Documentation
+  url: https://api.builtwith.com/domain-api
+servers:
+  - url: https://api.builtwith.com/v22
+    description: BuiltWith Domain API v22
+
+security:
+  - apiKeyQuery: []
+  - apiKeyHeader: []
+
+tags:
+  - name: Domain Lookup
+    description: Single or multi-domain technology detection endpoints
+  - name: Bulk Processing
+    description: Asynchronous batch domain processing
+  - name: Reference
+    description: Reference data for categories and verticals
+
+paths:
+  /api.json:
+    get:
+      summary: Lookup domain technologies (JSON)
+      description: >
+        Returns the technology stack and metadata for one or more domains in
+        JSON format. Supports up to 16 domains as a comma-separated list.
+      operationId: getDomainTechnologiesJson
+      tags:
+        - Domain Lookup
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/LOOKUP'
+        - $ref: '#/components/parameters/HIDETEXT'
+        - $ref: '#/components/parameters/NOMETA'
+        - $ref: '#/components/parameters/NOPII'
+        - $ref: '#/components/parameters/LIVEONLY'
+        - $ref: '#/components/parameters/TRUST'
+        - $ref: '#/components/parameters/FDRANGE'
+        - $ref: '#/components/parameters/NOATTR'
+        - $ref: '#/components/parameters/CATEGORIES'
+        - $ref: '#/components/parameters/VERTICALS'
+      responses:
+        '200':
+          description: Technology profile for the requested domain(s)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainResult'
+              example:
+                Results:
+                  - Result:
+                      Lookup: example.com
+                      Meta:
+                        CompanyName: Example Inc
+                        Vertical: Business and Consumer Services
+                      Paths:
+                        - Technologies:
+                            - Name: WordPress
+                              Tag: cms
+                              Categories:
+                                - Category: CMS
+                              FirstDetected: 1609459200000
+                              LastDetected: 1748736000000
+                              Live: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /api.xml:
+    get:
+      summary: Lookup domain technologies (XML)
+      description: Returns domain technology profile in XML format.
+      operationId: getDomainTechnologiesXml
+      tags:
+        - Domain Lookup
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/LOOKUP'
+        - $ref: '#/components/parameters/HIDETEXT'
+        - $ref: '#/components/parameters/NOMETA'
+        - $ref: '#/components/parameters/NOPII'
+        - $ref: '#/components/parameters/LIVEONLY'
+        - $ref: '#/components/parameters/TRUST'
+        - $ref: '#/components/parameters/FDRANGE'
+        - $ref: '#/components/parameters/NOATTR'
+      responses:
+        '200':
+          description: Technology profile in XML format
+          content:
+            application/xml:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api.csv:
+    get:
+      summary: Lookup domain technologies (CSV)
+      description: Returns domain technology profile in CSV format.
+      operationId: getDomainTechnologiesCsv
+      tags:
+        - Domain Lookup
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/LOOKUP'
+        - $ref: '#/components/parameters/HIDETEXT'
+        - $ref: '#/components/parameters/NOMETA'
+        - $ref: '#/components/parameters/NOPII'
+        - $ref: '#/components/parameters/LIVEONLY'
+      responses:
+        '200':
+          description: Technology profile in CSV format
+          content:
+            text/csv:
+              schema:
+                type: string
+
+  /domain/bulk:
+    post:
+      summary: Bulk domain technology lookup
+      description: >
+        Submit a list of domains for batch processing. Small batches return
+        synchronously; large batches return a job ID for polling.
+      operationId: bulkDomainLookup
+      tags:
+        - Bulk Processing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+            example:
+              KEY: "00000000-0000-0000-0000-000000000000"
+              LOOKUP:
+                - example.com
+                - shopify.com
+                - wordpress.org
+      responses:
+        '200':
+          description: Bulk results or async job reference
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/DomainResult'
+                  - $ref: '#/components/schemas/BulkJobResponse'
+
+components:
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+      description: API key passed as a query parameter
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: "API key in header format: 'Authorization: API {key}'"
+
+  parameters:
+    KEY:
+      name: KEY
+      in: query
+      description: Your BuiltWith API authentication key (UUID format)
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: "00000000-0000-0000-0000-000000000000"
+
+    LOOKUP:
+      name: LOOKUP
+      in: query
+      description: >
+        Domain or comma-separated list of up to 16 domains to look up.
+        Use root domains only.
+      required: true
+      schema:
+        type: string
+        example: "example.com"
+
+    HIDETEXT:
+      name: HIDETEXT
+      in: query
+      description: Set to 'yes' to exclude technology descriptions and links
+      required: false
+      schema:
+        type: string
+        enum: ["yes"]
+
+    NOMETA:
+      name: NOMETA
+      in: query
+      description: Set to 'yes' to skip address and company metadata
+      required: false
+      schema:
+        type: string
+        enum: ["yes"]
+
+    NOPII:
+      name: NOPII
+      in: query
+      description: Set to 'yes' to remove personally identifiable information (names/emails)
+      required: false
+      schema:
+        type: string
+        enum: ["yes"]
+
+    LIVEONLY:
+      name: LIVEONLY
+      in: query
+      description: Set to 'yes' to return only currently active technologies
+      required: false
+      schema:
+        type: string
+        enum: ["yes"]
+
+    TRUST:
+      name: TRUST
+      in: query
+      description: Set to 'yes' to include trust/safety data (uses additional API credits)
+      required: false
+      schema:
+        type: string
+        enum: ["yes"]
+
+    FDRANGE:
+      name: FDRANGE
+      in: query
+      description: Filter by detection date range in YYYY-MM-DD|YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        example: "2025-01-01|2026-01-01"
+
+    NOATTR:
+      name: NOATTR
+      in: query
+      description: Set to 'yes' to exclude technology attributes
+      required: false
+      schema:
+        type: string
+        enum: ["yes"]
+
+    CATEGORIES:
+      name: CATEGORIES
+      in: query
+      description: Set to '1' to return technology category list instead of domain data
+      required: false
+      schema:
+        type: integer
+        enum: [1]
+
+    VERTICALS:
+      name: VERTICALS
+      in: query
+      description: Set to '1' to return vertical list instead of domain data
+      required: false
+      schema:
+        type: integer
+        enum: [1]
+
+  schemas:
+    DomainResult:
+      type: object
+      description: Top-level response wrapper for domain technology lookups
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainResultItem'
+
+    DomainResultItem:
+      type: object
+      properties:
+        Result:
+          $ref: '#/components/schemas/Result'
+
+    Result:
+      type: object
+      properties:
+        Lookup:
+          type: string
+          description: The queried domain
+          example: example.com
+        Meta:
+          $ref: '#/components/schemas/DomainMeta'
+        Paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/Path'
+
+    DomainMeta:
+      type: object
+      description: Company and domain metadata
+      properties:
+        CompanyName:
+          type: string
+        Vertical:
+          type: string
+        Telephones:
+          type: array
+          items:
+            type: string
+        Emails:
+          type: array
+          items:
+            type: string
+        City:
+          type: string
+        State:
+          type: string
+        Postcode:
+          type: string
+        Country:
+          type: string
+        Names:
+          type: array
+          items:
+            type: string
+
+    Path:
+      type: object
+      properties:
+        Domain:
+          type: string
+          description: Sub-domain or path scanned
+        Technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Technology'
+
+    Technology:
+      type: object
+      description: A detected web technology
+      properties:
+        Name:
+          type: string
+          example: WordPress
+        Description:
+          type: string
+        Link:
+          type: string
+          format: uri
+        Tag:
+          type: string
+          description: Primary technology category tag
+          example: cms
+        Categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/TechCategory'
+        FirstDetected:
+          type: integer
+          format: int64
+          description: Unix timestamp (ms) of first detection
+        LastDetected:
+          type: integer
+          format: int64
+          description: Unix timestamp (ms) of last detection
+        Live:
+          type: boolean
+          description: Whether the technology is currently active
+        Attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+
+    TechCategory:
+      type: object
+      properties:
+        Category:
+          type: string
+          example: CMS
+
+    Attribute:
+      type: object
+      description: Additional attribute data for a technology
+      properties:
+        Field:
+          type: string
+        Value:
+          type: string
+
+    BulkRequest:
+      type: object
+      required:
+        - KEY
+        - LOOKUP
+      properties:
+        KEY:
+          type: string
+          format: uuid
+          description: API authentication key
+        LOOKUP:
+          type: array
+          items:
+            type: string
+          description: List of domains to look up
+          maxItems: 500
+
+    BulkJobResponse:
+      type: object
+      description: Async job reference for large bulk batches
+      properties:
+        JobId:
+          type: string
+          description: Job identifier for polling status
+        Status:
+          type: string
+          enum: [queued, processing, complete, error]
+
+    ErrorResponse:
+      type: object
+      properties:
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: integer
+              Message:
+                type: string
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimited:
+      description: >
+        Too many requests — max 10 req/sec or 8 concurrent requests exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

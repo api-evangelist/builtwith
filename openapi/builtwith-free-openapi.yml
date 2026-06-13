@@ -1,0 +1,217 @@
+openapi: 3.0.3
+info:
+  title: BuiltWith Free API
+  description: >
+    Free tier API providing technology group counts and timestamps for website
+    domains. Returns aggregated counts of active and inactive technologies
+    organized by tag groups and subcategories. Rate limited to 1 request
+    per second.
+  version: free1
+  contact:
+    name: BuiltWith Support
+    url: https://builtwith.com/contact
+  termsOfService: https://builtwith.com/terms
+  license:
+    name: Free
+    url: https://api.builtwith.com/free-api
+externalDocs:
+  description: BuiltWith Free API Documentation
+  url: https://api.builtwith.com/free-api
+servers:
+  - url: https://api.builtwith.com/free1
+    description: BuiltWith Free API v1
+
+security:
+  - apiKeyQuery: []
+
+tags:
+  - name: Free Lookup
+    description: Technology count lookups for free tier
+
+paths:
+  /api.json:
+    get:
+      summary: Get technology group counts (JSON)
+      description: >
+        Returns technology category group counts (live and dead) for a domain,
+        organized by tag groups and subcategories. Free tier; rate limited to
+        1 request/second.
+      operationId: getFreeDomainJson
+      tags:
+        - Free Lookup
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/LOOKUP'
+      responses:
+        '200':
+          description: Technology group counts for the domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FreeResult'
+              example:
+                domain: builtwith.com
+                first: 1262304000
+                last: 1748736000
+                groups:
+                  - name: javascript
+                    live: 12
+                    dead: 45
+                    latest: 1748736000
+                    oldest: 1262304000
+                    categories:
+                      - name: social-sdk
+                        live: 3
+                        dead: 8
+                        latest: 1748736000
+                        oldest: 1262304000
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /api.xml:
+    get:
+      summary: Get technology group counts (XML)
+      operationId: getFreeDomainXml
+      tags:
+        - Free Lookup
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/LOOKUP'
+      responses:
+        '200':
+          description: Technology group counts in XML
+          content:
+            application/xml:
+              schema:
+                type: object
+
+components:
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+
+  parameters:
+    KEY:
+      name: KEY
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: "00000000-0000-0000-0000-000000000000"
+
+    LOOKUP:
+      name: LOOKUP
+      in: query
+      description: Root domain to analyze
+      required: true
+      schema:
+        type: string
+        example: "builtwith.com"
+
+  schemas:
+    FreeResult:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: The queried domain
+        first:
+          type: integer
+          format: int64
+          description: Unix timestamp of first indexing
+        last:
+          type: integer
+          format: int64
+          description: Unix timestamp of last indexing
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/TechGroup'
+
+    TechGroup:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Technology tag/category name
+          example: javascript
+        live:
+          type: integer
+          description: Count of active technologies
+        dead:
+          type: integer
+          description: Count of inactive technologies
+        latest:
+          type: integer
+          format: int64
+          description: Most recent detection timestamp
+        oldest:
+          type: integer
+          format: int64
+          description: Earliest detection timestamp
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/TechSubcategory'
+
+    TechSubcategory:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Subcategory name
+          example: social-sdk
+        live:
+          type: integer
+          description: Active technology count
+        dead:
+          type: integer
+          description: Inactive technology count
+        latest:
+          type: integer
+          format: int64
+          description: Most recent detection timestamp
+        oldest:
+          type: integer
+          format: int64
+          description: Earliest detection timestamp
+
+    ErrorResponse:
+      type: object
+      properties:
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: integer
+              Message:
+                type: string
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimited:
+      description: Too many requests — free tier limited to 1 request per second
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

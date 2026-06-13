@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.builtwith.com/schemas/change-result",
+  "title": "BuiltWith Change API Result",
+  "description": "Schema for the BuiltWith Change API response, tracking technology additions and removals with AI-generated business context.",
+  "type": "object",
+  "properties": {
+    "Results": {
+      "type": "array",
+      "description": "Array of domain change results",
+      "items": {
+        "$ref": "#/$defs/DomainChanges"
+      }
+    }
+  },
+  "required": ["Results"],
+  "$defs": {
+    "DomainChanges": {
+      "type": "object",
+      "properties": {
+        "Lookup": {
+          "type": "string",
+          "description": "The queried domain"
+        },
+        "Changes": {
+          "$ref": "#/$defs/ChangeSet"
+        }
+      },
+      "required": ["Lookup"]
+    },
+    "ChangeSet": {
+      "type": "object",
+      "properties": {
+        "since_utc": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start of the detection window"
+        },
+        "last_checked_utc": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Most recent crawl timestamp"
+        },
+        "summary": {
+          "type": "string",
+          "description": "AI-generated overview of technology additions and removals"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ChangeEvent"
+          }
+        }
+      }
+    },
+    "ChangeEvent": {
+      "type": "object",
+      "description": "A single technology change event",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["technology_added", "technology_removed"],
+          "description": "Direction of the technology change"
+        },
+        "technology": {
+          "type": "string",
+          "description": "Name of the technology that changed"
+        },
+        "category": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "BuiltWith category labels for the technology"
+        },
+        "tag": {
+          "type": "string",
+          "description": "Primary technology tag"
+        },
+        "first_seen_utc": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the addition was first detected"
+        },
+        "last_seen_utc": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the removal was last detected"
+        },
+        "importance": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "Significance level of the change"
+        },
+        "why_this_matters": {
+          "type": "string",
+          "description": "AI-generated explanation of the business significance"
+        }
+      },
+      "required": ["type", "technology"]
+    }
+  }
+}

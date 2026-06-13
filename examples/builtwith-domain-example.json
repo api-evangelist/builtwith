@@ -1,0 +1,69 @@
+{
+  "Results": [
+    {
+      "Result": {
+        "Lookup": "shopify.com",
+        "Meta": {
+          "CompanyName": "Shopify Inc.",
+          "Vertical": "Business and Consumer Services",
+          "Telephones": [],
+          "Emails": [],
+          "City": "Ottawa",
+          "State": "Ontario",
+          "Postcode": "K2P 1L4",
+          "Country": "CA",
+          "Names": []
+        },
+        "Paths": [
+          {
+            "Domain": "shopify.com",
+            "Technologies": [
+              {
+                "Name": "Shopify",
+                "Description": "Shopify is a commerce platform that allows anyone to easily sell online, at a retail location, and everywhere in between.",
+                "Link": "https://www.shopify.com/",
+                "Tag": "ecommerce",
+                "Categories": [
+                  { "Category": "Ecommerce" },
+                  { "Category": "Shopping Cart" }
+                ],
+                "FirstDetected": 1262304000000,
+                "LastDetected": 1748736000000,
+                "Live": true,
+                "Attributes": [
+                  { "Field": "MonthlySpend", "Value": "50000" }
+                ]
+              },
+              {
+                "Name": "Google Analytics 4",
+                "Description": "Google Analytics is a web analytics service offered by Google that tracks and reports website traffic.",
+                "Link": "https://analytics.google.com/",
+                "Tag": "analytics",
+                "Categories": [
+                  { "Category": "Analytics" }
+                ],
+                "FirstDetected": 1609459200000,
+                "LastDetected": 1748736000000,
+                "Live": true,
+                "Attributes": []
+              },
+              {
+                "Name": "Cloudflare CDN",
+                "Description": "Cloudflare is a global CDN and distributed DNS services provider, existing between the visitor and Cloudflare user's hosting provider.",
+                "Link": "https://www.cloudflare.com/",
+                "Tag": "cdn",
+                "Categories": [
+                  { "Category": "CDN" }
+                ],
+                "FirstDetected": 1388534400000,
+                "LastDetected": 1748736000000,
+                "Live": true,
+                "Attributes": []
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

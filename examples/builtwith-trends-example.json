@@ -1,0 +1,22 @@
+{
+  "Trends": {
+    "Tech": {
+      "Name": "Shopify",
+      "Description": "Shopify is a commerce platform that allows anyone to easily sell online, at a retail location, and everywhere in between.",
+      "Link": "https://www.shopify.com/",
+      "Icon": "https://cdn.builtwith.com/img/shopify.png",
+      "IsPremium": "Yes",
+      "Tag": "ecommerce",
+      "Categories": ["Ecommerce", "Shopping Cart"],
+      "TrendsLink": "https://trends.builtwith.com/shop/Shopify",
+      "Coverage": {
+        "TenK": 2150,
+        "HundredK": 12800,
+        "Mil": 68500,
+        "Internet": 4200000,
+        "Live": 3900000,
+        "Historical": 6100000
+      }
+    }
+  }
+}

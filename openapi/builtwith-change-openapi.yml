@@ -1,0 +1,210 @@
+openapi: 3.0.3
+info:
+  title: BuiltWith Change API
+  description: >
+    Track technology additions and removals on websites with business context.
+    Returns AI-generated summaries explaining the business significance of
+    technology changes. Credits are only consumed when changes are found.
+  version: change1
+  contact:
+    name: BuiltWith Support
+    url: https://builtwith.com/contact
+  termsOfService: https://builtwith.com/terms
+  license:
+    name: Commercial
+    url: https://builtwith.com/plans
+externalDocs:
+  description: BuiltWith Change API Documentation
+  url: https://api.builtwith.com/change-api
+servers:
+  - url: https://api.builtwith.com/change1
+    description: BuiltWith Change API v1
+
+security:
+  - apiKeyQuery: []
+  - apiKeyHeader: []
+
+tags:
+  - name: Technology Changes
+    description: Track technology additions and removals on websites
+
+paths:
+  /api.json:
+    get:
+      summary: Get technology changes for domain(s)
+      description: >
+        Returns technology additions and removals for one or more domains,
+        with optional SINCE parameter to scope the detection window.
+        AI-generated summaries explain the business significance of each change.
+        1 API credit per domain with changes; no charge for domains with none.
+      operationId: getDomainChanges
+      tags:
+        - Technology Changes
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/LOOKUP'
+        - $ref: '#/components/parameters/SINCE'
+      responses:
+        '200':
+          description: Technology changes for the requested domain(s)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangesResponse'
+              example:
+                Results:
+                  - Lookup: example.com
+                    Changes:
+                      since_utc: "2026-05-01T00:00:00Z"
+                      last_checked_utc: "2026-06-10T12:00:00Z"
+                      summary: "Example.com adopted HubSpot CRM and removed Salesforce."
+                      events:
+                        - type: technology_added
+                          technology: HubSpot CRM
+                          category: ["CRM", "Marketing Automation"]
+                          tag: analytics
+                          first_seen_utc: "2026-05-15T08:00:00Z"
+                          importance: high
+                          why_this_matters: "Switching to HubSpot typically signals a focus on inbound marketing."
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: "Format: 'Authorization: API {key}'"
+
+  parameters:
+    KEY:
+      name: KEY
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: "00000000-0000-0000-0000-000000000000"
+
+    LOOKUP:
+      name: LOOKUP
+      in: query
+      description: Single domain or comma-separated list of domains
+      required: true
+      schema:
+        type: string
+        example: "hotelscombined.com"
+
+    SINCE:
+      name: SINCE
+      in: query
+      description: Time window for change detection; natural language or ISO 8601 date
+      required: false
+      schema:
+        type: string
+        example: "last month"
+
+  schemas:
+    ChangesResponse:
+      type: object
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainChanges'
+
+    DomainChanges:
+      type: object
+      properties:
+        Lookup:
+          type: string
+          description: The queried domain
+        Changes:
+          $ref: '#/components/schemas/ChangeSet'
+
+    ChangeSet:
+      type: object
+      properties:
+        since_utc:
+          type: string
+          format: date-time
+          description: Detection window start
+        last_checked_utc:
+          type: string
+          format: date-time
+          description: Most recent scan timestamp
+        summary:
+          type: string
+          description: AI-generated overview of additions and removals
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangeEvent'
+
+    ChangeEvent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [technology_added, technology_removed]
+          description: Whether the technology was added or removed
+        technology:
+          type: string
+          description: Name of the technology
+        category:
+          type: array
+          items:
+            type: string
+          description: BuiltWith technology categories
+        tag:
+          type: string
+          description: Technology tag classification
+        first_seen_utc:
+          type: string
+          format: date-time
+          description: Timestamp when the addition was first detected
+        last_seen_utc:
+          type: string
+          format: date-time
+          description: Timestamp when the removal was last detected
+        importance:
+          type: string
+          enum: [low, medium, high]
+          description: Priority level of the change
+        why_this_matters:
+          type: string
+          description: AI-generated explanation of the business significance
+
+    ErrorResponse:
+      type: object
+      properties:
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: integer
+              Message:
+                type: string
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

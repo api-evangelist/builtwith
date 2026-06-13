@@ -1,0 +1,45 @@
+{
+  "NextOffset": "oQEwEnH2FJuIzeXOEk2T",
+  "Results": [
+    {
+      "D": "mystore.com",
+      "S": 2000,
+      "FD": 1451606400000,
+      "LD": 1748736000000,
+      "SKU": 450,
+      "R": 800000,
+      "F": 12500,
+      "E": 25,
+      "A": 250000,
+      "Q": null,
+      "M": 180000,
+      "U": "US",
+      "Meta": {
+        "Name": "My Store Inc.",
+        "Title": "My Store - Best Products Online",
+        "Description": "Shop the best products online at My Store.",
+        "Emails": ["contact@mystore.com"],
+        "Telephones": ["+1-800-555-0100"],
+        "Social": [
+          "https://twitter.com/mystore",
+          "https://www.facebook.com/mystore"
+        ]
+      }
+    },
+    {
+      "D": "boutique-shop.co.uk",
+      "S": 500,
+      "FD": 1483228800000,
+      "LD": 1748736000000,
+      "SKU": 120,
+      "R": 150000,
+      "F": 3200,
+      "E": 8,
+      "A": 850000,
+      "Q": null,
+      "M": 620000,
+      "U": "GB",
+      "Meta": null
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "Results": [
+    {
+      "Lookup": "hotelscombined.com",
+      "Changes": {
+        "since_utc": "2026-05-01T00:00:00Z",
+        "last_checked_utc": "2026-06-10T12:00:00Z",
+        "summary": "hotelscombined.com added HubSpot CRM and removed Salesforce Marketing Cloud during this period, signaling a potential shift in their CRM and marketing automation strategy.",
+        "events": [
+          {
+            "type": "technology_added",
+            "technology": "HubSpot CRM",
+            "category": ["CRM", "Marketing Automation"],
+            "tag": "analytics",
+            "first_seen_utc": "2026-05-15T08:00:00Z",
+            "last_seen_utc": null,
+            "importance": "high",
+            "why_this_matters": "Adopting HubSpot CRM typically signals a focus on inbound marketing and lead nurturing. This could indicate they are expanding their sales team or consolidating their marketing stack."
+          },
+          {
+            "type": "technology_removed",
+            "technology": "Salesforce Marketing Cloud",
+            "category": ["CRM", "Email Marketing"],
+            "tag": "analytics",
+            "first_seen_utc": null,
+            "last_seen_utc": "2026-05-12T06:00:00Z",
+            "importance": "high",
+            "why_this_matters": "Removing Salesforce Marketing Cloud after an extended period of use may indicate cost restructuring or consolidation onto a more unified platform such as HubSpot."
+          },
+          {
+            "type": "technology_added",
+            "technology": "Intercom",
+            "category": ["Customer Support", "Live Chat"],
+            "tag": "widgets",
+            "first_seen_utc": "2026-05-20T10:00:00Z",
+            "last_seen_utc": null,
+            "importance": "medium",
+            "why_this_matters": "Adding Intercom suggests investment in customer support and in-app messaging capabilities, possibly to improve retention or onboarding."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+openapi: 3.0.3
+info:
+  title: BuiltWith Trends API
+  description: >
+    Access technology trend data showing adoption and growth of web technologies
+    over time across different traffic segments including the top 10K, 100K,
+    1 million, and the full internet.
+  version: v6
+  contact:
+    name: BuiltWith Support
+    url: https://builtwith.com/contact
+  termsOfService: https://builtwith.com/terms
+  license:
+    name: Commercial
+    url: https://builtwith.com/plans
+externalDocs:
+  description: BuiltWith Trends API Documentation
+  url: https://api.builtwith.com/trends-api
+servers:
+  - url: https://api.builtwith.com/trends/v6
+    description: BuiltWith Trends API v6
+
+security:
+  - apiKeyQuery: []
+  - apiKeyHeader: []
+
+tags:
+  - name: Technology Trends
+    description: Technology adoption trends and market share data
+
+paths:
+  /api.json:
+    get:
+      summary: Get technology trend data (JSON)
+      description: >
+        Returns trend data for a web technology including adoption metrics across
+        top 10K, 100K, 1M, and full internet segments. Optionally retrieve
+        historical data for a specific date.
+      operationId: getTechTrendJson
+      tags:
+        - Technology Trends
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/TECH'
+        - $ref: '#/components/parameters/DATE'
+      responses:
+        '200':
+          description: Technology trend data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrendsResponse'
+              example:
+                Trends:
+                  Tech:
+                    Name: Shopify
+                    Description: Ecommerce platform for online stores
+                    Link: https://www.shopify.com/
+                    Tag: ecommerce
+                    Categories: ["Ecommerce", "Shopping Cart"]
+                    Coverage:
+                      TenK: 1250
+                      HundredK: 8500
+                      Mil: 45000
+                      Internet: 5000000
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api.xml:
+    get:
+      summary: Get technology trend data (XML)
+      description: Returns trend data for a web technology in XML format.
+      operationId: getTechTrendXml
+      tags:
+        - Technology Trends
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/TECH'
+        - $ref: '#/components/parameters/DATE'
+      responses:
+        '200':
+          description: Technology trend data in XML
+          content:
+            application/xml:
+              schema:
+                type: object
+
+components:
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: "Format: 'Authorization: API {key}'"
+
+  parameters:
+    KEY:
+      name: KEY
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: "00000000-0000-0000-0000-000000000000"
+
+    TECH:
+      name: TECH
+      in: query
+      description: Technology name with spaces replaced by dashes (e.g. Google-Analytics)
+      required: true
+      schema:
+        type: string
+        example: Shopify
+
+    DATE:
+      name: DATE
+      in: query
+      description: ISO 8601 date for historical trend data retrieval
+      required: false
+      schema:
+        type: string
+        format: date
+        example: "2026-01-20"
+
+  schemas:
+    TrendsResponse:
+      type: object
+      properties:
+        Trends:
+          type: object
+          properties:
+            Tech:
+              $ref: '#/components/schemas/TechTrend'
+
+    TechTrend:
+      type: object
+      description: Technology trend information and coverage metrics
+      properties:
+        Name:
+          type: string
+          description: Technology name
+          example: Shopify
+        Description:
+          type: string
+          description: Technology description
+        Link:
+          type: string
+          format: uri
+          description: Official technology website
+        Icon:
+          type: string
+          format: uri
+          description: CDN URL for technology icon
+        IsPremium:
+          type: string
+          description: SaaS designation (Yes/No/Maybe)
+          enum: ["Yes", "No", "Maybe"]
+        Tag:
+          type: string
+          description: Primary category tag
+          example: ecommerce
+        Categories:
+          type: array
+          items:
+            type: string
+          description: Subcategory labels
+        TrendsLink:
+          type: string
+          format: uri
+          description: BuiltWith trends page URL for this technology
+        Coverage:
+          $ref: '#/components/schemas/TrendCoverage'
+
+    TrendCoverage:
+      type: object
+      description: Adoption metrics across different traffic segments
+      properties:
+        TenK:
+          type: integer
+          description: Count among top 10,000 websites
+        HundredK:
+          type: integer
+          description: Count among top 100,000 websites
+        Mil:
+          type: integer
+          description: Count among top 1,000,000 websites
+        Internet:
+          type: integer
+          description: Total count across the full internet dataset
+        Live:
+          type: integer
+          description: Currently active detections
+        Historical:
+          type: integer
+          description: Historical total detections (including inactive)
+
+    ErrorResponse:
+      type: object
+      properties:
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: integer
+              Message:
+                type: string
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

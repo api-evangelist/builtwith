@@ -1,0 +1,375 @@
+openapi: 3.0.3
+info:
+  title: BuiltWith Lists API
+  description: >
+    Retrieve lists of websites using specific web technologies. Returns results
+    in XML, JSON, TXT, CSV, and TSV formats with filtering by country, spend,
+    revenue, followers, and page rank. Supports pagination via offset tokens.
+  version: lists12
+  contact:
+    name: BuiltWith Support
+    url: https://builtwith.com/contact
+  termsOfService: https://builtwith.com/terms
+  license:
+    name: Commercial
+    url: https://builtwith.com/plans
+externalDocs:
+  description: BuiltWith Lists API Documentation
+  url: https://api.builtwith.com/lists-api
+servers:
+  - url: https://api.builtwith.com/lists12
+    description: BuiltWith Lists API v12
+
+security:
+  - apiKeyQuery: []
+  - apiKeyHeader: []
+
+tags:
+  - name: Technology Lists
+    description: Retrieve websites using specific technologies
+
+paths:
+  /api.json:
+    get:
+      summary: Get technology website list (JSON)
+      description: >
+        Returns a paginated list of websites using the specified technology,
+        with optional filters for country, spend, revenue, followers, and rank.
+      operationId: getTechListJson
+      tags:
+        - Technology Lists
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/TECH'
+        - $ref: '#/components/parameters/OTHERTECHS'
+        - $ref: '#/components/parameters/META'
+        - $ref: '#/components/parameters/COUNTRY'
+        - $ref: '#/components/parameters/OFFSET'
+        - $ref: '#/components/parameters/SINCE'
+        - $ref: '#/components/parameters/ALL'
+        - $ref: '#/components/parameters/SPEND'
+        - $ref: '#/components/parameters/REVENUE'
+        - $ref: '#/components/parameters/FOLLOWERS'
+        - $ref: '#/components/parameters/PAGERANK'
+      responses:
+        '200':
+          description: Paginated list of websites using the technology
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListsResult'
+              example:
+                NextOffset: "oQEwEnH2FJuIzeXOEk2T"
+                Results:
+                  - D: shopify.com
+                    S: 50000
+                    FD: 1451606400000
+                    LD: 1748736000000
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api.xml:
+    get:
+      summary: Get technology website list (XML)
+      description: Returns the technology website list in XML format.
+      operationId: getTechListXml
+      tags:
+        - Technology Lists
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/TECH'
+        - $ref: '#/components/parameters/COUNTRY'
+        - $ref: '#/components/parameters/OFFSET'
+      responses:
+        '200':
+          description: Technology website list in XML
+          content:
+            application/xml:
+              schema:
+                type: object
+
+  /api.txt:
+    get:
+      summary: Get technology website list (TXT)
+      description: Returns plain text list of domains using the technology.
+      operationId: getTechListTxt
+      tags:
+        - Technology Lists
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/TECH'
+      responses:
+        '200':
+          description: Domain list as plain text
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /api.csv:
+    get:
+      summary: Get technology website list (CSV)
+      description: Returns domain list in CSV format.
+      operationId: getTechListCsv
+      tags:
+        - Technology Lists
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/TECH'
+      responses:
+        '200':
+          description: Domain list as CSV
+          content:
+            text/csv:
+              schema:
+                type: string
+
+  /api.tsv:
+    get:
+      summary: Get technology website list (TSV)
+      description: Returns domain list in TSV format.
+      operationId: getTechListTsv
+      tags:
+        - Technology Lists
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/TECH'
+      responses:
+        '200':
+          description: Domain list as TSV
+          content:
+            text/tab-separated-values:
+              schema:
+                type: string
+
+components:
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: "Format: 'Authorization: API {key}'"
+
+  parameters:
+    KEY:
+      name: KEY
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: "00000000-0000-0000-0000-000000000000"
+
+    TECH:
+      name: TECH
+      in: query
+      description: Technology name (spaces replaced with dashes, e.g. Google-Analytics)
+      required: true
+      schema:
+        type: string
+        example: Shopify
+
+    OTHERTECHS:
+      name: OTHERTECHS
+      in: query
+      description: Additional technologies to filter by (comma-separated, max 16)
+      required: false
+      schema:
+        type: string
+        example: "Google-Analytics,Meta-Pixel"
+
+    META:
+      name: META
+      in: query
+      description: Set to 'yes' to include metadata (names, titles, social links)
+      required: false
+      schema:
+        type: string
+        enum: ["yes"]
+
+    COUNTRY:
+      name: COUNTRY
+      in: query
+      description: ISO 3166-1 alpha-2 country code(s), comma-separated
+      required: false
+      schema:
+        type: string
+        example: "US,AU,NZ"
+
+    OFFSET:
+      name: OFFSET
+      in: query
+      description: Pagination anchor from the previous response's NextOffset field
+      required: false
+      schema:
+        type: string
+        example: "oQEwEnH2FJuIzeXOEk2T"
+
+    SINCE:
+      name: SINCE
+      in: query
+      description: Filter for recent detections only ('30 Days Ago' or ISO date, incompatible with ALL)
+      required: false
+      schema:
+        type: string
+        example: "30 Days Ago"
+
+    ALL:
+      name: ALL
+      in: query
+      description: Set to 'yes' to include historical data (incompatible with SINCE)
+      required: false
+      schema:
+        type: string
+        enum: ["yes"]
+
+    SPEND:
+      name: SPEND
+      in: query
+      description: Filter by monthly tech spend using 'amount|operator' (e.g. 100|GT)
+      required: false
+      schema:
+        type: string
+        example: "100|GT"
+
+    REVENUE:
+      name: REVENUE
+      in: query
+      description: Filter by eCommerce revenue using 'amount|operator'
+      required: false
+      schema:
+        type: string
+        example: "100000|GT"
+
+    FOLLOWERS:
+      name: FOLLOWERS
+      in: query
+      description: Filter by social follower count using 'count|operator'
+      required: false
+      schema:
+        type: string
+        example: "10000|GTE"
+
+    PAGERANK:
+      name: PAGERANK
+      in: query
+      description: Filter by traffic rank using 'rank|operator'
+      required: false
+      schema:
+        type: string
+        example: "1000000|LT"
+
+  schemas:
+    ListsResult:
+      type: object
+      properties:
+        NextOffset:
+          type: string
+          description: Pagination anchor for the next page; 'END' indicates last page
+          example: "oQEwEnH2FJuIzeXOEk2T"
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListResultItem'
+
+    ListResultItem:
+      type: object
+      description: A website result from the lists API
+      properties:
+        D:
+          type: string
+          description: Domain name
+          example: shopify.com
+        S:
+          type: integer
+          description: Monthly technology spend estimate
+        FD:
+          type: integer
+          format: int64
+          description: First detection timestamp (ms)
+        LD:
+          type: integer
+          format: int64
+          description: Last detection timestamp (ms)
+        SKU:
+          type: integer
+          description: Product SKU count (eCommerce)
+        R:
+          type: number
+          description: Revenue estimate
+        F:
+          type: integer
+          description: Social follower count
+        E:
+          type: integer
+          description: Employee count estimate
+        A:
+          type: integer
+          description: Alexa traffic rank
+        Q:
+          type: integer
+          description: Quantcast traffic rank
+        M:
+          type: integer
+          description: Majestic traffic rank
+        U:
+          type: string
+          description: Country code
+        Meta:
+          $ref: '#/components/schemas/ListMeta'
+
+    ListMeta:
+      type: object
+      description: Optional metadata returned when META=yes
+      properties:
+        Name:
+          type: string
+        Title:
+          type: string
+        Description:
+          type: string
+        Emails:
+          type: array
+          items:
+            type: string
+        Telephones:
+          type: array
+          items:
+            type: string
+        Social:
+          type: array
+          items:
+            type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: integer
+              Message:
+                type: string
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

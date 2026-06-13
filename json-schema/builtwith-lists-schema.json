@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.builtwith.com/schemas/lists-result",
+  "title": "BuiltWith Lists API Result",
+  "description": "Schema for the BuiltWith Lists API response, returning paginated website lists for a given technology.",
+  "type": "object",
+  "properties": {
+    "NextOffset": {
+      "type": "string",
+      "description": "Pagination cursor for the next page. Value 'END' indicates the last page.",
+      "example": "oQEwEnH2FJuIzeXOEk2T"
+    },
+    "Results": {
+      "type": "array",
+      "description": "Array of websites using the queried technology",
+      "items": {
+        "$ref": "#/$defs/ListResultItem"
+      }
+    }
+  },
+  "required": ["Results"],
+  "$defs": {
+    "ListResultItem": {
+      "type": "object",
+      "description": "A single website result from the Lists API",
+      "properties": {
+        "D": {
+          "type": "string",
+          "description": "Domain name",
+          "example": "shopify.com"
+        },
+        "S": {
+          "type": "number",
+          "description": "Monthly technology spend estimate (USD)"
+        },
+        "FD": {
+          "type": "integer",
+          "description": "First detection timestamp (milliseconds)"
+        },
+        "LD": {
+          "type": "integer",
+          "description": "Last detection timestamp (milliseconds)"
+        },
+        "SKU": {
+          "type": "integer",
+          "description": "eCommerce product SKU count"
+        },
+        "R": {
+          "type": "number",
+          "description": "Revenue estimate (USD)"
+        },
+        "F": {
+          "type": "integer",
+          "description": "Social media follower count"
+        },
+        "E": {
+          "type": "integer",
+          "description": "Employee count estimate"
+        },
+        "A": {
+          "type": "integer",
+          "description": "Alexa traffic rank"
+        },
+        "Q": {
+          "type": "integer",
+          "description": "Quantcast traffic rank"
+        },
+        "M": {
+          "type": "integer",
+          "description": "Majestic traffic rank"
+        },
+        "U": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code"
+        },
+        "Meta": {
+          "$ref": "#/$defs/ListMeta"
+        }
+      },
+      "required": ["D"]
+    },
+    "ListMeta": {
+      "type": "object",
+      "description": "Optional metadata included when META=yes",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "description": "Company or site owner name"
+        },
+        "Title": {
+          "type": "string",
+          "description": "Website page title"
+        },
+        "Description": {
+          "type": "string",
+          "description": "Website meta description"
+        },
+        "Emails": {
+          "type": "array",
+          "items": { "type": "string", "format": "email" }
+        },
+        "Telephones": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "Social": {
+          "type": "array",
+          "items": { "type": "string", "format": "uri" },
+          "description": "Social media profile URLs"
+        }
+      }
+    }
+  }
+}

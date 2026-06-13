@@ -1,0 +1,177 @@
+vocabulary:
+  provider: builtwith
+  name: BuiltWith API Vocabulary
+  description: >
+    Canonical terms, concepts, and domain-specific language used across all
+    BuiltWith APIs for technology profiling, lead generation, and web intelligence.
+  version: "1.0"
+  updated: "2026-06-13"
+
+terms:
+  - term: Technology
+    definition: >
+      A software library, framework, platform, service, or tool detectable
+      on a website's pages, such as WordPress, Shopify, Google Analytics,
+      or a CDN.
+    aliases:
+      - Tech
+      - Web Technology
+
+  - term: Domain
+    definition: >
+      A root-level internet domain (e.g. example.com), the primary unit of
+      lookup across all BuiltWith APIs. Subdomains and URL paths are not
+      supported as primary lookup values.
+    aliases:
+      - Lookup
+      - Root Domain
+
+  - term: Technology Tag
+    definition: >
+      A top-level category label applied to a technology (e.g. "cms",
+      "analytics", "ecommerce", "cdn"). Used to group technologies by
+      primary function.
+    aliases:
+      - Tag
+
+  - term: Technology Category
+    definition: >
+      A subcategory providing finer-grained classification within a tag
+      group (e.g. "CMS", "Shopping Cart", "A/B Testing").
+    aliases:
+      - Category
+
+  - term: Live Technology
+    definition: >
+      A technology currently detected as active on a domain during the
+      most recent crawl.
+    aliases:
+      - Active Technology
+      - LIVEONLY
+
+  - term: Dead Technology
+    definition: >
+      A technology that was previously detected on a domain but is no
+      longer present in the most recent crawl.
+    aliases:
+      - Historical Technology
+      - Inactive Technology
+
+  - term: First Detected
+    definition: >
+      The earliest date or timestamp when a technology was first observed
+      on a domain by BuiltWith's crawler.
+    aliases:
+      - FD
+      - FirstDetected
+      - first_seen_utc
+
+  - term: Last Detected
+    definition: >
+      The most recent date or timestamp when a technology was last observed
+      on a domain.
+    aliases:
+      - LD
+      - LastDetected
+      - last_seen_utc
+
+  - term: API Key
+    definition: >
+      A UUID-format authentication credential required for all BuiltWith API
+      requests. May be passed as the KEY query parameter or as an
+      Authorization header value.
+    aliases:
+      - KEY
+      - API Credential
+
+  - term: API Credit
+    definition: >
+      The unit of consumption for BuiltWith API usage. Each API call
+      consumes a defined number of credits depending on the endpoint and
+      the volume of results returned.
+    aliases:
+      - Credit
+
+  - term: Monthly Tech Spend
+    definition: >
+      An estimated monthly expenditure by a domain on a technology product,
+      used as a filter in the Lists API. Expressed in USD.
+    aliases:
+      - S
+      - Spend
+      - SPEND
+
+  - term: Vertical
+    definition: >
+      An industry classification for a website (e.g. "Business and Consumer
+      Services", "Retail", "Healthcare"). Used in Domain API metadata and
+      as a filter in the Trends API.
+
+  - term: Relationship
+    definition: >
+      A link between two domains established by a shared identifier such
+      as an analytics ID, IP address, or advertising tag. Returned by
+      the Relationships API.
+
+  - term: Identifier
+    definition: >
+      A shared attribute value (e.g. a Google Analytics ID, IP address,
+      or AdSense publisher ID) used to relate multiple domains in the
+      Relationships and Tags APIs.
+
+  - term: NextOffset
+    definition: >
+      A pagination cursor string returned in Lists and Ask API responses.
+      Pass it as the OFFSET or NEXTOFFSET parameter to retrieve the next
+      page of results. The value "END" indicates the final page.
+    aliases:
+      - OFFSET
+      - NEXTOFFSET
+
+  - term: Coverage
+    definition: >
+      Adoption metrics in the Trends API showing how many websites in
+      defined traffic segments (top 10K, 100K, 1M, full internet) use
+      a technology.
+
+  - term: Technology Change
+    definition: >
+      An event in the Change API representing a technology being added or
+      removed from a domain within a given time window, annotated with
+      AI-generated business context.
+
+  - term: Trust Score
+    definition: >
+      A reliability and safety rating for a domain provided by the Trust
+      API, reflecting trustworthiness signals gathered from BuiltWith's
+      data corpus.
+
+  - term: Company to URL
+    definition: >
+      The resolution of a company name to its associated web domain,
+      provided by the Company to URL API.
+
+  - term: Bulk Domain
+    definition: >
+      A batch processing mode in the Domain API allowing large lists of
+      domains to be submitted for asynchronous technology lookup.
+
+  - term: Vector Search
+    definition: >
+      A semantic similarity search mode using text embeddings to find
+      technologies matching a natural language description.
+
+  - term: MCP
+    definition: >
+      Model Context Protocol — an integration standard enabling AI
+      assistants to query BuiltWith data natively via the MCP API.
+
+  - term: Live Feed
+    definition: >
+      A real-time WebSocket stream of technology detections as BuiltWith's
+      crawlers discover new technology usage across the web.
+
+  - term: Recommendation
+    definition: >
+      A technology suggestion generated by the Recommendations API based
+      on a domain's existing technology profile.
