@@ -1,0 +1,157 @@
+name: BuiltWith Plans and Pricing
+description: Pricing plans and tiers for the BuiltWith technology profiling platform and API services.
+specificationVersion: '0.1'
+url: https://builtwith.com/plans
+plans:
+  - name: Free
+    description: Individual site lookups available perpetually at no cost. Access to the Free API with basic technology group counts and last-updated timestamps.
+    url: https://builtwith.com/signup
+    price: 0
+    currency: USD
+    billingPeriod: perpetual
+    features:
+      - Individual site lookups only
+      - Free API access (technology group counts)
+      - Rate limit of 1 request per second on Free API
+      - Basic technology detection
+    apiAccess:
+      - name: Free API
+        baseURL: https://api.builtwith.com/free1
+        rateLimit: 1 request per second
+    limitations:
+      - No list exports
+      - No historical data
+      - No bulk processing
+      - No CRM integration
+
+  - name: Advanced
+    description: Individual detailed site lookups for single users who need more in-depth technology profiles than the free tier.
+    url: https://builtwith.com/plans
+    price: 144
+    currency: USD
+    billingPeriod: yearly
+    features:
+      - Detailed individual site lookups
+      - Full technology profiles
+      - Technology history per domain
+    limitations:
+      - Individual lookups only
+      - No list exports
+      - No bulk processing
+      - No API access
+
+  - name: Basic
+    description: Entry-level plan for teams needing technology lists and lead generation with access to two technology searches.
+    url: https://builtwith.com/plans
+    price: 295
+    currency: USD
+    billingPeriod: monthly
+    yearlyPrice: 2950
+    yearlyBillingPeriod: yearly
+    features:
+      - 2 Technology searches
+      - 2 Keywords searches
+      - 2 Retail Reports
+      - 1 System Login
+      - 2,000 upload credits per month
+      - CRM Integration (Salesforce, HubSpot, Zoho, Dynamics 365, Pardot, Close.io)
+      - CSV/Excel export
+      - Contact data (names, emails, titles)
+      - Sales revenue and spend estimates
+      - Usage alerts
+      - 7-day telephone and email support
+    apiAccess:
+      - name: Domain API
+        baseURL: https://api.builtwith.com/v22
+      - name: Lists API
+        baseURL: https://api.builtwith.com/lists12
+
+  - name: Pro
+    description: Professional plan with unlimited technology searches and 20,000 upload credits per month for growing sales and marketing teams.
+    url: https://builtwith.com/plans
+    price: 495
+    currency: USD
+    billingPeriod: monthly
+    yearlyPrice: 4950
+    yearlyBillingPeriod: yearly
+    features:
+      - Unlimited Technologies
+      - Unlimited Keywords
+      - Unlimited Retail Reports
+      - 1 System Login
+      - 20,000 upload credits per month
+      - CRM Integration (Salesforce, HubSpot, Zoho, Dynamics 365, Pardot, Close.io)
+      - CSV/Excel export
+      - Contact data (names, emails, titles)
+      - Sales revenue and spend estimates
+      - Predictive leads identification
+      - Competitor comparison
+      - Usage alerts
+      - 7-day telephone and email support
+    apiAccess:
+      - name: Domain API
+        baseURL: https://api.builtwith.com/v22
+      - name: Lists API
+        baseURL: https://api.builtwith.com/lists12
+      - name: Trends API
+        baseURL: https://api.builtwith.com/trends/v6
+      - name: Change API
+        baseURL: https://api.builtwith.com/change1
+
+  - name: Team
+    description: Full-featured team plan with unlimited logins, 1.2 million API credits annually, SSO, and advanced team management.
+    url: https://builtwith.com/plans
+    price: 995
+    currency: USD
+    billingPeriod: monthly
+    yearlyPrice: 9950
+    yearlyBillingPeriod: yearly
+    features:
+      - Unlimited Technologies
+      - Unlimited Keywords
+      - Unlimited Retail Reports
+      - Unlimited Pro Logins
+      - 1.2 million API credits per year (100,000 per month)
+      - SSO and team management
+      - CRM Integration (Salesforce, HubSpot, Zoho, Dynamics 365, Pardot, Close.io)
+      - CSV/Excel export
+      - Contact data (names, emails, titles)
+      - Sales revenue and spend estimates
+      - Predictive leads identification
+      - Competitor comparison
+      - Usage alerts
+      - 7-day telephone and email support
+    apiAccess:
+      - name: Domain API
+        baseURL: https://api.builtwith.com/v22
+        credits: 1200000 per year
+      - name: Lists API
+        baseURL: https://api.builtwith.com/lists12
+      - name: Trends API
+        baseURL: https://api.builtwith.com/trends/v6
+      - name: Change API
+        baseURL: https://api.builtwith.com/change1
+      - name: Relationships API
+        baseURL: https://api.builtwith.com/rv4
+      - name: Financial API
+        baseURL: https://api.builtwith.com/financial1
+      - name: Keywords API
+        baseURL: https://api.builtwith.com/kw2
+      - name: Tags API
+        baseURL: https://api.builtwith.com/tag1
+
+  - name: Dedicated Domain Live API
+    description: High-throughput dedicated endpoints for enterprise customers requiring maximum API performance and volume.
+    url: https://api.builtwith.com/dedicated-domain-live-api
+    price: contact
+    currency: USD
+    billingPeriod: custom
+    features:
+      - Dedicated endpoints
+      - High-throughput processing
+      - Custom rate limits
+      - Enterprise SLA
+      - Priority support
+    apiAccess:
+      - name: Dedicated Domain Live API
+        url: https://api.builtwith.com/dedicated-domain-live-api

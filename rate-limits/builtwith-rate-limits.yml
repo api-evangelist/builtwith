@@ -1,0 +1,108 @@
+name: BuiltWith API Rate Limits
+description: Rate limits and throttling policies for the BuiltWith API platform across all available endpoints.
+specificationVersion: '0.1'
+url: https://api.builtwith.com/
+rateLimits:
+  - name: Domain API Rate Limit
+    description: Concurrent request and per-second rate limits for the BuiltWith Domain API.
+    api: Domain API
+    endpoint: https://api.builtwith.com/v22/api.{format}
+    limits:
+      - type: concurrent
+        max: 8
+        description: Maximum 8 concurrent requests at any one time
+      - type: per-second
+        max: 10
+        description: Maximum 10 requests per second
+    enforcement:
+      - type: http-status
+        code: 429
+        description: Returns HTTP 429 Too Many Requests when limits are exceeded
+    headers:
+      - name: X-RATELIMIT-CURRENT-CONCURRENT
+        description: Current number of concurrent requests in flight
+      - name: X-RATELIMIT-CURRENT-PERSECOND
+        description: Current requests per second being made
+      - name: X-API-CREDITS-AVAILABLE
+        description: Total API credits available on the account
+      - name: X-API-CREDITS-USED
+        description: API credits used in the current billing period
+      - name: X-API-CREDITS-REMAINING
+        description: API credits remaining in the current billing period
+    notes:
+      - Contact BuiltWith for dedicated endpoints to remove rate limits for high-volume use cases
+
+  - name: Free API Rate Limit
+    description: Rate limit applied to the BuiltWith Free API tier.
+    api: Free API
+    endpoint: https://api.builtwith.com/free1/api.{format}
+    limits:
+      - type: per-second
+        max: 1
+        description: Maximum 1 request per second
+    enforcement:
+      - type: http-status
+        code: 429
+        description: Returns HTTP 429 Too Many Requests when limits are exceeded
+    notes:
+      - Free API is available to all registered users at no cost
+      - Upgrade to a paid plan for higher rate limits
+
+  - name: Lists API Rate Limit
+    description: Rate limits for the BuiltWith Lists API used for technology-based website lists.
+    api: Lists API
+    endpoint: https://api.builtwith.com/lists12/api.{format}
+    limits:
+      - type: credits
+        description: Requests consume credits from the account balance; exact per-request credit cost depends on plan
+    notes:
+      - Credit costs vary by query complexity and result size
+      - Account credit usage is tracked in the dashboard
+
+  - name: Credit System
+    description: BuiltWith uses a credit-based system for API usage across paid plans, with credits consumed per request.
+    creditSystem:
+      teamPlanCredits: 1200000
+      teamPlanPeriod: yearly
+      teamPlanMonthlyCredits: 100000
+      creditTracking:
+        - header: X-API-CREDITS-AVAILABLE
+        - header: X-API-CREDITS-USED
+        - header: X-API-CREDITS-REMAINING
+    notes:
+      - Credits reset on a monthly or annual basis depending on the plan
+      - Some endpoints (e.g., TRUST parameter in Domain API) consume additional credits
+      - Dedicated plans available for enterprise-level credit needs
+
+  - name: Bulk Domain API Limits
+    description: Rate limits and job constraints for the BuiltWith Bulk Domain API.
+    api: Bulk Domain API
+    endpoint: https://api.builtwith.com/v22/domain/bulk
+    notes:
+      - Bulk jobs are submitted via POST and polled for status
+      - Rate limits apply per account; contact BuiltWith for high-volume batch processing
+      - Results available via GET /v22/domain/bulk/{job_id}
+
+  - name: Live Feed API Limits
+    description: WebSocket connection limits for the BuiltWith Live Feed API.
+    api: Live Feed API
+    endpoint: wss://sync.builtwith.com/wss/
+    limits:
+      - type: connection
+        description: Real-time WebSocket stream; connection limits apply per account
+    notes:
+      - WebSocket protocol requires persistent connection management
+      - Disconnects and reconnects count against connection limits
+
+authentication:
+  methods:
+    - name: Query Parameter
+      description: Pass the API key as a KEY query parameter in every request
+      example: "https://api.builtwith.com/v22/api.json?KEY=your-api-key&LOOKUP=example.com"
+    - name: HTTP Header
+      description: Pass the API key as an Authorization header
+      format: "Authorization: API your-api-key"
+  security:
+    - HTTPS required for all endpoints
+    - API keys must be kept secret; never expose in client-side code
+    - Rotate API keys if compromised via the account dashboard

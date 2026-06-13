@@ -1,0 +1,175 @@
+name: BuiltWith FinOps Framework
+description: FinOps Framework 1.0 FOCUS-aligned cost management and optimization guide for BuiltWith API consumption.
+specificationVersion: '1.0'
+framework: FinOps Framework
+alignment: FOCUS 1.0
+url: https://builtwith.com/plans
+provider: BuiltWith
+currency: USD
+
+costModel:
+  type: subscription-plus-credits
+  description: BuiltWith uses a tiered subscription model combined with a credit-based API consumption system. Monthly or annual subscriptions include a fixed number of API credits; dedicated plans provide custom credit allocations.
+  billingCycle:
+    - monthly
+    - annual
+  creditModel:
+    unit: API Credit
+    resetPeriod: monthly
+    trackingHeaders:
+      - X-API-CREDITS-AVAILABLE
+      - X-API-CREDITS-USED
+      - X-API-CREDITS-REMAINING
+
+pricingDimensions:
+  - dimension: Subscription Tier
+    description: Base monthly or annual plan cost covering platform access and included credits
+    tiers:
+      - name: Free
+        price: 0
+        currency: USD
+        period: perpetual
+        includedCredits: limited
+      - name: Advanced
+        price: 144
+        currency: USD
+        period: yearly
+        includedCredits: individual lookups only
+      - name: Basic
+        price: 295
+        currency: USD
+        period: monthly
+        yearlyEquivalent: 2950
+        includedCredits: 2000 upload credits per month
+      - name: Pro
+        price: 495
+        currency: USD
+        period: monthly
+        yearlyEquivalent: 4950
+        includedCredits: 20000 upload credits per month
+      - name: Team
+        price: 995
+        currency: USD
+        period: monthly
+        yearlyEquivalent: 9950
+        includedCredits: 1200000 API credits per year (100000 per month)
+      - name: Dedicated/Enterprise
+        price: contact
+        currency: USD
+        period: custom
+        includedCredits: custom
+
+  - dimension: API Credits
+    description: Credits consumed per API request; varies by endpoint and query complexity
+    notes:
+      - Standard domain lookups consume a base credit amount
+      - TRUST parameter lookups consume additional credits beyond standard
+      - Free API has no credit cost but is rate-limited to 1 req/sec
+      - Credit balance tracked via response headers in real-time
+
+  - dimension: Upload Credits
+    description: Credits for uploading domain lists for bulk technology analysis
+    notes:
+      - Basic plan includes 2,000 upload credits per month
+      - Pro plan includes 20,000 upload credits per month
+      - Team plan API credits and upload credits are tracked separately
+
+costOptimization:
+  strategies:
+    - name: Annual Billing Discount
+      description: Switch from monthly to annual billing to reduce per-month cost
+      savings:
+        - basicMonthly: 295
+          basicAnnual: 2950
+          basicAnnualPerMonth: 245.83
+          savingsPerMonth: 49.17
+          savingsPercent: 16.7
+        - proMonthly: 495
+          proAnnual: 4950
+          proAnnualPerMonth: 412.50
+          savingsPerMonth: 82.50
+          savingsPercent: 16.7
+        - teamMonthly: 995
+          teamAnnual: 9950
+          teamAnnualPerMonth: 829.17
+          savingsPerMonth: 165.83
+          savingsPercent: 16.7
+
+    - name: Credit Monitoring
+      description: Track X-API-CREDITS-REMAINING header to avoid unexpected credit exhaustion
+      implementation:
+        - Monitor X-API-CREDITS-AVAILABLE at start of billing period
+        - Alert when X-API-CREDITS-REMAINING drops below 20%
+        - Use X-API-CREDITS-USED to forecast monthly burn rate
+
+    - name: Rate Limit Optimization
+      description: Stay within concurrent and per-second rate limits to avoid 429 errors and wasted retry requests
+      implementation:
+        - Implement exponential backoff on 429 responses
+        - Monitor X-RATELIMIT-CURRENT-CONCURRENT header
+        - Batch requests efficiently using the Bulk Domain API
+
+    - name: Free API for Lightweight Checks
+      description: Use the Free API for initial domain qualification before consuming paid credits for full lookups
+      implementation:
+        - Use Free API (free1) for basic technology group counts
+        - Only escalate to Domain API (v22) for domains that pass initial qualification criteria
+        - Reduces paid credit consumption for high-volume prospecting workflows
+
+    - name: Caching
+      description: Cache API responses locally to avoid re-querying the same domains
+      implementation:
+        - Cache Domain API responses with a TTL of 7 days (data updated weekly)
+        - Store and reuse Trends API responses which change less frequently
+        - Implement a lookup cache keyed on root domain
+
+    - name: Bulk Processing for Large Volumes
+      description: Use the Bulk Domain API for high-volume domain lists rather than individual requests
+      implementation:
+        - Submit batch jobs via POST to /v22/domain/bulk
+        - Poll for job completion via GET /v22/domain/bulk/{job_id}
+        - Reduces per-request overhead and enables more efficient credit usage
+
+    - name: Dedicated Endpoints for Enterprise
+      description: Upgrade to dedicated endpoints when rate limits become a bottleneck for high-volume use cases
+      implementation:
+        - Contact BuiltWith at builtwith.com/contact for dedicated endpoint pricing
+        - Dedicated endpoints remove standard concurrent and per-second rate limits
+
+costAllocation:
+  dimensions:
+    - name: Team / Department
+      description: Allocate costs by team using separate API keys per department
+    - name: Use Case
+      description: Track credit consumption by use case (lead gen, competitive intelligence, market research)
+    - name: API Endpoint
+      description: Track credits consumed per API endpoint type using response headers
+  tagging:
+    - Use separate API keys per business unit for granular billing attribution
+    - Log request metadata (endpoint, timestamp, credits used) for cost chargeback
+
+governance:
+  policies:
+    - name: API Key Rotation
+      description: Rotate API keys quarterly or immediately upon suspected compromise
+    - name: Credit Budget Alerts
+      description: Set alerts at 50%, 75%, and 90% of monthly credit consumption
+    - name: Least-Privilege Access
+      description: Issue API keys with minimum required access; use separate keys for separate functions
+    - name: HTTPS Enforcement
+      description: All API requests must use HTTPS; BuiltWith does not support plain HTTP
+    - name: Data Resale Prohibition
+      description: Terms of service prohibit reselling BuiltWith data as-is or providing duplicate functionality to builtwith.com
+
+reporting:
+  metrics:
+    - name: Credits Consumed Per Day
+      source: X-API-CREDITS-USED response header
+    - name: Credits Remaining
+      source: X-API-CREDITS-REMAINING response header
+    - name: API Error Rate
+      description: Percentage of requests returning 429 or 5xx status codes
+    - name: Cost Per Lead
+      description: Total subscription cost divided by number of qualified leads generated
+    - name: API Cost Per Domain Lookup
+      description: Monthly subscription cost divided by total domains queried

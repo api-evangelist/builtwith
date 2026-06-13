@@ -1,0 +1,343 @@
+aid: builtwith
+name: BuiltWith
+description: Technology profiling and lead generation platform with a REST API for detecting technologies used by websites, tracking technology trends, and identifying technology adoption across 491.9 million domains and 115,907 tracked web technologies.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/builtwith/refs/heads/main/apis.yml
+created: 2026-06-13
+modified: 2026-06-13
+specificationVersion: '0.19'
+tags:
+  - Technology Profiling
+  - Lead Generation
+  - Web Intelligence
+  - Technology Detection
+  - Website Analysis
+  - Market Research
+apis:
+  - name: BuiltWith Domain API
+    description: Current and historical website technology information for single or multiple domains with support for JSON, XML, and CSV formats.
+    humanURL: https://api.builtwith.com/domain-api
+    baseURL: https://api.builtwith.com/v22
+    tags:
+      - Domain Lookup
+      - Technology Detection
+      - Historical Data
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/domain-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Lists API
+    description: Retrieve lists of websites using specific web technologies in XML, JSON, TXT, CSV, and TSV formats.
+    humanURL: https://api.builtwith.com/lists-api
+    baseURL: https://api.builtwith.com/lists12
+    tags:
+      - Technology Lists
+      - Lead Generation
+      - Website Lists
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/lists-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Trends API
+    description: Access technology trend data showing adoption and growth of web technologies over time.
+    humanURL: https://api.builtwith.com/trends-api
+    baseURL: https://api.builtwith.com/trends/v6
+    tags:
+      - Technology Trends
+      - Market Intelligence
+      - Adoption Data
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/trends-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Change API
+    description: Track technology additions and removals on websites with business context in JSON format.
+    humanURL: https://api.builtwith.com/change-api
+    baseURL: https://api.builtwith.com/change1
+    tags:
+      - Technology Changes
+      - Business Intelligence
+      - Signals
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/change-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Relationships API
+    description: Website interconnection data revealing domain relationships via shared IPs, analytics, and other attributes.
+    humanURL: https://api.builtwith.com/relationships-api
+    baseURL: https://api.builtwith.com/rv4
+    tags:
+      - Domain Relationships
+      - Web Graph
+      - Interconnections
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/relationships-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Free API
+    description: Free tier API providing technology group counts and last-updated timestamps for website domains.
+    humanURL: https://api.builtwith.com/free-api
+    baseURL: https://api.builtwith.com/free1
+    tags:
+      - Free Tier
+      - Technology Counts
+      - Domain Lookup
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/free-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Ask API
+    description: Natural language website lookups returning technology profile data in JSON and CSV formats.
+    humanURL: https://api.builtwith.com/ask-api
+    baseURL: https://api.builtwith.com/ask1
+    tags:
+      - Natural Language
+      - AI
+      - Domain Lookup
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/ask-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Live Feed API
+    description: Real-time WebSocket feed of technology detections as they happen across the web.
+    humanURL: https://api.builtwith.com/live-feed-api
+    baseURL: wss://sync.builtwith.com/wss/
+    tags:
+      - Real-time
+      - WebSocket
+      - Streaming
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/live-feed-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Company to URL API
+    description: Resolve company names to their associated domain names in JSON and XML formats.
+    humanURL: https://api.builtwith.com/company-to-url
+    baseURL: https://api.builtwith.com/ctu3
+    tags:
+      - Company Lookup
+      - Domain Resolution
+      - Lead Generation
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/company-to-url
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Tags API
+    description: Retrieve related domains associated with IPs and other website attributes.
+    humanURL: https://api.builtwith.com/tags-api
+    baseURL: https://api.builtwith.com/tag1
+    tags:
+      - IP Lookup
+      - Domain Tags
+      - Attribution
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/tags-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Recommendations API
+    description: Get technology suggestions based on a website's existing technology profile.
+    humanURL: https://api.builtwith.com/recommendations-api
+    baseURL: https://api.builtwith.com/rec1
+    tags:
+      - Recommendations
+      - Technology Suggestions
+      - Intelligence
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/recommendations-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Keywords API
+    description: Find websites that use specific keywords in their content.
+    humanURL: https://api.builtwith.com/keywords-api
+    baseURL: https://api.builtwith.com/kw2
+    tags:
+      - Keyword Search
+      - Content Intelligence
+      - Lead Generation
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/keywords-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Keyword Search API
+    description: Search websites by keyword content returning results in JSON and CSV formats.
+    humanURL: https://api.builtwith.com/keyword-search-api
+    baseURL: https://api.builtwith.com/kws1
+    tags:
+      - Keyword Search
+      - Content Discovery
+      - Lead Generation
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/keyword-search-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Vector Search API
+    description: Text-based technology searches using vector embeddings for semantic similarity matching.
+    humanURL: https://api.builtwith.com/vector-search-api
+    baseURL: https://api.builtwith.com/vector/v1
+    tags:
+      - Vector Search
+      - AI
+      - Semantic Search
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/vector-search-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Redirects API
+    description: Access website redirect chain data to understand domain redirect patterns.
+    humanURL: https://api.builtwith.com/redirects-api
+    baseURL: https://api.builtwith.com/redirect1
+    tags:
+      - Redirects
+      - Domain Intelligence
+      - Website Data
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/redirects-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Product API
+    description: eCommerce product lookup for identifying products and merchants across the web.
+    humanURL: https://api.builtwith.com/product-api
+    baseURL: https://api.builtwith.com/productv1
+    tags:
+      - eCommerce
+      - Product Intelligence
+      - Retail
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/product-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Trust API
+    description: Website trustworthiness assessment providing reliability and safety scores for domains.
+    humanURL: https://api.builtwith.com/trust-api
+    baseURL: https://api.builtwith.com/trustv1
+    tags:
+      - Trust Score
+      - Safety
+      - Domain Intelligence
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/trust-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Financial API
+    description: Access financial data from SEC Edgar and UK Companies House filings for domains, including revenue, assets, and equity data.
+    humanURL: https://api.builtwith.com/financial-api
+    baseURL: https://api.builtwith.com/financial1
+    tags:
+      - Financial Data
+      - SEC Filings
+      - Companies House
+      - Business Intelligence
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/financial-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Bulk Domain API
+    description: Batch domain processing for high-volume technology lookups across large domain lists.
+    humanURL: https://api.builtwith.com/bulk-domain-api
+    baseURL: https://api.builtwith.com/v22/domain
+    tags:
+      - Bulk Processing
+      - Batch API
+      - High Volume
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/bulk-domain-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith MCP API
+    description: Model Context Protocol server integration enabling AI assistants to query BuiltWith technology detection data natively.
+    humanURL: https://api.builtwith.com/mcp-api
+    baseURL: https://api.builtwith.com
+    tags:
+      - MCP
+      - AI Integration
+      - Model Context Protocol
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/mcp-api
+      - type: GitHubRepository
+        url: https://github.com/builtwith/mcp
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+  - name: BuiltWith Agent Payment API
+    description: Autonomous credit management API enabling AI agents to manage and replenish API credits programmatically.
+    humanURL: https://api.builtwith.com/agent-payment-api
+    baseURL: https://api.builtwith.com
+    tags:
+      - AI Agents
+      - Payments
+      - Credits
+      - Autonomous
+    properties:
+      - type: Documentation
+        url: https://api.builtwith.com/agent-payment-api
+    contact:
+      - FN: BuiltWith Support
+        url: https://builtwith.com/contact
+common:
+  - type: Website
+    url: https://builtwith.com/
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: GitHubOrg
+    url: https://github.com/builtwith
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/builtwith
+  - type: Blog
+    url: https://blog.builtwith.com/
+  - type: Pricing
+    url: https://builtwith.com/plans
+  - type: X
+    url: https://x.com/builtwith
+  - type: KnowledgeBase
+    url: https://kb.builtwith.com/
+  - type: PostmanWorkspace
+    url: https://www.postman.com/builtwithcom/builtwith/overview
+  - type: Plans
+    url: plans/builtwith-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/builtwith-rate-limits.yml
+  - type: FinOps
+    url: finops/builtwith-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
