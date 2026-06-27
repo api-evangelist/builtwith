@@ -2,10 +2,17 @@
   "provider": "builtwith",
   "blogUrl": "https://blog.builtwith.com/",
   "feedUrl": "https://blog.builtwith.com/feed/",
-  "lastFetched": "2026-06-13",
+  "lastFetched": "2026-06-21",
   "posts": [],
   "repo": "builtwith",
   "feeds": [
+    {
+      "source": "https://blog.builtwith.com/feed/",
+      "feed_url": "https://blog.builtwith.com/feed/",
+      "title": "",
+      "saved": 1,
+      "method": "feed"
+    },
     {
       "source": "https://www.linkedin.com/company/builtwith",
       "feed_url": "https://www.linkedin.com/company/builtwith",
@@ -14,6 +21,6 @@
       "method": "none"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 1,
+  "fetched": "2026-06-27T12:03:07Z"
 }
