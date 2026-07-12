@@ -1,0 +1,36 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/builtwith-change-openapi.yml, openapi/builtwith-domain-openapi.yml, openapi/builtwith-free-openapi.yml,
+  openapi/builtwith-lists-openapi.yml, openapi/builtwith-relationships-openapi.yml, openapi/builtwith-tags-openapi.yml,
+  openapi/builtwith-trends-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  - query
+schemes:
+- name: apiKeyQuery
+  type: apiKey
+  in: query
+  parameter: KEY
+  sources:
+  - openapi/builtwith-change-openapi.yml
+  - openapi/builtwith-domain-openapi.yml
+  - openapi/builtwith-free-openapi.yml
+  - openapi/builtwith-lists-openapi.yml
+  - openapi/builtwith-relationships-openapi.yml
+  - openapi/builtwith-tags-openapi.yml
+  - openapi/builtwith-trends-openapi.yml
+- name: apiKeyHeader
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'Format: ''Authorization: API {key}'''
+  sources:
+  - openapi/builtwith-change-openapi.yml
+  - openapi/builtwith-domain-openapi.yml
+  - openapi/builtwith-lists-openapi.yml
+  - openapi/builtwith-relationships-openapi.yml
+  - openapi/builtwith-tags-openapi.yml
+  - openapi/builtwith-trends-openapi.yml

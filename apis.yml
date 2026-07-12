@@ -314,6 +314,12 @@ apis:
       - FN: BuiltWith Support
         url: https://builtwith.com/contact
 common:
+  - type: VulnerabilityDisclosure
+    url: security/builtwith-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/builtwith-domain-security.yml
+  - type: Authentication
+    url: authentication/builtwith-authentication.yml
   - type: Website
     url: https://builtwith.com/
   - type: Documentation
