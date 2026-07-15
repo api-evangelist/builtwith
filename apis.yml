@@ -314,6 +314,8 @@ apis:
       - FN: BuiltWith Support
         url: https://builtwith.com/contact
 common:
+  - type: AgenticAccess
+    url: agentic-access/builtwith-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/builtwith-vulnerability-disclosure.yml
   - type: DomainSecurity
