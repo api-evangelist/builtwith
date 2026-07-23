@@ -1,0 +1,212 @@
+openapi: 3.0.3
+info:
+  title: BuiltWith Change Bulk Processing API
+  description: 'Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.
+
+    '
+  version: change1
+  contact:
+    name: BuiltWith Support
+    url: https://builtwith.com/contact
+  termsOfService: https://builtwith.com/terms
+  license:
+    name: Commercial
+    url: https://builtwith.com/plans
+servers:
+- url: https://api.builtwith.com/change1
+  description: BuiltWith Change API v1
+security:
+- apiKeyQuery: []
+- apiKeyHeader: []
+tags:
+- name: Bulk Processing
+  description: Asynchronous batch domain processing
+paths:
+  /domain/bulk:
+    post:
+      summary: Bulk domain technology lookup
+      description: 'Submit a list of domains for batch processing. Small batches return synchronously; large batches return a job ID for polling.
+
+        '
+      operationId: bulkDomainLookup
+      tags:
+      - Bulk Processing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+            example:
+              KEY: 00000000-0000-0000-0000-000000000000
+              LOOKUP:
+              - example.com
+              - shopify.com
+              - wordpress.org
+      responses:
+        '200':
+          description: Bulk results or async job reference
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/DomainResult'
+                - $ref: '#/components/schemas/BulkJobResponse'
+components:
+  schemas:
+    Result:
+      type: object
+      properties:
+        Lookup:
+          type: string
+          description: The queried domain
+          example: example.com
+        Meta:
+          $ref: '#/components/schemas/DomainMeta'
+        Paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/Path'
+    DomainResult:
+      type: object
+      description: Top-level response wrapper for domain technology lookups
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainResultItem'
+    BulkRequest:
+      type: object
+      required:
+      - KEY
+      - LOOKUP
+      properties:
+        KEY:
+          type: string
+          format: uuid
+          description: API authentication key
+        LOOKUP:
+          type: array
+          items:
+            type: string
+          description: List of domains to look up
+          maxItems: 500
+    DomainResultItem:
+      type: object
+      properties:
+        Result:
+          $ref: '#/components/schemas/Result'
+    DomainMeta:
+      type: object
+      description: Company and domain metadata
+      properties:
+        CompanyName:
+          type: string
+        Vertical:
+          type: string
+        Telephones:
+          type: array
+          items:
+            type: string
+        Emails:
+          type: array
+          items:
+            type: string
+        City:
+          type: string
+        State:
+          type: string
+        Postcode:
+          type: string
+        Country:
+          type: string
+        Names:
+          type: array
+          items:
+            type: string
+    TechCategory:
+      type: object
+      properties:
+        Category:
+          type: string
+          example: CMS
+    Technology:
+      type: object
+      description: A detected web technology
+      properties:
+        Name:
+          type: string
+          example: WordPress
+        Description:
+          type: string
+        Link:
+          type: string
+          format: uri
+        Tag:
+          type: string
+          description: Primary technology category tag
+          example: cms
+        Categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/TechCategory'
+        FirstDetected:
+          type: integer
+          format: int64
+          description: Unix timestamp (ms) of first detection
+        LastDetected:
+          type: integer
+          format: int64
+          description: Unix timestamp (ms) of last detection
+        Live:
+          type: boolean
+          description: Whether the technology is currently active
+        Attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+    Path:
+      type: object
+      properties:
+        Domain:
+          type: string
+          description: Sub-domain or path scanned
+        Technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Technology'
+    BulkJobResponse:
+      type: object
+      description: Async job reference for large bulk batches
+      properties:
+        JobId:
+          type: string
+          description: Job identifier for polling status
+        Status:
+          type: string
+          enum:
+          - queued
+          - processing
+          - complete
+          - error
+    Attribute:
+      type: object
+      description: Additional attribute data for a technology
+      properties:
+        Field:
+          type: string
+        Value:
+          type: string
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Format: ''Authorization: API {key}'''
+externalDocs:
+  description: BuiltWith Change API Documentation
+  url: https://api.builtwith.com/change-api

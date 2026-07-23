@@ -1,12 +1,10 @@
 openapi: 3.0.3
 info:
-  title: BuiltWith Relationships API
-  description: >
-    Website interconnection data revealing domain relationships via shared IPs,
-    analytics identifiers, and other attributes. Supports up to 16 domains per
-    request and pagination with up to 500 relationships per page.
-    1 API credit per 500 relationships returned.
-  version: rv4
+  title: BuiltWith Change Bulk Processing Domain Relationships API
+  description: 'Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.
+
+    '
+  version: change1
   contact:
     name: BuiltWith Support
     url: https://builtwith.com/contact
@@ -14,37 +12,30 @@ info:
   license:
     name: Commercial
     url: https://builtwith.com/plans
-externalDocs:
-  description: BuiltWith Relationships API Documentation
-  url: https://api.builtwith.com/relationships-api
 servers:
-  - url: https://api.builtwith.com/rv4
-    description: BuiltWith Relationships API v4
-
+- url: https://api.builtwith.com/change1
+  description: BuiltWith Change API v1
 security:
-  - apiKeyQuery: []
-  - apiKeyHeader: []
-
+- apiKeyQuery: []
+- apiKeyHeader: []
 tags:
-  - name: Domain Relationships
-    description: Identify domain interconnections via shared identifiers
-
+- name: Domain Relationships
+  description: Identify domain interconnections via shared identifiers
 paths:
   /api.json:
     get:
       summary: Get domain relationships (JSON)
-      description: >
-        Returns relationships for one or more domains based on shared identifiers
-        such as analytics IDs, IP addresses, and other attributes. Paginate
-        using the next_skip value from the response.
+      description: 'Returns relationships for one or more domains based on shared identifiers such as analytics IDs, IP addresses, and other attributes. Paginate using the next_skip value from the response.
+
+        '
       operationId: getDomainRelationshipsJson
       tags:
-        - Domain Relationships
+      - Domain Relationships
       parameters:
-        - $ref: '#/components/parameters/KEY'
-        - $ref: '#/components/parameters/LOOKUP'
-        - $ref: '#/components/parameters/OFFSET'
-        - $ref: '#/components/parameters/IP'
+      - $ref: '#/components/parameters/KEY'
+      - $ref: '#/components/parameters/LOOKUP'
+      - $ref: '#/components/parameters/OFFSET'
+      - $ref: '#/components/parameters/IP'
       responses:
         '200':
           description: Domain relationship data
@@ -58,32 +49,31 @@ paths:
                 next_skip: 500
                 more_results: true
                 Relationships:
-                  - Domain: builtwith.com
-                    Identifiers:
-                      - Type: google-analytics
-                        Value: UA-12345678-1
-                        First: 1451606400000
-                        Last: 1748736000000
-                        Matches:
-                          - Domain: related-site.com
-                            First: 1451606400000
-                            Last: 1748736000000
-                            Overlap: true
+                - Domain: builtwith.com
+                  Identifiers:
+                  - Type: google-analytics
+                    Value: UA-12345678-1
+                    First: 1451606400000
+                    Last: 1748736000000
+                    Matches:
+                    - Domain: related-site.com
+                      First: 1451606400000
+                      Last: 1748736000000
+                      Overlap: true
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
-
   /api.xml:
     get:
       summary: Get domain relationships (XML)
       operationId: getDomainRelationshipsXml
       tags:
-        - Domain Relationships
+      - Domain Relationships
       parameters:
-        - $ref: '#/components/parameters/KEY'
-        - $ref: '#/components/parameters/LOOKUP'
-        - $ref: '#/components/parameters/OFFSET'
+      - $ref: '#/components/parameters/KEY'
+      - $ref: '#/components/parameters/LOOKUP'
+      - $ref: '#/components/parameters/OFFSET'
       responses:
         '200':
           description: Domain relationships in XML
@@ -91,16 +81,15 @@ paths:
             application/xml:
               schema:
                 type: object
-
   /api.csv:
     get:
       summary: Get domain relationships (CSV)
       operationId: getDomainRelationshipsCsv
       tags:
-        - Domain Relationships
+      - Domain Relationships
       parameters:
-        - $ref: '#/components/parameters/KEY'
-        - $ref: '#/components/parameters/LOOKUP'
+      - $ref: '#/components/parameters/KEY'
+      - $ref: '#/components/parameters/LOOKUP'
       responses:
         '200':
           description: Domain relationships in CSV
@@ -108,16 +97,15 @@ paths:
             text/csv:
               schema:
                 type: string
-
   /api.tsv:
     get:
       summary: Get domain relationships (TSV)
       operationId: getDomainRelationshipsTsv
       tags:
-        - Domain Relationships
+      - Domain Relationships
       parameters:
-        - $ref: '#/components/parameters/KEY'
-        - $ref: '#/components/parameters/LOOKUP'
+      - $ref: '#/components/parameters/KEY'
+      - $ref: '#/components/parameters/LOOKUP'
       responses:
         '200':
           description: Domain relationships in TSV
@@ -125,38 +113,8 @@ paths:
             text/tab-separated-values:
               schema:
                 type: string
-
 components:
-  securitySchemes:
-    apiKeyQuery:
-      type: apiKey
-      in: query
-      name: KEY
-    apiKeyHeader:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: "Format: 'Authorization: API {key}'"
-
   parameters:
-    KEY:
-      name: KEY
-      in: query
-      required: false
-      schema:
-        type: string
-        format: uuid
-        example: "00000000-0000-0000-0000-000000000000"
-
-    LOOKUP:
-      name: LOOKUP
-      in: query
-      description: Domain or comma-separated list of up to 16 domains
-      required: true
-      schema:
-        type: string
-        example: "builtwith.com"
-
     OFFSET:
       name: OFFSET
       in: query
@@ -165,7 +123,14 @@ components:
       schema:
         type: integer
         example: 500
-
+    LOOKUP:
+      name: LOOKUP
+      in: query
+      description: Domain or comma-separated list of up to 16 domains
+      required: true
+      schema:
+        type: string
+        example: builtwith.com
     IP:
       name: IP
       in: query
@@ -173,8 +138,16 @@ components:
       required: false
       schema:
         type: string
-        enum: ["yes"]
-
+        enum:
+        - 'yes'
+    KEY:
+      name: KEY
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: 00000000-0000-0000-0000-000000000000
   schemas:
     RelationshipsResponse:
       type: object
@@ -196,18 +169,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Relationship'
-
-    Relationship:
-      type: object
-      properties:
-        Domain:
-          type: string
-          description: The queried domain
-        Identifiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Identifier'
-
     Identifier:
       type: object
       properties:
@@ -231,7 +192,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RelationshipMatch'
-
+    Relationship:
+      type: object
+      properties:
+        Domain:
+          type: string
+          description: The queried domain
+        Identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Identifier'
     RelationshipMatch:
       type: object
       properties:
@@ -249,7 +219,6 @@ components:
         Overlap:
           type: boolean
           description: Whether the domains simultaneously used the identifier
-
     ErrorResponse:
       type: object
       properties:
@@ -262,17 +231,29 @@ components:
                 type: integer
               Message:
                 type: string
-
   responses:
-    BadRequest:
-      description: Bad request — invalid parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     Unauthorized:
       description: Unauthorized — invalid or missing API key
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Format: ''Authorization: API {key}'''
+externalDocs:
+  description: BuiltWith Change API Documentation
+  url: https://api.builtwith.com/change-api
