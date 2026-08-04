@@ -1,0 +1,210 @@
+openapi: 3.0.3
+info:
+  title: BuiltWith Tags API
+  description: >
+    Retrieve related domains associated with IPs, analytics identifiers,
+    and other website attributes. Supports up to 16 comma-separated attribute
+    values per request. Includes endpoints for listing available attribute types.
+  version: tag1
+  contact:
+    name: BuiltWith Support
+    url: https://builtwith.com/contact
+  termsOfService: https://builtwith.com/terms
+  license:
+    name: Commercial
+    url: https://builtwith.com/plans
+externalDocs:
+  description: BuiltWith Tags API Documentation
+  url: https://api.builtwith.com/tags-api
+servers:
+  - url: https://api.builtwith.com/tag1
+    description: BuiltWith Tags API v1
+
+security:
+  - apiKeyQuery: []
+  - apiKeyHeader: []
+
+tags:
+  - name: Tag Lookup
+    description: Lookup domains by IP or attribute identifier
+  - name: Reference
+    description: Reference data for attribute types
+
+paths:
+  /api.json:
+    get:
+      summary: Get domains by tag/attribute (JSON)
+      description: >
+        Returns domains associated with the given attribute (IP address,
+        publisher ID, etc.). Supports up to 16 comma-separated attribute values.
+        Use TYPES=true to retrieve the list of available attribute types.
+      operationId: getTagDomainsJson
+      tags:
+        - Tag Lookup
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/LOOKUP'
+        - $ref: '#/components/parameters/TYPES'
+      responses:
+        '200':
+          description: Domains matching the attribute or list of attribute types
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/TagResult'
+                  - $ref: '#/components/schemas/TypesResult'
+              example:
+                Identifiers:
+                  - Value: "IP-98.158.194.127"
+                    Matches:
+                      - Domain: example.com
+                        First: "2020-01-01"
+                        Last: "2026-06-01"
+                      - Domain: example2.com
+                        First: "2021-03-15"
+                        Last: "2025-12-01"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api.xml:
+    get:
+      summary: Get domains by tag/attribute (XML)
+      operationId: getTagDomainsXml
+      tags:
+        - Tag Lookup
+      parameters:
+        - $ref: '#/components/parameters/KEY'
+        - $ref: '#/components/parameters/LOOKUP'
+        - $ref: '#/components/parameters/TYPES'
+      responses:
+        '200':
+          description: Tag domains in XML
+          content:
+            application/xml:
+              schema:
+                type: object
+
+components:
+  securitySchemes:
+    apiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: "Format: 'Authorization: API {key}'"
+
+  parameters:
+    KEY:
+      name: KEY
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: "00000000-0000-0000-0000-000000000000"
+
+    LOOKUP:
+      name: LOOKUP
+      in: query
+      description: >
+        Attribute value(s) to query, prefix with type (e.g. IP-98.158.194.127
+        or CA-PUB-1894893914772263). Up to 16 comma-separated values.
+      required: false
+      schema:
+        type: string
+        example: "IP-98.158.194.127"
+
+    TYPES:
+      name: TYPES
+      in: query
+      description: Set to 'true' to return list of available attribute types
+      required: false
+      schema:
+        type: string
+        enum: ["true"]
+
+  schemas:
+    TagResult:
+      type: object
+      description: Results for tag/attribute lookup
+      properties:
+        Identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagIdentifier'
+
+    TagIdentifier:
+      type: object
+      properties:
+        Value:
+          type: string
+          description: The queried attribute value
+          example: "IP-98.158.194.127"
+        Matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/TagMatch'
+
+    TagMatch:
+      type: object
+      properties:
+        Domain:
+          type: string
+          description: Domain associated with the attribute
+        First:
+          type: string
+          format: date
+          description: First detection date (ISO 8601)
+        Last:
+          type: string
+          format: date
+          description: Last detection date (ISO 8601)
+
+    TypesResult:
+      type: object
+      description: Available attribute types
+      properties:
+        Types:
+          type: array
+          items:
+            type: object
+            properties:
+              Type:
+                type: string
+                description: Attribute type identifier
+              Description:
+                type: string
+                description: Human-readable description of the attribute type
+
+    ErrorResponse:
+      type: object
+      properties:
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: integer
+              Message:
+                type: string
+
+  responses:
+    BadRequest:
+      description: Bad request — invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

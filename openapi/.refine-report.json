@@ -1,0 +1,28 @@
+{
+  "provider": "builtwith",
+  "sources": [
+    "builtwith-bulk-processing-api-openapi.yml",
+    "builtwith-domain-lookup-api-openapi.yml",
+    "builtwith-domain-relationships-api-openapi.yml",
+    "builtwith-free-lookup-api-openapi.yml",
+    "builtwith-tag-lookup-api-openapi.yml",
+    "builtwith-technology-changes-api-openapi.yml",
+    "builtwith-technology-lists-api-openapi.yml",
+    "builtwith-technology-trends-api-openapi.yml"
+  ],
+  "outputs": [
+    "builtwith-bulk-processing-api-openapi.yml",
+    "builtwith-domain-lookup-api-openapi.yml",
+    "builtwith-domain-relationships-api-openapi.yml",
+    "builtwith-free-lookup-api-openapi.yml",
+    "builtwith-tag-lookup-api-openapi.yml",
+    "builtwith-technology-changes-api-openapi.yml",
+    "builtwith-technology-lists-api-openapi.yml",
+    "builtwith-technology-trends-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
