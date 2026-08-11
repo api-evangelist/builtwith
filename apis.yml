@@ -419,6 +419,13 @@ apis:
   - type: OpenAPI
     url: openapi/builtwith-technology-trends-api-openapi.yml
 common:
+  - type: IssueTracker
+    url: https://github.com/builtwith/mcp/issues
+  - type: Releases
+    url: https://github.com/builtwith/mcp/releases
+  - type: License
+    name: MIT
+    url: https://github.com/builtwith/mcp/blob/main/LICENSE
   - type: AgenticAccess
     url: agentic-access/builtwith-agentic-access.yml
   - type: VulnerabilityDisclosure
