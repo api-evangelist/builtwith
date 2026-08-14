@@ -18,7 +18,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/builtwith.png
 url: https://raw.githubusercontent.com/api-evangelist/builtwith/refs/heads/main/apis.yml
 created: 2026-06-13
-modified: 2026-06-13
+modified: 2026-08-14
 specificationVersion: '0.19'
 tags:
   - Technology Profiling
@@ -27,6 +27,12 @@ tags:
   - Technology Detection
   - Website Analysis
   - Market Research
+  - Technographics
+  - Sales Intelligence
+  - AI Agents
+  - Model Context Protocol
+  - Agentic Commerce
+  - Real-time Data
 apis:
 - name: BuiltWith Domain API
   description: >-
@@ -144,6 +150,8 @@ apis:
   properties:
   - type: Documentation
     url: https://api.builtwith.com/live-feed-api
+  - type: AsyncAPI
+    url: asyncapi/builtwith-live-feed-asyncapi.yml
   contact:
   - FN: BuiltWith Support
     url: https://builtwith.com/contact
@@ -309,7 +317,7 @@ apis:
     Model Context Protocol server integration enabling AI assistants to query BuiltWith technology detection
     data natively.
   humanURL: https://api.builtwith.com/mcp-api
-  baseURL: https://api.builtwith.com
+  baseURL: https://api.builtwith.com/mcp
   tags:
   - MCP
   - AI Integration
@@ -318,15 +326,21 @@ apis:
   - type: Documentation
     url: https://api.builtwith.com/mcp-api
   - type: GitHubRepository
-    url: https://github.com/builtwith/mcp
+    url: https://github.com/builtwith/builtwith-mcp
+  - type: MCPServer
+    url: mcp/builtwith-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/builtwith-tool-crosswalk.yml
   contact:
   - FN: BuiltWith Support
     url: https://builtwith.com/contact
 - name: BuiltWith Agent Payment API
   description: >-
     Autonomous credit management API enabling AI agents to manage and replenish API credits programmatically.
+    Charges an existing account's saved Stripe payment method against a separately scoped Agent Billing Key,
+    with a required Idempotency-Key on every purchase.
   humanURL: https://api.builtwith.com/agent-payment-api
-  baseURL: https://api.builtwith.com
+  baseURL: https://payments.builtwith.com
   tags:
   - AI Agents
   - Payments
@@ -335,6 +349,56 @@ apis:
   properties:
   - type: Documentation
     url: https://api.builtwith.com/agent-payment-api
+  - type: OpenAPI
+    url: openapi/builtwith-agent-stripe-topup-openapi.json
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  contact:
+  - FN: BuiltWith Support
+    url: https://builtwith.com/contact
+- name: BuiltWith REST API
+  description: >-
+    The provider-published OpenAPI 3.0.3 document covering the whole BuiltWith REST surface -
+    WhoAmI, Usage, Domain, Change, Lists, Relationships, Free, Company to URL, Tags,
+    Recommendations, Redirects, Keywords, Keyword Search, Trends, Product, Trust, Financial,
+    Social, Vector Search, Ask, agent device-code authorization and agent billing - served by
+    BuiltWith at /.well-known/openai.json.
+  humanURL: https://api.builtwith.com/
+  baseURL: https://api.builtwith.com
+  tags:
+  - REST
+  - Technology Detection
+  - Web Intelligence
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-rest-api-openapi.json
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  contact:
+  - FN: BuiltWith Support
+    url: https://builtwith.com/contact
+- name: BuiltWith x402 Pay-per-Call API
+  description: >-
+    Accountless pay-per-call access to BuiltWith intelligence over the x402 v2 payment
+    protocol on Base mainnet. Twelve fixed-price /agent/* routes answer 402 with a
+    PAYMENT-REQUIRED challenge, settle in USDC on retry with PAYMENT-SIGNATURE, and require no
+    API key, account or prepaid balance.
+  humanURL: https://api.builtwith.com/x402-api
+  baseURL: https://api.builtwith.com
+  tags:
+  - x402
+  - Agentic Commerce
+  - Pay Per Call
+  - AI Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-x402-pay-per-call-openapi.json
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+  - type: AgentSkill
+    url: skills/builtwith-pay-per-call-with-x402.md
   contact:
   - FN: BuiltWith Support
     url: https://builtwith.com/contact
@@ -420,12 +484,12 @@ apis:
     url: openapi/builtwith-technology-trends-api-openapi.yml
 common:
   - type: IssueTracker
-    url: https://github.com/builtwith/mcp/issues
+    url: https://github.com/builtwith/builtwith-mcp/issues
   - type: Releases
-    url: https://github.com/builtwith/mcp/releases
+    url: https://github.com/builtwith/builtwith-mcp/releases
   - type: License
     name: MIT
-    url: https://github.com/builtwith/mcp/blob/main/LICENSE
+    url: https://github.com/builtwith/builtwith-mcp/blob/main/LICENSE
   - type: AgenticAccess
     url: agentic-access/builtwith-agentic-access.yml
   - type: VulnerabilityDisclosure
@@ -438,8 +502,6 @@ common:
     url: https://builtwith.com/
   - type: Documentation
     url: https://api.builtwith.com/
-  - type: GitHubOrg
-    url: https://github.com/builtwith
   - type: LinkedIn
     url: https://www.linkedin.com/company/builtwith
   - type: Blog
@@ -458,6 +520,115 @@ common:
     url: rate-limits/builtwith-rate-limits.yml
   - type: FinOps
     url: finops/builtwith-finops.yml
+  - type: AgentCard
+    name: BuiltWith A2A Agent Card (conformant, A2A 0.3.0)
+    url: a2a/builtwith-a2a.yml
+  - type: MCPServer
+    name: BuiltWith hosted MCP server (48 tools, streamable HTTP)
+    url: mcp/builtwith-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/builtwith-tool-crosswalk.yml
+  - type: LLMsTxt
+    url: llms/builtwith-llms.txt
+  - type: WellKnown
+    url: well-known/builtwith-well-known.yml
+  - type: APICatalog
+    name: RFC 9727 api-catalog linkset
+    url: well-known/builtwith-api-catalog.json
+  - type: SecurityTxt
+    url: well-known/builtwith-security.txt
+  - type: Security
+    name: RFC 9116 security contact and PGP key
+    url: https://builtwith.com/.well-known/security.txt
+  - type: OAuthScopes
+    url: scopes/builtwith-scopes.yml
+  - type: Packages
+    url: packages/builtwith-packages.yml
+  - type: SDKs
+    name: First-party client libraries and CLI
+    url: packages/builtwith-packages.yml
+  - type: CLI
+    url: cli/builtwith-cli.yml
+  - type: Conventions
+    url: conventions/builtwith-conventions.yml
+  - type: Idempotency
+    name: Idempotency-Key on account credit purchases
+    url: conventions/builtwith-conventions.yml
+  - type: ErrorCatalog
+    name: BuiltWith API error-code registry
+    url: errors/builtwith-error-codes.yml
+  - type: ErrorCodes
+    url: errors/builtwith-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/builtwith-lifecycle.yml
+  - type: Conformance
+    url: conformance/builtwith-conformance.yml
+  - type: DataModel
+    url: data-model/builtwith-data-model.yml
+  - type: Components
+    url: components/builtwith-components.yml
+  - type: AgentSkill
+    name: BuiltWith agent skills
+    url: skills/_index.yml
+  - type: AsyncAPI
+    name: BuiltWith Live Feed API events
+    url: asyncapi/builtwith-live-feed-asyncapi.yml
+  - type: Vocabulary
+    url: vocabulary/builtwith-vocabulary.yml
+  - type: JSONSchema
+    name: Domain lookup schema
+    url: json-schema/builtwith-domain-schema.json
+  - type: JSONSchema
+    name: Technology change schema
+    url: json-schema/builtwith-change-schema.json
+  - type: JSONSchema
+    name: Technology lists schema
+    url: json-schema/builtwith-lists-schema.json
+  - type: JSONLDContext
+    url: json-ld/builtwith-context.jsonld
+  - type: SpectralRules
+    url: rules/builtwith-jsonschema-spectral-rules.yml
+  - type: Examples
+    name: Domain lookup example
+    url: examples/builtwith-domain-example.json
+  - type: Examples
+    name: Technology lists example
+    url: examples/builtwith-lists-example.json
+  - type: Examples
+    name: Technology trends example
+    url: examples/builtwith-trends-example.json
+  - type: Examples
+    name: Technology change example
+    url: examples/builtwith-change-example.json
+  - type: Overlay
+    name: API Evangelist overlay for the published REST OpenAPI
+    url: overlays/builtwith-rest-api-overlay.yaml
+  - type: Overlay
+    name: API Evangelist overlay for the x402 pay-per-call OpenAPI
+    url: overlays/builtwith-x402-pay-per-call-overlay.yaml
+  - type: DeveloperPortal
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Support
+    url: https://builtwith.com/contact
+  - type: SupportFAQs
+    url: https://builtwith.com/faq
+  - type: TermsOfService
+    url: https://builtwith.com/terms
+  - type: PrivacyPolicy
+    url: https://builtwith.com/privacy
+  - type: SignUp
+    url: https://builtwith.com/signup
+  - type: Login
+    url: https://builtwith.com/login
+  - type: GitHubOrganization
+    url: https://github.com/builtwith
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 45
+  pass: local-v1
