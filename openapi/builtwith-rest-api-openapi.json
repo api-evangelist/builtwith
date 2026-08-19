@@ -1,0 +1,1264 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "BuiltWith API (from llms.txt + samples)",
+    "version": "2026-05-08",
+    "description": "OpenAPI spec generated from https://api.builtwith.com/llms.txt and sample payloads under https://api.builtwith.com/samples/*.json (where available). Endpoints not covered by a sample file use a generic JSON schema."
+  },
+  "servers": [
+    { "url": "https://api.builtwith.com" }
+  ],
+  "security": [
+    { "ApiKeyQuery": [] }
+  ],
+  "tags": [
+    { "name": "Meta" },
+    { "name": "Domain" },
+    { "name": "Change" },
+    { "name": "Lists" },
+    { "name": "Relationships" },
+    { "name": "Free" },
+    { "name": "CompanyToUrl" },
+    { "name": "Tags" },
+    { "name": "Recommendations" },
+    { "name": "Redirects" },
+    { "name": "Keywords" },
+    { "name": "KeywordSearch" },
+    { "name": "Trends" },
+    { "name": "Product" },
+    { "name": "Trust" },
+    { "name": "Financial" },
+    { "name": "Social" },
+    { "name": "Vector" },
+    { "name": "Ask" },
+    { "name": "AgentAuth" },
+    { "name": "AgentPayments" },
+    { "name": "LiveFeed" }
+  ],
+  "paths": {
+    "/whoamiv1/api.json": {
+      "get": {
+        "operationId": "whoami_v1",
+        "tags": ["Meta"],
+        "summary": "WhoAmI",
+        "description": "Returns information about the API key/account.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+    "/usagev2/api.json": {
+      "get": {
+        "operationId": "usage_v2",
+        "tags": ["Meta"],
+        "summary": "Usage",
+        "description": "Returns usage information for the API key/account.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/agent-auth/start": {
+      "post": {
+        "operationId": "agent_auth_start",
+        "tags": ["AgentAuth"],
+        "summary": "Start agent device-code authorization",
+        "description": "Starts a device-code authorization flow for AI agents. No API key is required.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Device authorization started.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AgentAuthStartResponse" } } }
+          }
+        }
+      }
+    },
+    "/agent-auth/token": {
+      "post": {
+        "operationId": "agent_auth_token",
+        "tags": ["AgentAuth"],
+        "summary": "Poll agent device-code authorization",
+        "description": "Poll no faster than the interval returned by agent_auth_start. Denied and expired responses use HTTP 400 and include a JSON body.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AgentAuthTokenRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token issued or authorization still pending.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AgentAuthTokenResponse" } } }
+          },
+          "400": {
+            "description": "Access denied, expired token, or other authorization error.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AgentAuthTokenResponse" } } }
+          }
+        }
+      }
+    },
+
+    "/v22/api.json": {
+      "get": {
+        "operationId": "domain_lookup_v22",
+        "tags": ["Domain"],
+        "summary": "Domain API (v22) - lookup",
+        "description": "Technology + metadata for a domain. Sample schema inferred from /samples/domain_api_v22.json.",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" },
+          { "$ref": "#/components/parameters/nopii" },
+          { "$ref": "#/components/parameters/nometa" },
+          { "$ref": "#/components/parameters/noattr" },
+          { "$ref": "#/components/parameters/fdrange" },
+          { "$ref": "#/components/parameters/ldrange" },
+          { "$ref": "#/components/parameters/liveonly" },
+          { "$ref": "#/components/parameters/hidetext" },
+          { "$ref": "#/components/parameters/hidedl" },
+          { "$ref": "#/components/parameters/ip" },
+          { "$ref": "#/components/parameters/trust" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DomainApiV22Response" } } }
+          }
+        }
+      },
+      "post": {
+        "operationId": "domain_bulk_v22_legacy",
+        "tags": ["Domain"],
+        "summary": "Domain API (v22) - legacy bulk lookup (POST)",
+        "description": "Legacy POST form retained for compatibility. New high-volume lookups should use POST /v22/domain/bulk.",
+        "deprecated": true,
+        "parameters": [
+          { "$ref": "#/components/parameters/nopii" },
+          { "$ref": "#/components/parameters/nometa" },
+          { "$ref": "#/components/parameters/noattr" },
+          { "$ref": "#/components/parameters/fdrange" },
+          { "$ref": "#/components/parameters/ldrange" },
+          { "$ref": "#/components/parameters/liveonly" }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DomainBulkRequest" },
+              "examples": {
+                "bulk_lookup": {
+                  "value": {
+                    "lookups": ["example.com", "builtwith.com"],
+                    "options": {
+                      "nopii": true,
+                      "nometa": false,
+                      "noattr": false,
+                      "liveonly": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/DomainApiV22Response" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/v22/domain/bulk": {
+      "post": {
+        "operationId": "domain_bulk_submit_v22",
+        "tags": ["Domain"],
+        "summary": "Bulk Domain API - submit",
+        "description": "Submits a high-volume Domain API lookup job. Use WhoAmI account.max_batch_size.domain_bulk_submit for the current maximum.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DomainBulkRequest" },
+              "examples": {
+                "bulk_submit": {
+                  "value": {
+                    "lookups": ["example.com", "builtwith.com"],
+                    "options": {
+                      "noMeta": false,
+                      "noPii": true,
+                      "hideText": false,
+                      "hideDL": false,
+                      "liveOnly": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Small batch completed synchronously.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DomainApiV22Response" } } }
+          },
+          "202": {
+            "description": "Bulk job queued.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DomainBulkJobResponse" } } }
+          }
+        }
+      }
+    },
+    "/v22/domain/bulk/{job_id}": {
+      "get": {
+        "operationId": "domain_bulk_status_v22",
+        "tags": ["Domain"],
+        "summary": "Bulk Domain API - poll status",
+        "parameters": [
+          { "$ref": "#/components/parameters/job_id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bulk job status.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DomainBulkJobResponse" } } }
+          }
+        }
+      }
+    },
+    "/v22/domain/bulk/{job_id}/result": {
+      "get": {
+        "operationId": "domain_bulk_result_v22",
+        "tags": ["Domain"],
+        "summary": "Bulk Domain API - retrieve results",
+        "description": "Returns Domain API JSON results. Results are deleted after first successful access.",
+        "parameters": [
+          { "$ref": "#/components/parameters/job_id" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Domain API results.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DomainApiV22Response" } } }
+          }
+        }
+      }
+    },
+
+    "/change1/api.json": {
+      "get": {
+        "operationId": "change_v1",
+        "tags": ["Change"],
+        "summary": "Change API",
+        "description": "Technology additions and removals for one or more domains. SINCE accepts natural language dates such as last+month; default is 3 months.",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" },
+          { "$ref": "#/components/parameters/since" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/lists12/api.json": {
+      "get": {
+        "operationId": "lists_v12",
+        "tags": ["Lists"],
+        "summary": "Lists API",
+        "description": "Lists of sites using a technology. (Schema not provided by samples; generic JSON returned.)",
+        "parameters": [
+          { "$ref": "#/components/parameters/tech" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/rv4/api.json": {
+      "get": {
+        "operationId": "relationships_v4",
+        "tags": ["Relationships"],
+        "summary": "Relationships API",
+        "description": "Relationships between sites. (Schema not provided by samples; generic JSON returned.)",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/free1/api.json": {
+      "get": {
+        "operationId": "free_v1",
+        "tags": ["Free"],
+        "summary": "Free API",
+        "description": "Summary counts/updates for tech groups. Sample schema inferred from /samples/free_api_v1.json.",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FreeApiV1Response" } } }
+          }
+        }
+      }
+    },
+
+    "/ctu3/api.json": {
+      "get": {
+        "operationId": "company_to_url_v3",
+        "tags": ["CompanyToUrl"],
+        "summary": "Company to URL API",
+        "description": "Discover domains from company names. Sample schema inferred from /samples/ctu_api_v3.json.",
+        "parameters": [
+          { "$ref": "#/components/parameters/company" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CompanyToUrlItem" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/tag1/api.json": {
+      "get": {
+        "operationId": "tags_v1",
+        "tags": ["Tags"],
+        "summary": "Tags API",
+        "description": "Domains related to IPs and site attributes. (Schema not provided by samples; generic JSON returned.)",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/rec1/api.json": {
+      "get": {
+        "operationId": "recommendations_v1",
+        "tags": ["Recommendations"],
+        "summary": "Recommendations API",
+        "description": "Related recommendations for a domain. Sample schema inferred from /samples/recommendations_api_v1.json.",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/RecommendationsApiV1Item" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/redirect1/api.json": {
+      "get": {
+        "operationId": "redirects_v1",
+        "tags": ["Redirects"],
+        "summary": "Redirects API",
+        "description": "Redirect history. (Schema not provided by samples; generic JSON returned.)",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/kw2/api.json": {
+      "get": {
+        "operationId": "keywords_v2",
+        "tags": ["Keywords"],
+        "summary": "Keywords API",
+        "description": "Keywords for a domain. (Sample file name not available; generic JSON returned.)",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/kws1/api.json": {
+      "get": {
+        "operationId": "keyword_search_v1",
+        "tags": ["KeywordSearch"],
+        "summary": "Keyword Search API",
+        "description": "Finds websites containing a keyword. LIMIT defaults to 100 and supports 16-1000. Use NextOffset from the previous page as OFFSET.",
+        "parameters": [
+          { "$ref": "#/components/parameters/keyword" },
+          { "$ref": "#/components/parameters/limit" },
+          { "$ref": "#/components/parameters/offset" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/KeywordSearchApiV1Response" } } }
+          }
+        }
+      }
+    },
+
+    "/trends/v6/api.json": {
+      "get": {
+        "operationId": "trends_v6",
+        "tags": ["Trends"],
+        "summary": "Trends API",
+        "description": "Technology trends for a given technology name. (Sample file name not available; generic JSON returned.)",
+        "parameters": [
+          { "$ref": "#/components/parameters/tech" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/productv1/api.json": {
+      "get": {
+        "operationId": "product_v1",
+        "tags": ["Product"],
+        "summary": "Product API",
+        "description": "Find websites selling products. (Schema not provided by samples; generic JSON returned.)",
+        "parameters": [
+          { "$ref": "#/components/parameters/query" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/trustv1/api.json": {
+      "get": {
+        "operationId": "trust_v1",
+        "tags": ["Trust"],
+        "summary": "Trust API",
+        "description": "Trust/fraud signals for a domain. Sample schema inferred from /samples/trust_api_v1.json.",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TrustApiV1Response" } } }
+          }
+        }
+      }
+    },
+
+    "/financial1/api.json": {
+      "get": {
+        "operationId": "financial_v1",
+        "tags": ["Financial"],
+        "summary": "Financial API",
+        "description": "Financial API JSON lookup for financial data by domain.",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/social1/api.json": {
+      "get": {
+        "operationId": "social_v1",
+        "tags": ["Social"],
+        "summary": "Social API",
+        "description": "Social API JSON lookup for domains related to social profiles.",
+        "parameters": [
+          { "$ref": "#/components/parameters/lookup" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+
+    "/vector/v1/api.json": {
+      "get": {
+        "operationId": "vector_search_v1",
+        "tags": ["Vector"],
+        "summary": "Vector Search API",
+        "description": "Semantic search across technologies and categories. Uses 1 API credit per search.",
+        "parameters": [
+          { "$ref": "#/components/parameters/query" },
+          { "$ref": "#/components/parameters/vector_limit" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/VectorSearchApiV1Response" } } }
+          }
+        }
+      }
+    },
+
+    "/ask1/api.json": {
+      "get": {
+        "operationId": "ask_v1",
+        "tags": ["Ask"],
+        "summary": "Ask API",
+        "description": "Natural language website list queries. MCP OpenAI/ChatGPT requests are served as preview results and do not send COMMIT=true.",
+        "parameters": [
+          { "$ref": "#/components/parameters/query" },
+          { "$ref": "#/components/parameters/commit" },
+          { "$ref": "#/components/parameters/nextOffset" },
+          { "$ref": "#/components/parameters/meta" }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AskApiV1Response" } } }
+          }
+        }
+      }
+    },
+
+    "/v1/billing/api-discovery": {
+      "get": {
+        "operationId": "agent_payment_api_discovery",
+        "tags": ["AgentPayments"],
+        "summary": "Agent Payment API discovery",
+        "servers": [{ "url": "https://payments.builtwith.com" }],
+        "security": [
+          { "ApiKeyQuery": [] },
+          { "BearerAuth": [] }
+        ],
+        "responses": {
+          "200": {
+            "description": "Available API credits.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+    "/v1/billing/api-configuration": {
+      "get": {
+        "operationId": "agent_payment_api_configuration",
+        "tags": ["AgentPayments"],
+        "summary": "Agent Payment API configuration",
+        "servers": [{ "url": "https://payments.builtwith.com" }],
+        "security": [
+          { "ApiKeyQuery": [] },
+          { "BearerAuth": [] }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spending limits and monthly purchase status.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    },
+    "/v1/billing/api-purchase": {
+      "post": {
+        "operationId": "agent_payment_api_purchase",
+        "tags": ["AgentPayments"],
+        "summary": "Agent Payment API purchase",
+        "description": "Purchases API credits. Minimum purchase is 2000 credits.",
+        "servers": [{ "url": "https://payments.builtwith.com" }],
+        "security": [
+          { "ApiKeyQuery": [] },
+          { "BearerAuth": [] }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AgentPaymentPurchaseRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Purchase response.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyJson" } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyQuery": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "KEY",
+        "description": "BuiltWith API key (KEY)."
+      },
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "BuiltWith API key or temporary bw- agent token in the Authorization header."
+      }
+    },
+    "parameters": {
+      "lookup": {
+        "name": "LOOKUP",
+        "in": "query",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Primary lookup value, typically a root domain (e.g. example.com)."
+      },
+      "tech": {
+        "name": "TECH",
+        "in": "query",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Technology name (e.g. Shopify, WordPress)."
+      },
+      "company": {
+        "name": "COMPANY",
+        "in": "query",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Company name to discover domains."
+      },
+      "query": {
+        "name": "QUERY",
+        "in": "query",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Search query."
+      },
+      "commit": {
+        "name": "COMMIT",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": false },
+        "description": "For Ask API, set true to request a committed/full report. OpenAI MCP requests ignore this and stay in preview mode."
+      },
+      "nextOffset": {
+        "name": "NEXTOFFSET",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Pagination offset from the previous response's NextOffset."
+      },
+      "meta": {
+        "name": "META",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": false },
+        "description": "Set true to include metadata in Ask API results."
+      },
+      "keyword": {
+        "name": "KEYWORD",
+        "in": "query",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Keyword to search for."
+      },
+      "since": {
+        "name": "SINCE",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string", "default": "3 months" },
+        "description": "Natural language date range, such as last+month."
+      },
+      "job_id": {
+        "name": "job_id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Bulk Domain API job identifier."
+      },
+      "limit": {
+        "name": "LIMIT",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "integer", "minimum": 16, "maximum": 1000, "default": 100 },
+        "description": "Keyword Search result limit."
+      },
+      "offset": {
+        "name": "OFFSET",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Opaque pagination offset from the previous response's NextOffset."
+      },
+      "vector_limit": {
+        "name": "LIMIT",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "integer", "minimum": 1, "maximum": 100, "default": 10 },
+        "description": "Vector Search result limit."
+      },
+      "nopii": {
+        "name": "NOPII",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": false },
+        "description": "Domain API option."
+      },
+      "nometa": {
+        "name": "NOMETA",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": false },
+        "description": "Domain API option."
+      },
+      "noattr": {
+        "name": "NOATTR",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": false },
+        "description": "Domain API option."
+      },
+      "fdrange": {
+        "name": "FDRANGE",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Domain API option. Exact format not specified in llms.txt."
+      },
+      "ldrange": {
+        "name": "LDRANGE",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Domain API option. Exact format not specified in llms.txt."
+      },
+      "liveonly": {
+        "name": "LIVEONLY",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": false },
+        "description": "Domain API option."
+      },
+      "hidetext": {
+        "name": "HIDETEXT",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": false },
+        "description": "Domain API option."
+      },
+      "hidedl": {
+        "name": "HIDEDL",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": false },
+        "description": "Domain API option."
+      },
+      "ip": {
+        "name": "IP",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": false },
+        "description": "Domain API option."
+      },
+      "trust": {
+        "name": "TRUST",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean", "default": false },
+        "description": "Domain API option."
+      }
+    },
+    "schemas": {
+      "AnyJson": {
+        "description": "A generic JSON payload.",
+        "oneOf": [
+          { "type": "object", "additionalProperties": true },
+          { "type": "array", "items": {} },
+          { "type": "string" },
+          { "type": "number" },
+          { "type": "boolean" },
+          { "type": "null" }
+        ]
+      },
+
+      "DomainApiV22Response": {
+        "type": "object",
+        "required": ["Results"],
+        "properties": {
+          "Results": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/DomainApiV22ResultsItem" }
+          }
+        },
+        "additionalProperties": true
+      },
+      "DomainApiV22ResultsItem": {
+        "type": "object",
+        "required": ["Result"],
+        "properties": {
+          "Result": { "$ref": "#/components/schemas/DomainApiV22Result" }
+        },
+        "additionalProperties": true
+      },
+      "DomainApiV22Result": {
+        "type": "object",
+        "properties": {
+          "SpendHistory": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/SpendPoint" }
+          },
+          "IsDB": {
+            "description": "String boolean in sample payloads (e.g. \"True\").",
+            "type": "string"
+          },
+          "Spend": { "type": "integer", "format": "int64" },
+          "Paths": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/DomainPath" }
+          }
+        },
+        "additionalProperties": true
+      },
+      "SpendPoint": {
+        "type": "object",
+        "required": ["D", "S"],
+        "properties": {
+          "D": {
+            "description": "Epoch milliseconds.",
+            "type": "integer",
+            "format": "int64"
+          },
+          "S": { "type": "integer", "format": "int64" }
+        },
+        "additionalProperties": false
+      },
+      "DomainPath": {
+        "type": "object",
+        "properties": {
+          "Technologies": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/TechnologyDetection" }
+          },
+          "FirstIndexed": { "type": "integer", "format": "int64", "description": "Epoch milliseconds." },
+          "LastIndexed": { "type": "integer", "format": "int64", "description": "Epoch milliseconds." },
+          "Domain": { "type": "string" },
+          "Url": { "type": "string" },
+          "SubDomain": { "type": "string" }
+        },
+        "additionalProperties": true
+      },
+      "TechnologyDetection": {
+        "type": "object",
+        "properties": {
+          "Name": { "type": "string" },
+          "Description": { "type": "string" },
+          "Link": { "type": "string" },
+          "Parent": { "type": "string" },
+          "Tag": { "type": "string" },
+          "FirstDetected": { "type": "integer", "format": "int64", "description": "Epoch milliseconds." },
+          "LastDetected": { "type": "integer", "format": "int64", "description": "Epoch milliseconds." },
+          "IsPremium": {
+            "description": "String boolean in sample payloads (e.g. \"No\").",
+            "type": "string"
+          },
+          "Categories": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": true
+      },
+
+      "FreeApiV1Response": {
+        "type": "object",
+        "required": ["domain", "first", "last", "groups"],
+        "properties": {
+          "domain": { "type": "string" },
+          "first": { "type": "integer", "format": "int64", "description": "Epoch milliseconds." },
+          "last": { "type": "integer", "format": "int64", "description": "Epoch milliseconds." },
+          "groups": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/FreeGroupSummary" }
+          }
+        },
+        "additionalProperties": true
+      },
+      "FreeGroupSummary": {
+        "type": "object",
+        "required": ["name", "live", "dead", "latest", "oldest", "categories"],
+        "properties": {
+          "name": { "type": "string" },
+          "live": { "type": "integer", "format": "int64" },
+          "dead": { "type": "integer", "format": "int64" },
+          "latest": { "type": "integer", "format": "int64", "description": "Epoch milliseconds." },
+          "oldest": { "type": "integer", "format": "int64", "description": "Epoch milliseconds." },
+          "categories": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/FreeCategorySummary" }
+          }
+        },
+        "additionalProperties": true
+      },
+      "FreeCategorySummary": {
+        "type": "object",
+        "required": ["live", "dead", "latest", "oldest", "name"],
+        "properties": {
+          "live": { "type": "integer", "format": "int64" },
+          "dead": { "type": "integer", "format": "int64" },
+          "latest": { "type": "integer", "format": "int64", "description": "Epoch milliseconds." },
+          "oldest": { "type": "integer", "format": "int64", "description": "Epoch milliseconds." },
+          "name": { "type": "string" }
+        },
+        "additionalProperties": true
+      },
+
+      "CompanyToUrlItem": {
+        "type": "object",
+        "required": ["Domain", "CompanyName", "Spend", "PageRank", "BuiltWithRank", "Parked", "Country", "State", "Postcode", "City", "Socials"],
+        "properties": {
+          "Domain": { "type": "string" },
+          "CompanyName": { "type": "string" },
+          "Spend": { "type": "integer", "format": "int64" },
+          "PageRank": { "type": "integer", "format": "int64" },
+          "BuiltWithRank": { "type": "integer", "format": "int64" },
+          "Parked": { "type": "boolean" },
+          "Country": { "type": "string" },
+          "State": { "type": "string" },
+          "Postcode": { "type": "string" },
+          "City": { "type": "string" },
+          "Socials": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": true
+      },
+
+      "RecommendationsApiV1Item": {
+        "type": "object",
+        "required": ["Domain", "Compiled", "Recommendations"],
+        "properties": {
+          "Domain": { "type": "string" },
+          "Compiled": {
+            "type": "string",
+            "description": "Date wrapper string in sample payload, e.g. \"/Date(1749427200000)/\"."
+          },
+          "Recommendations": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/RecommendationItem" }
+          }
+        },
+        "additionalProperties": true
+      },
+      "RecommendationItem": {
+        "type": "object",
+        "required": ["link", "name", "tag", "categories", "stars", "match"],
+        "properties": {
+          "link": { "type": "string" },
+          "name": { "type": "string" },
+          "tag": { "type": "string" },
+          "categories": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "stars": { "type": "integer", "format": "int32" },
+          "match": { "type": "number", "format": "float" }
+        },
+        "additionalProperties": true
+      },
+
+      "TrustApiV1Response": {
+        "type": "object",
+        "required": ["Domain", "DBRecord", "LiveRecord", "Status"],
+        "properties": {
+          "Domain": { "type": "string" },
+          "DBRecord": { "$ref": "#/components/schemas/TrustDbRecord" },
+          "LiveRecord": {
+            "description": "Null in sample payload.",
+            "nullable": true,
+            "oneOf": [
+              { "type": "null" },
+              { "type": "object", "additionalProperties": true }
+            ]
+          },
+          "Status": { "type": "integer", "format": "int32" }
+        },
+        "additionalProperties": true
+      },
+      "TrustDbRecord": {
+        "type": "object",
+        "required": ["EarliestRecord", "LatestUpdate", "PremiumTechs", "LiveTechs", "AffiliateLinks", "PaymentOptions", "Ecommerce", "Parked", "Spend", "Established", "DBIndexed"],
+        "properties": {
+          "EarliestRecord": { "type": "integer", "format": "int64" },
+          "LatestUpdate": { "type": "integer", "format": "int64" },
+          "PremiumTechs": { "type": "integer", "format": "int32" },
+          "LiveTechs": { "type": "boolean" },
+          "AffiliateLinks": { "type": "boolean" },
+          "PaymentOptions": { "type": "boolean" },
+          "Ecommerce": { "type": "boolean" },
+          "Parked": { "type": "boolean" },
+          "Spend": { "type": "integer", "format": "int64" },
+          "Established": { "type": "boolean" },
+          "DBIndexed": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      },
+
+      "AgentAuthStartResponse": {
+        "type": "object",
+        "required": ["device_code", "verification_uri", "expires_in", "interval"],
+        "properties": {
+          "device_code": { "type": "string" },
+          "verification_uri": { "type": "string", "format": "uri" },
+          "expires_in": { "type": "integer", "format": "int32" },
+          "interval": { "type": "integer", "format": "int32" }
+        },
+        "additionalProperties": true
+      },
+      "AgentAuthTokenRequest": {
+        "type": "object",
+        "required": ["device_code"],
+        "properties": {
+          "device_code": { "type": "string" }
+        },
+        "additionalProperties": false
+      },
+      "AgentAuthTokenResponse": {
+        "type": "object",
+        "properties": {
+          "access_token": { "type": "string", "description": "Temporary bw- prefixed API token when authorization succeeds." },
+          "token_type": { "type": "string", "example": "bearer" },
+          "expires_in": { "type": "integer", "format": "int32" },
+          "error": {
+            "type": "string",
+            "enum": ["authorization_pending", "access_denied", "expired_token"]
+          }
+        },
+        "additionalProperties": true
+      },
+      "AgentPaymentPurchaseRequest": {
+        "type": "object",
+        "required": ["credits"],
+        "properties": {
+          "credits": { "type": "integer", "minimum": 2000 }
+        },
+        "additionalProperties": false
+      },
+
+      "AskApiV1Response": {
+        "type": "object",
+        "properties": {
+          "Results": {
+            "type": "array",
+            "items": { "type": "object", "additionalProperties": true }
+          },
+          "NextOffset": { "type": "string" }
+        },
+        "additionalProperties": true
+      },
+
+      "KeywordSearchApiV1Response": {
+        "type": "object",
+        "properties": {
+          "Keyword": { "type": "string" },
+          "Domains": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "NextOffset": { "type": "string" }
+        },
+        "additionalProperties": true
+      },
+      "VectorSearchApiV1Response": {
+        "type": "object",
+        "properties": {
+          "Query": { "type": "string" },
+          "Results": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/VectorSearchResult" }
+          },
+          "Errors": {
+            "type": "array",
+            "items": {}
+          }
+        },
+        "additionalProperties": true
+      },
+      "VectorSearchResult": {
+        "type": "object",
+        "properties": {
+          "Type": { "type": "string" },
+          "Name": { "type": "string" },
+          "Tag": { "type": "string" },
+          "Score": { "type": "number", "format": "float" },
+          "Categories": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": true
+      },
+      "DomainBulkJobResponse": {
+        "type": "object",
+        "properties": {
+          "job_id": { "type": "string" },
+          "status": { "type": "string" },
+          "created_utc": { "type": "string", "format": "date-time" },
+          "completed_utc": { "type": "string", "format": "date-time" },
+          "result_url": { "type": "string" },
+          "count": { "type": "integer", "format": "int32" },
+          "sync_max": { "type": "integer", "format": "int32" }
+        },
+        "additionalProperties": true
+      },
+
+      "DomainBulkRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["lookups"],
+        "properties": {
+          "lookups": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "description": "List of root domains to look up."
+          },
+          "options": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Optional flags/options.",
+            "properties": {
+              "noMeta": { "type": "boolean" },
+              "noPii": { "type": "boolean" },
+              "hideText": { "type": "boolean" },
+              "hideDL": { "type": "boolean" },
+              "liveOnly": { "type": "boolean" },
+              "noattr": { "type": "boolean" },
+              "fdrange": { "type": "string" },
+              "ldrange": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Source: BuiltWith llms.txt",
+    "url": "https://api.builtwith.com/llms.txt"
+  },
+  "x-mcp": {
+    "endpoint": "https://api.builtwith.com/mcp",
+    "server": "builtwith",
+    "version": "1.3.0",
+    "transport": "streamable-http",
+    "tools": [
+      "domain-lookup",
+      "domain-api",
+      "domain-api-json",
+      "change-api",
+      "relationships-api",
+      "free-api",
+      "company-to-url",
+      "tags-api",
+      "recommendations-api",
+      "redirects-api",
+      "keywords-api",
+      "keywords-search-api",
+      "trends-api",
+      "product-api",
+      "trust-api",
+      "financial-api",
+      "social-api",
+      "payment-balance",
+      "payment-config",
+      "payment-purchase",
+      "vector-api",
+      "ask-api",
+      "ask-api-json"
+    ],
+    "resources": [
+      "ui://widget/domain-technologies.html",
+      "ui://widget/ask-sites.html"
+    ],
+    "prompts": [
+      "analyze-tech-stack",
+      "find-related-websites",
+      "get-technology-recommendations",
+      "research-company",
+      "check-domain-trust",
+      "discover-technologies-by-concept"
+    ]
+  },
+  "x-live-feed-websocket": {
+    "tag": "LiveFeed",
+    "servers": [{ "url": "wss://sync.builtwith.com" }],
+    "connection_endpoints": [
+      "wss://sync.builtwith.com/wss/new?KEY=YOUR_KEY",
+      "wss://sync.builtwith.com/wss/channel/{TECH}?KEY=YOUR_KEY"
+    ],
+    "commands": [
+      { "action": "subscribe", "payload": { "action": "subscribe", "channel": "Shopify" } },
+      { "action": "unsubscribe", "payload": { "action": "unsubscribe", "channel": "Shopify" } },
+      { "action": "list_subscriptions", "payload": { "action": "list_subscriptions" } }
+    ]
+  }
+}

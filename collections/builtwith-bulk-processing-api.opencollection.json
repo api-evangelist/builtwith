@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BuiltWith Change Bulk Processing API",
+    "version": "change1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "KEY",
+      "value": "{{KEY}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bulk Processing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bulk domain technology lookup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.builtwith.com/change1/domain/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a list of domains for batch processing. Small batches return synchronously; large batches return a job ID for polling.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

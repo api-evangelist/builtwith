@@ -1,36 +1,132 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/builtwith-change-openapi.yml, openapi/builtwith-domain-openapi.yml, openapi/builtwith-free-openapi.yml,
-  openapi/builtwith-lists-openapi.yml, openapi/builtwith-relationships-openapi.yml, openapi/builtwith-tags-openapi.yml,
-  openapi/builtwith-trends-openapi.yml
+generated: '2026-08-14'
+method: searched
+docs: https://api.builtwith.com/domain-api
+source: >-
+  https://api.builtwith.com/domain-api, https://api.builtwith.com/llms.txt,
+  https://api.builtwith.com/.well-known/oauth-authorization-server,
+  https://api.builtwith.com/.well-known/oauth-protected-resource,
+  https://builtwith.com/.well-known/agent-card.json,
+  openapi/builtwith-rest-api-openapi.json, openapi/builtwith-agent-stripe-topup-openapi.json,
+  openapi/builtwith-domain-lookup-api-openapi.yml and the six sibling refined specs
 summary:
-  types:
-  - apiKey
-  api_key_in:
-  - header
-  - query
+  types: [apiKey, http, oauth2]
+  api_key_in: [header, query]
+  oauth2_flows: [authorizationCode]
+  pkce: S256
+  dynamic_client_registration: true
+  preferred: 'Authorization: API {key}'
+  https_only: true
 schemes:
-- name: apiKeyQuery
-  type: apiKey
-  in: query
-  parameter: KEY
-  sources:
-  - openapi/builtwith-change-openapi.yml
-  - openapi/builtwith-domain-openapi.yml
-  - openapi/builtwith-free-openapi.yml
-  - openapi/builtwith-lists-openapi.yml
-  - openapi/builtwith-relationships-openapi.yml
-  - openapi/builtwith-tags-openapi.yml
-  - openapi/builtwith-trends-openapi.yml
 - name: apiKeyHeader
   type: apiKey
   in: header
   parameter: Authorization
-  description: 'Format: ''Authorization: API {key}'''
+  format: 'Authorization: API {guid}'
+  preferred: true
+  applies_to: all REST intelligence endpoints
   sources:
-  - openapi/builtwith-change-openapi.yml
-  - openapi/builtwith-domain-openapi.yml
-  - openapi/builtwith-lists-openapi.yml
-  - openapi/builtwith-relationships-openapi.yml
-  - openapi/builtwith-tags-openapi.yml
-  - openapi/builtwith-trends-openapi.yml
+  - https://api.builtwith.com/domain-api
+  - openapi/builtwith-rest-api-openapi.json
+  - openapi/builtwith-bulk-processing-api-openapi.yml
+  - openapi/builtwith-domain-lookup-api-openapi.yml
+  - openapi/builtwith-domain-relationships-api-openapi.yml
+  - openapi/builtwith-free-lookup-api-openapi.yml
+  - openapi/builtwith-tag-lookup-api-openapi.yml
+  - openapi/builtwith-technology-changes-api-openapi.yml
+  - openapi/builtwith-technology-lists-api-openapi.yml
+  - openapi/builtwith-technology-trends-api-openapi.yml
+- name: apiKeyQuery
+  type: apiKey
+  in: query
+  parameter: KEY
+  format: GUID (UUID v4), or a bw- prefixed device token
+  applies_to: all REST intelligence endpoints and the WebSocket Live Feed
+  note: 'Retained for compatibility. Deprecated on the Stripe credit top-up service only.'
+  sources:
+  - https://api.builtwith.com/domain-api
+  - openapi/builtwith-rest-api-openapi.json
+  - openapi/builtwith-bulk-processing-api-openapi.yml
+  - openapi/builtwith-domain-lookup-api-openapi.yml
+  - openapi/builtwith-domain-relationships-api-openapi.yml
+  - openapi/builtwith-free-lookup-api-openapi.yml
+  - openapi/builtwith-tag-lookup-api-openapi.yml
+  - openapi/builtwith-technology-changes-api-openapi.yml
+  - openapi/builtwith-technology-lists-api-openapi.yml
+  - openapi/builtwith-technology-trends-api-openapi.yml
+- name: mcpBearer
+  type: http
+  scheme: bearer
+  format: 'Authorization: Bearer {builtwith-api-key}'
+  applies_to: https://api.builtwith.com/mcp (hosted MCP server) and the local stdio server
+  note: >-
+    Bring-your-own BuiltWith API key. tools/list and initialize answer anonymously; tool
+    invocation requires the bearer key or an x402 creditKey.
+  sources:
+  - https://builtwith.com/.well-known/mcp.json
+  - https://builtwith.com/.well-known/agent-card.json
+- name: agentBillingKey
+  type: http
+  scheme: bearer
+  format: 'Authorization: Bearer {agent-billing-key}'
+  applies_to: https://payments.builtwith.com/v1/billing/* and the https://api.builtwith.com/mppx/* aliases
+  note: >-
+    Separately scoped credential obtained from
+    https://payments.builtwith.com/agent-payment-api-config. General API keys and temporary
+    bw- tokens cannot purchase credits.
+  sources:
+  - openapi/builtwith-agent-stripe-topup-openapi.json
+  - openapi/builtwith-rest-api-openapi.json
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.builtwith.com/authorize
+    tokenUrl: https://api.builtwith.com/token
+    registrationUrl: https://api.builtwith.com/oauth/register
+    code_challenge_methods: [S256]
+    token_endpoint_auth_methods: [none]
+    scopes: [api.read, api.write]
+  discovery:
+  - https://api.builtwith.com/.well-known/oauth-authorization-server
+  - https://api.builtwith.com/.well-known/oauth-protected-resource
+  note: >-
+    Not declared in any OpenAPI - published only as RFC 8414 / RFC 9728 discovery documents,
+    which is the shape an MCP client negotiates. Detail in scopes/builtwith-scopes.yml.
+  sources:
+  - https://api.builtwith.com/.well-known/oauth-authorization-server
+device_code_authorization:
+  purpose: Lets an agent obtain a temporary token without asking a human to paste an API key.
+  start: POST https://api.builtwith.com/agent-auth/start
+  verification_uri_template: https://api.builtwith.com/device-auth?code={device_code}
+  poll: POST https://api.builtwith.com/agent-auth/token
+  poll_body: '{"device_code":"<device_code>"}'
+  default_interval_seconds: 5
+  code_expires_in_seconds: 900
+  token_prefix: bw-
+  token_type: bearer
+  token_expires_in_seconds: 86400
+  pending_responses: [authorization_pending, access_denied, expired_token]
+  error_status: 400
+  usage: 'Pass the returned token as KEY=bw-... exactly like a permanent key.'
+  operations:
+  - openapi/builtwith-rest-api-openapi.json#agent_auth_start
+  - openapi/builtwith-rest-api-openapi.json#agent_auth_token
+  source: https://api.builtwith.com/llms.txt
+payment_credentials:
+- name: creditKey
+  protocol: x402 v2
+  description: Reusable, non-expiring prepaid lookup-unit key bought with Base USDC; held in a separate x402 ledger, not a BuiltWith account.
+  bound_to: the payer wallet that created it
+  discovery: https://api.builtwith.com/.well-known/x402
+- name: passToken
+  protocol: x402 v2
+  description: 30-day Basic or Pro List pass token required for x402 List and Keyword Search tools.
+introspection:
+  whoami: GET https://api.builtwith.com/whoamiv1/api.json
+  usage: GET https://api.builtwith.com/usagev2/api.json
+  note: Both are free (no credits) and let an agent discover its own plan, limits, credit costs and privacy flags before acting.
+key_handling:
+  rotation: via the account dashboard
+  guidance:
+  - HTTPS is required on every endpoint.
+  - Never expose the API key in client-side code.

@@ -1,0 +1,363 @@
+{
+  "item": [
+    {
+      "id": "c8728706-3d18-4731-9733-9991fb7c4d44",
+      "name": "Technology Trends",
+      "description": {
+        "content": "Technology adoption trends and market share data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b2706d3c-8996-4669-9949-cf7339879b58",
+          "name": "Get technology trend data (JSON)",
+          "request": {
+            "name": "Get technology trend data (JSON)",
+            "description": {
+              "content": "Returns trend data for a web technology including adoption metrics across top 10K, 100K, 1M, and full internet segments. Optionally retrieve historical data for a specific date.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TECH",
+                  "value": "<string>",
+                  "description": "(Required) Technology name with spaces replaced by dashes (e.g. Google-Analytics)"
+                },
+                {
+                  "disabled": false,
+                  "key": "DATE",
+                  "value": "<date>",
+                  "description": "ISO 8601 date for historical trend data retrieval"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3c2091b8-71be-4a44-9df6-281467a3daf8",
+              "name": "Technology trend data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "DATE",
+                      "value": "2026-01-20"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Trends\": {\n    \"Tech\": {\n      \"Name\": \"Shopify\",\n      \"Description\": \"Ecommerce platform for online stores\",\n      \"Link\": \"https://www.shopify.com/\",\n      \"Tag\": \"ecommerce\",\n      \"Categories\": [\n        \"Ecommerce\",\n        \"Shopping Cart\"\n      ],\n      \"Coverage\": {\n        \"TenK\": 1250,\n        \"HundredK\": 8500,\n        \"Mil\": 45000,\n        \"Internet\": 5000000\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "179862ed-c999-45e4-8573-619ee9a77509",
+              "name": "Bad request — invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "DATE",
+                      "value": "2026-01-20"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 6674,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 7275,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "667e2cab-491c-4e28-84c0-e1b3bf24afbf",
+              "name": "Unauthorized — invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "DATE",
+                      "value": "2026-01-20"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 3874,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 9240,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e8f495ef-4a53-457a-a6f8-32c413a22d8b",
+          "name": "Get technology trend data (XML)",
+          "request": {
+            "name": "Get technology trend data (XML)",
+            "description": {
+              "content": "Returns trend data for a web technology in XML format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.xml"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TECH",
+                  "value": "<string>",
+                  "description": "(Required) Technology name with spaces replaced by dashes (e.g. Google-Analytics)"
+                },
+                {
+                  "disabled": false,
+                  "key": "DATE",
+                  "value": "<date>",
+                  "description": "ISO 8601 date for historical trend data retrieval"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dd76cc1b-fb62-4183-95f9-7d6f18027606",
+              "name": "Technology trend data in XML",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.xml"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "DATE",
+                      "value": "2026-01-20"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.builtwith.com/change1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "80cae4e1-3144-4537-95ac-6e2c117ae250",
+    "name": "BuiltWith Change Bulk Processing Technology Trends API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.\n\n\nContact Support:\n Name: BuiltWith Support",
+      "type": "text/plain"
+    }
+  }
+}

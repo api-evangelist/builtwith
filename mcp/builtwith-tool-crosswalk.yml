@@ -1,0 +1,104 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  mcp/builtwith-mcp-tools.json (live anonymous tools/list, 48 tools),
+  openapi/builtwith-rest-api-openapi.json (29 operations),
+  openapi/builtwith-x402-pay-per-call-openapi.json (14 operations),
+  openapi/builtwith-agent-stripe-topup-openapi.json (3 operations)
+surfaces:
+  openapi:
+  - file: openapi/builtwith-rest-api-openapi.json
+    title: BuiltWith API (from llms.txt + samples)
+    served_at: https://builtwith.com/.well-known/openai.json
+    operations: 29
+    gated: false
+  - file: openapi/builtwith-x402-pay-per-call-openapi.json
+    title: BuiltWith x402 Pay-per-Call API
+    served_at: https://api.builtwith.com/openapi.json
+    operations: 14
+    gated: false
+  - file: openapi/builtwith-agent-stripe-topup-openapi.json
+    title: BuiltWith Agent Stripe Credit Top-Up API via mppx aliases
+    served_at: https://api.builtwith.com/mppx/openapi.json
+    operations: 3
+    gated: false
+  graphql: null
+  mcp:
+    url: https://api.builtwith.com/mcp
+    gated: false
+    note: tools/list answers anonymously, so every inputSchema below is the live schema.
+  websocket:
+    url: wss://sync.builtwith.com/wss/
+    note: Live Feed API has no MCP tool; see asyncapi/builtwith-live-feed-asyncapi.yml
+coverage:
+  tools_named: 48
+  tools_bound: 41
+  mcp_only: 7
+  rest_operations_total: 46
+  rest_operations_with_tool: 38
+  rest_only: 8
+crosswalk:
+- {tool: domain-lookup, category: technology-profile, rest: [domain_lookup_v22], binding: rest, confidence: high, note: 'MCP tool defaults liveOnly; REST equivalent is LIVEONLY=yes on /v23/api.json (spec still documents /v22/).'}
+- {tool: domain-api, category: technology-profile, rest: [domain_lookup_v22], binding: rest, confidence: high}
+- {tool: domain-api-json, category: technology-profile, rest: [domain_lookup_v22], binding: rest, confidence: high}
+- {tool: change-api, category: change-tracking, rest: [change_v1], binding: rest, confidence: high}
+- {tool: relationships-api, category: relationships, rest: [relationships_v4], binding: rest, confidence: high}
+- {tool: free-api, category: technology-profile, rest: [free_v1], binding: rest, confidence: high}
+- {tool: company-to-url, category: company, rest: [company_to_url_v3], binding: rest, confidence: high}
+- {tool: tags-api, category: relationships, rest: [tags_v1], binding: rest, confidence: high}
+- {tool: recommendations-api, category: recommendations, rest: [recommendations_v1], binding: rest, confidence: high}
+- {tool: redirects-api, category: change-tracking, rest: [redirects_v1], binding: rest, confidence: high}
+- {tool: keywords-api, category: keywords, rest: [keywords_v2], binding: rest, confidence: high}
+- {tool: keywords-search-api, category: keywords, rest: [keyword_search_v1], binding: rest, confidence: high}
+- {tool: trends-api, category: trends, rest: [trends_v6], binding: rest, confidence: high}
+- {tool: product-api, category: ecommerce, rest: [product_v1], binding: rest, confidence: high}
+- {tool: trust-api, category: trust, rest: [trust_v1], binding: rest, confidence: medium, note: 'Spec documents /trustv1/; llms.txt documents /trustv2/ as current. Same capability, spec lags a version.'}
+- {tool: whoami-api, category: account, rest: [whoami_v1], binding: rest, confidence: high}
+- {tool: usage-api, category: account, rest: [usage_v2], binding: rest, confidence: high}
+- {tool: list-api, category: lists, rest: [lists_v12], binding: rest, confidence: high, note: 'Tool exposes 20+ attribute filters (aiMaturity/aiOpenness/aiReadiness/aiVisibility, bwRank, tranco, majestic) that the published spec parameterises only loosely.'}
+- {tool: vector-api, category: search, rest: [vector_search_v1], binding: rest, confidence: high}
+- {tool: ask-api, category: search, rest: [ask_v1], binding: rest, confidence: high}
+- {tool: ask-api-json, category: search, rest: [ask_v1], binding: rest, confidence: high}
+- {tool: payment-balance, category: billing, rest: [agent_payment_api_discovery, getStripeTopUpBalance], binding: rest, confidence: high, note: Same operation on two hosts - payments.builtwith.com and the /mppx/ alias.}
+- {tool: payment-config, category: billing, rest: [agent_payment_api_configuration, getStripeTopUpConfiguration], binding: rest, confidence: high}
+- {tool: payment-purchase, category: billing, rest: [agent_payment_api_purchase, purchaseAccountCreditsWithStripe], binding: rest, confidence: high, note: 'Only mutating flow in the catalogue; requires an Idempotency-Key (tool input idempotencyKey).'}
+- {tool: x402-domain-lookup, category: x402-prepaid, rest: [lookupDomainTechnologies], binding: rest, confidence: high}
+- {tool: x402-domain-api, category: x402-prepaid, rest: [lookupDomainTechnologies], binding: rest, confidence: high}
+- {tool: x402-domain-api-json, category: x402-prepaid, rest: [lookupDomainTechnologies], binding: rest, confidence: high}
+- {tool: x402-change-api, category: x402-prepaid, rest: [getDomainTechnologyChanges], binding: rest, confidence: high}
+- {tool: x402-relationships-api, category: x402-prepaid, rest: [findRelatedWebsites], binding: rest, confidence: high}
+- {tool: x402-company-to-url, category: x402-prepaid, rest: [findCompanyDomains], binding: rest, confidence: high}
+- {tool: x402-tags-api, category: x402-prepaid, rest: [findDomainsByTag], binding: rest, confidence: high}
+- {tool: x402-recommendations-api, category: x402-prepaid, rest: [recommendTechnologies], binding: rest, confidence: high}
+- {tool: x402-redirects-api, category: x402-prepaid, rest: [getDomainRedirects], binding: rest, confidence: high}
+- {tool: x402-keywords-api, category: x402-prepaid, rest: [getDomainKeywords], binding: rest, confidence: high}
+- {tool: x402-trust-api, category: x402-prepaid, rest: [getDomainTrust], binding: rest, confidence: high}
+- {tool: x402-vat-api, category: x402-prepaid, rest: [getCompanyIdentifiers], binding: rest, confidence: high}
+- {tool: x402-vector-api, category: x402-prepaid, rest: [searchTechnologies], binding: rest, confidence: high}
+- {tool: x402-ask-api, category: x402-prepaid, rest: [askForWebsites], binding: rest, confidence: high}
+- {tool: x402-list-pass-purchase, category: x402-billing, rest: [purchaseBasicListPass, purchaseProListPass], binding: rest, confidence: high, note: One tool fans out to the two tier-specific REST routes via its tier input.}
+- {tool: x402-list-api, category: x402-prepaid, rest: [lists_v12], binding: rest, confidence: medium, note: Same underlying List capability, but entitlement is an x402 List pass rather than an account API key.}
+- {tool: x402-keywords-search-api, category: x402-prepaid, rest: [keyword_search_v1], binding: rest, confidence: medium, note: Same capability behind an x402 List pass.}
+mcp_only:
+- {tool: vat-api, reason: 'REST endpoint /vat1/api.json is documented in llms.txt but has no operation in any published OpenAPI. The x402 sibling getCompanyIdentifiers is the only speced form.'}
+- {tool: vat-types-api, reason: 'REST endpoint /vat1/types.json is documented in llms.txt only; absent from every published spec.'}
+- {tool: mcp-list-api, reason: 'BuiltWith MCP registry search (/mcp2/api.json) is documented in llms.txt only; absent from every published spec.'}
+- {tool: mcp-list-categories, reason: '/mcp2/categories.json is documented in llms.txt only; absent from every published spec.'}
+- {tool: x402-pricing, reason: 'x402 configuration and tier pricing; the HTTP equivalent is the /.well-known/x402 descriptor, not a spec operation.'}
+- {tool: x402-credit-purchase, reason: 'Prepaid creditKey purchase is settled inside MCP request metadata (_meta["x402/payment"]); there is no REST route for it.'}
+- {tool: x402-credit-balance, reason: 'Prepaid creditKey balance is MCP-only; the REST balance operations cover account credits, not x402 lookup units.'}
+rest_only:
+- {operation: financial_v1, capability: SEC Edgar / UK Companies House financial data for a domain, spec: openapi/builtwith-rest-api-openapi.json}
+- {operation: social_v1, capability: Social profile discovery for a domain, spec: openapi/builtwith-rest-api-openapi.json}
+- {operation: domain_bulk_submit_v22, capability: Asynchronous bulk domain job submission, spec: openapi/builtwith-rest-api-openapi.json}
+- {operation: domain_bulk_status_v22, capability: Bulk job status polling, spec: openapi/builtwith-rest-api-openapi.json}
+- {operation: domain_bulk_result_v22, capability: One-time bulk result retrieval, spec: openapi/builtwith-rest-api-openapi.json}
+- {operation: domain_bulk_v22_legacy, capability: Legacy synchronous bulk POST, spec: openapi/builtwith-rest-api-openapi.json}
+- {operation: agent_auth_start, capability: Agent device-code authorization start, spec: openapi/builtwith-rest-api-openapi.json}
+- {operation: agent_auth_token, capability: Agent device-code token poll, spec: openapi/builtwith-rest-api-openapi.json}
+notes:
+- >-
+  The three published specs and the MCP tool surface are overlapping but non-identical
+  projections of one data core. The MCP surface adds VAT and MCP-registry capabilities that
+  no published spec covers; the REST surface keeps bulk processing, the device-code auth
+  handshake, and the Financial and Social APIs that no tool exposes.

@@ -1,0 +1,106 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://api.builtwith.com/llms.txt, https://api.builtwith.com/domain-api,
+  https://api.builtwith.com/terms, https://builtwith.com/terms,
+  openapi/builtwith-rest-api-openapi.json
+versioning:
+  scheme: uri-path, versioned independently per API product
+  docs: https://api.builtwith.com/llms.txt
+  current:
+    domain: v23
+    domain_previous: v22
+    lists: lists12
+    change: change1
+    relationships: rv4
+    free: free1
+    trends: trends/v6
+    trust: trustv2
+    trust_previous: trustv1
+    tags: tag1
+    company_to_url: ctu3
+    keywords: kw2
+    keyword_search: kws1
+    recommendations: rec1
+    redirects: redirect1
+    product: productv1
+    vector: vector/v1
+    ask: ask1
+    vat: vat1
+    mcp_registry: mcp2
+    whoami: whoamiv1
+    usage: usagev2
+    billing: v1
+    mppx_aliases: mppx
+  note: >-
+    There is no single platform version. Each product carries its own version token in the path
+    and moves independently, so a client pins per endpoint.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  observed:
+  - subject: 'query-parameter authentication (?KEY=)'
+    statement: 'The legacy ?KEY= query parameter is deprecated.'
+    scope: Agent Stripe Credit Top-Up API
+    replacement: 'Authorization: Bearer YOUR_AGENT_BILLING_KEY'
+    source: https://api.builtwith.com/llms.txt
+    removal_date: null
+  - subject: Domain API v22
+    statement: 'v23 adds Result.SpendHistory and per-result SalesRevenue; the previous /v22/ endpoints remain available.'
+    scope: Domain API
+    replacement: /v23/
+    source: https://api.builtwith.com/llms.txt
+    removal_date: null
+  - subject: Trust API v1
+    statement: The published OpenAPI still documents /trustv1/ while llms.txt documents /trustv2/ as current.
+    scope: Trust API
+    replacement: /trustv2/
+    source: https://api.builtwith.com/llms.txt
+    removal_date: null
+  assessment: >-
+    BuiltWith publishes individual deprecation statements inside its agent documentation but no
+    deprecation POLICY page, no Sunset/Deprecation response headers, and no removal dates. No
+    `Deprecation` pointer is emitted in apis.yml for that reason.
+deprecated_operations: []
+status_page:
+  url: null
+  checked:
+  - {url: 'https://status.builtwith.com', result: 'DNS does not resolve (curl exit, no HTTP status)'}
+  - {url: 'https://builtwith.com/status', http_status: 200, result: 'soft 404 - serves the site-wide "Search results for status" page, not a status page'}
+  - {url: 'https://kb.builtwith.com/status', http_status: 200, result: 'soft 404 - same catch-all search template'}
+  assessment: No status page published. No `StatusPage` pointer is emitted.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No published SLA. Enterprise "Dedicated Domain Live API" plans advertise an enterprise SLA
+    on the pricing surface but no numeric target is published.
+changelog:
+  url: null
+  substitute: https://blog.builtwith.com/
+  note: >-
+    No dated changelog page exists. Product changes are announced as monthly blog posts on
+    blog.builtwith.com (already wired as the Blog pointer); because that is a marketing blog
+    rather than a versioned change log, no `ChangeLog` pointer is emitted.
+support:
+  knowledge_base: https://kb.builtwith.com/
+  email: support@builtwith.com
+  contact: https://builtwith.com/contact
+  phone: {AU: '+61 2 7242 2020', US: '+1 347 514 7140'}
+terms:
+  url: https://builtwith.com/terms
+  last_updated: '2026-03-06'
+  api_clause: >-
+    "You can use the API to enhance your product in many ways. The only limitation is you
+    cannot resell the data as-is or provide duplicate functionality to builtwith.com and its
+    associated services."
+data_freshness:
+  ignore_list: https://api.builtwith.com/ignoresv1/api.json
+  suffix_list: https://api.builtwith.com/suffixv1/api.json
+  note: BuiltWith publishes the domains it will not index and its extended public-suffix list as machine-readable endpoints.
+entity:
+  legal_name: BuiltWith Pty Ltd
+  abn: 53 167 706 470
+  address: Level 35, One International Towers, 100 Barangaroo Avenue, Sydney NSW 2000, Australia

@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BuiltWith Change Bulk Processing Technology Trends API",
+    "version": "change1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "KEY",
+      "value": "{{KEY}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Technology Trends",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get technology trend data (JSON)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.json",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "TECH",
+                "value": "",
+                "type": "query",
+                "description": "Technology name with spaces replaced by dashes (e.g. Google-Analytics)"
+              },
+              {
+                "name": "DATE",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 date for historical trend data retrieval"
+              }
+            ]
+          },
+          "docs": "Returns trend data for a web technology including adoption metrics across top 10K, 100K, 1M, and full internet segments. Optionally retrieve historical data for a specific date.\n"
+        },
+        {
+          "info": {
+            "name": "Get technology trend data (XML)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.xml",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "TECH",
+                "value": "",
+                "type": "query",
+                "description": "Technology name with spaces replaced by dashes (e.g. Google-Analytics)"
+              },
+              {
+                "name": "DATE",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 date for historical trend data retrieval"
+              }
+            ]
+          },
+          "docs": "Returns trend data for a web technology in XML format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

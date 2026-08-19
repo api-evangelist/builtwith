@@ -1,0 +1,63 @@
+generated: '2026-08-14'
+method: searched
+source: https://api.builtwith.com/errorCodes
+docs: https://api.builtwith.com/errorCodes
+format: vendor-codes
+envelope:
+  shape: '{"Errors":[{"Code":<integer>,"Message":"<text>"}]}'
+  code_field: Code
+  message_field: Message
+  transport: >-
+    Returned inside a 200 body on well-formed errors. The provider explicitly warns the
+    envelope "cannot be guaranteed" and that clients must also treat non-200 HTTP responses
+    as errors; Lookup is null (JSON) or omitted (XML) when the failure is server-side.
+error_codes:
+- code: -1
+  message: Not a supported return type - api.json is general call scheme.
+  cause: The requested response extension is not supported by that endpoint.
+  action: Use one of the extensions the endpoint documents (.json, .xml, .csv, .txt, .tsv).
+- code: -2
+  message: API Key is wrong - it needs to be a Guid.
+  cause: Malformed or missing API key.
+  action: >-
+    Send a GUID-format key as an "Authorization: API {key}" header or KEY={guid} query
+    parameter; bw- device tokens are also valid.
+- code: -3
+  message: You've run out of API Credits.
+  cause: Account credit balance exhausted.
+  action: Check GET /usagev2/api.json, then top up via the Stripe credit API or an x402 credit purchase.
+- code: -4
+  message: Technology endpoint technology name not found (maybe misspelled or escaped wrong).
+  cause: TECH value is not a canonical BuiltWith technology name.
+  action: Validate the name for free with the Trends API, or resolve it with the Vector Search API.
+- code: -5
+  message: Plan upgrade needed as maximum technologies reached.
+  cause: The plan's technology-search allowance is exhausted (Basic allows 2).
+  action: Upgrade the plan or reuse an existing technology search.
+- code: -6
+  message: Error saving technology usage.
+  cause: Server-side accounting failure while recording the lookup.
+  action: Retry; contact support@builtwith.com if it persists.
+- code: -7
+  message: Only one lookup at a time for this endpoint.
+  cause: A multi-domain LOOKUP was sent to an endpoint that accepts a single value.
+  action: Split the request into one domain per call.
+- code: -8
+  message: Invalid root domain name or unsupported.
+  cause: The domain is malformed, on the ignore list, or unsupported. Also returned by the Trends API for an unknown technology name.
+  action: Use a root domain only; check the ignore list at https://api.builtwith.com/ignoresv1/api.json.
+- code: -99
+  message: Internal code error - contact us if this keeps happening.
+  cause: Unhandled server error.
+  action: Retry with backoff; report to support@builtwith.com.
+non_enveloped_errors:
+- status: 429
+  body: '{"error":"Rate limit exceeded","maxConcurrentRequests":8,"maxRequestsPerSecond":1,"currentConcurrentRequests":0,"currentRequestsInWindow":1,"retryAfterSeconds":1}'
+  source: https://api.builtwith.com/domain-api
+  action: Back off for retryAfterSeconds; see rate-limits/builtwith-rate-limits.yml.
+- status: 400
+  context: Agent Device-Code Authorization
+  body_examples: ['{"error":"authorization_pending"}', '{"error":"access_denied"}', '{"error":"expired_token"}']
+  source: https://api.builtwith.com/llms.txt
+  action: 'Denied and expired responses use HTTP 400 - always parse the body even on 4xx.'
+related: errors/builtwith-problem-types.yml

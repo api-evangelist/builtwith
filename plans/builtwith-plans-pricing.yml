@@ -1,3 +1,7 @@
+generated: '2026-08-14'
+method: searched
+source: https://builtwith.com/plans
+plan_count: 6
 name: BuiltWith Plans and Pricing
 description: Pricing plans and tiers for the BuiltWith technology profiling platform and API services.
 specificationVersion: '0.1'

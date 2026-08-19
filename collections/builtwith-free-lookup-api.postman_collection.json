@@ -1,0 +1,380 @@
+{
+  "item": [
+    {
+      "id": "061aad40-e639-4181-89d1-a7dfcb5c15bf",
+      "name": "Free Lookup",
+      "description": {
+        "content": "Technology count lookups for free tier",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ff9e0768-e7dc-45a3-8469-58e6e3c135a1",
+          "name": "Get technology group counts (JSON)",
+          "request": {
+            "name": "Get technology group counts (JSON)",
+            "description": {
+              "content": "Returns technology category group counts (live and dead) for a domain, organized by tag groups and subcategories. Free tier; rate limited to 1 request/second.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "(Required) Root domain to analyze"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d8ef4ef5-8be5-46ef-aff8-185320f88cb9",
+              "name": "Technology group counts for the domain",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"domain\": \"builtwith.com\",\n  \"first\": 1262304000,\n  \"last\": 1748736000,\n  \"groups\": [\n    {\n      \"name\": \"javascript\",\n      \"live\": 12,\n      \"dead\": 45,\n      \"latest\": 1748736000,\n      \"oldest\": 1262304000,\n      \"categories\": [\n        {\n          \"name\": \"social-sdk\",\n          \"live\": 3,\n          \"dead\": 8,\n          \"latest\": 1748736000,\n          \"oldest\": 1262304000\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17cdb079-4845-46d0-9b6d-2fc0a1f78b7f",
+              "name": "Bad request — invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 9332,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 5963,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48283901-3cde-4ba5-8cf8-587dfa94d9f8",
+              "name": "Unauthorized — invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 9771,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 5583,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31cc3170-0e70-4357-b7a3-993f120a7373",
+              "name": "Too many requests — free tier limited to 1 request per second",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 9771,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 5583,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "819b6189-5f14-41a4-8abb-d7baddc37a85",
+          "name": "Get technology group counts (XML)",
+          "request": {
+            "name": "Get technology group counts (XML)",
+            "description": {},
+            "url": {
+              "path": [
+                "api.xml"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "(Required) Root domain to analyze"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b1119097-7548-4146-8eb6-f3046812b082",
+              "name": "Technology group counts in XML",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.xml"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.builtwith.com/change1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5b834f6c-1589-43c5-93fe-94a75cea8e80",
+    "name": "BuiltWith Change Bulk Processing Free Lookup API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.\n\n\nContact Support:\n Name: BuiltWith Support",
+      "type": "text/plain"
+    }
+  }
+}

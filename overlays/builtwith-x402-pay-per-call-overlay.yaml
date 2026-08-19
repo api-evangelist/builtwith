@@ -1,0 +1,35 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for BuiltWith x402 Pay-per-Call API
+  version: 1.0.0
+extends: openapi/builtwith-x402-pay-per-call-openapi.json
+x-generated: '2026-08-14'
+x-method: generated
+x-source: apis.yml + repo artifacts (conventions/, errors/, rate-limits/, authentication/, lifecycle/,
+  agentic-access/)
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: builtwith
+    x-apievangelist-profile: https://apis.io/provider/builtwith/
+    x-apievangelist-artifacts:
+      authentication: authentication/builtwith-authentication.yml
+      conventions: conventions/builtwith-conventions.yml
+      errors: errors/builtwith-error-codes.yml
+      rate_limits: rate-limits/builtwith-rate-limits.yml
+      lifecycle: lifecycle/builtwith-lifecycle.yml
+      plans: plans/builtwith-plans-pricing.yml
+      agentic_access: agentic-access/builtwith-agentic-access.yml
+      skills: skills/_index.yml
+    x-apievangelist-harvest: Harvested verbatim from the provider host
+- target: $
+  update:
+    x-rate-limit-headers:
+    - X-RATELIMIT-LIMIT-CONCURRENT
+    - X-RATELIMIT-LIMIT-PERSECOND
+    - X-RATELIMIT-CURRENT-CONCURRENT
+    - X-RATELIMIT-CURRENT-PERSECOND
+    - X-API-CREDITS-AVAILABLE
+    - X-API-CREDITS-USED
+    - X-API-CREDITS-REMAINING
+    x-error-catalog: errors/builtwith-error-codes.yml

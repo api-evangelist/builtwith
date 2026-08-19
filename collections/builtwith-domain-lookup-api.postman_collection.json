@@ -1,0 +1,941 @@
+{
+  "item": [
+    {
+      "id": "a367b03f-4c66-4f9d-821c-a64999f16595",
+      "name": "Domain Lookup",
+      "description": {
+        "content": "Single or multi-domain technology detection endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "da8fd1ab-b1ca-464d-8401-ff13248084e7",
+          "name": "Lookup domain technologies (JSON)",
+          "request": {
+            "name": "Lookup domain technologies (JSON)",
+            "description": {
+              "content": "Returns the technology stack and metadata for one or more domains in JSON format. Supports up to 16 domains as a comma-separated list.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>",
+                  "description": "Your BuiltWith API authentication key (UUID format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "(Required) Domain or comma-separated list of up to 16 domains to look up. Use root domains only.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "HIDETEXT",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to exclude technology descriptions and links"
+                },
+                {
+                  "disabled": false,
+                  "key": "NOMETA",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to skip address and company metadata"
+                },
+                {
+                  "disabled": false,
+                  "key": "NOPII",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to remove personally identifiable information (names/emails)"
+                },
+                {
+                  "disabled": false,
+                  "key": "LIVEONLY",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to return only currently active technologies"
+                },
+                {
+                  "disabled": false,
+                  "key": "TRUST",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to include trust/safety data (uses additional API credits)"
+                },
+                {
+                  "disabled": false,
+                  "key": "FDRANGE",
+                  "value": "<string>",
+                  "description": "Filter by detection date range in YYYY-MM-DD|YYYY-MM-DD format"
+                },
+                {
+                  "disabled": false,
+                  "key": "NOATTR",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to exclude technology attributes"
+                },
+                {
+                  "disabled": false,
+                  "key": "CATEGORIES",
+                  "value": "<integer>",
+                  "description": "Set to '1' to return technology category list instead of domain data"
+                },
+                {
+                  "disabled": false,
+                  "key": "VERTICALS",
+                  "value": "<integer>",
+                  "description": "Set to '1' to return vertical list instead of domain data"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "019905f7-c9a1-44e4-9436-f8ef22198a84",
+              "name": "Technology profile for the requested domain(s)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "example.com"
+                    },
+                    {
+                      "key": "HIDETEXT",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOMETA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOPII",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "LIVEONLY",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "TRUST",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "FDRANGE",
+                      "value": "2025-01-01|2026-01-01"
+                    },
+                    {
+                      "key": "NOATTR",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "CATEGORIES",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "VERTICALS",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Results\": [\n    {\n      \"Result\": {\n        \"Lookup\": \"example.com\",\n        \"Meta\": {\n          \"CompanyName\": \"Example Inc\",\n          \"Vertical\": \"Business and Consumer Services\"\n        },\n        \"Paths\": [\n          {\n            \"Technologies\": [\n              {\n                \"Name\": \"WordPress\",\n                \"Tag\": \"cms\",\n                \"Categories\": [\n                  {\n                    \"Category\": \"CMS\"\n                  }\n                ],\n                \"FirstDetected\": 1609459200000,\n                \"LastDetected\": 1748736000000,\n                \"Live\": true\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df52cbb5-6756-49b4-bf77-620b11e9142d",
+              "name": "Bad request — invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "example.com"
+                    },
+                    {
+                      "key": "HIDETEXT",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOMETA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOPII",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "LIVEONLY",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "TRUST",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "FDRANGE",
+                      "value": "2025-01-01|2026-01-01"
+                    },
+                    {
+                      "key": "NOATTR",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "CATEGORIES",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "VERTICALS",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 1747,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 4264,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcf6d1e3-efe6-4044-b776-f1d5a3ae5479",
+              "name": "Unauthorized — invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "example.com"
+                    },
+                    {
+                      "key": "HIDETEXT",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOMETA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOPII",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "LIVEONLY",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "TRUST",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "FDRANGE",
+                      "value": "2025-01-01|2026-01-01"
+                    },
+                    {
+                      "key": "NOATTR",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "CATEGORIES",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "VERTICALS",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 1522,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 534,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd0d8194-3840-418d-884f-1a45ea187b95",
+              "name": "Too many requests — max 10 req/sec or 8 concurrent requests exceeded\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "example.com"
+                    },
+                    {
+                      "key": "HIDETEXT",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOMETA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOPII",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "LIVEONLY",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "TRUST",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "FDRANGE",
+                      "value": "2025-01-01|2026-01-01"
+                    },
+                    {
+                      "key": "NOATTR",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "CATEGORIES",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "VERTICALS",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 1522,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 534,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f88daa17-3e9b-4a4f-88a2-53cd56913e00",
+          "name": "Lookup domain technologies (XML)",
+          "request": {
+            "name": "Lookup domain technologies (XML)",
+            "description": {
+              "content": "Returns domain technology profile in XML format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.xml"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>",
+                  "description": "Your BuiltWith API authentication key (UUID format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "(Required) Domain or comma-separated list of up to 16 domains to look up. Use root domains only.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "HIDETEXT",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to exclude technology descriptions and links"
+                },
+                {
+                  "disabled": false,
+                  "key": "NOMETA",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to skip address and company metadata"
+                },
+                {
+                  "disabled": false,
+                  "key": "NOPII",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to remove personally identifiable information (names/emails)"
+                },
+                {
+                  "disabled": false,
+                  "key": "LIVEONLY",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to return only currently active technologies"
+                },
+                {
+                  "disabled": false,
+                  "key": "TRUST",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to include trust/safety data (uses additional API credits)"
+                },
+                {
+                  "disabled": false,
+                  "key": "FDRANGE",
+                  "value": "<string>",
+                  "description": "Filter by detection date range in YYYY-MM-DD|YYYY-MM-DD format"
+                },
+                {
+                  "disabled": false,
+                  "key": "NOATTR",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to exclude technology attributes"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "da043370-1c94-48ab-8198-8b99253b5f6a",
+              "name": "Technology profile in XML format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.xml"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "example.com"
+                    },
+                    {
+                      "key": "HIDETEXT",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOMETA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOPII",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "LIVEONLY",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "TRUST",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "FDRANGE",
+                      "value": "2025-01-01|2026-01-01"
+                    },
+                    {
+                      "key": "NOATTR",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "bb895e05-e94a-4d78-88de-803eba6e0ade",
+              "name": "Bad request — invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.xml"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "example.com"
+                    },
+                    {
+                      "key": "HIDETEXT",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOMETA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOPII",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "LIVEONLY",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "TRUST",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "FDRANGE",
+                      "value": "2025-01-01|2026-01-01"
+                    },
+                    {
+                      "key": "NOATTR",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 1522,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 534,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fc88980-7ad2-44f4-b135-5788dc8676d3",
+              "name": "Unauthorized — invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.xml"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "example.com"
+                    },
+                    {
+                      "key": "HIDETEXT",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOMETA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOPII",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "LIVEONLY",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "TRUST",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "FDRANGE",
+                      "value": "2025-01-01|2026-01-01"
+                    },
+                    {
+                      "key": "NOATTR",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 1522,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 534,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9444d03-5fd5-403c-801b-d95f17faff85",
+          "name": "Lookup domain technologies (CSV)",
+          "request": {
+            "name": "Lookup domain technologies (CSV)",
+            "description": {
+              "content": "Returns domain technology profile in CSV format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.csv"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>",
+                  "description": "Your BuiltWith API authentication key (UUID format)"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "(Required) Domain or comma-separated list of up to 16 domains to look up. Use root domains only.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "HIDETEXT",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to exclude technology descriptions and links"
+                },
+                {
+                  "disabled": false,
+                  "key": "NOMETA",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to skip address and company metadata"
+                },
+                {
+                  "disabled": false,
+                  "key": "NOPII",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to remove personally identifiable information (names/emails)"
+                },
+                {
+                  "disabled": false,
+                  "key": "LIVEONLY",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to return only currently active technologies"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/csv"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "001fd95f-9ae9-4d8b-a7d1-4e28b889af58",
+              "name": "Technology profile in CSV format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.csv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "example.com"
+                    },
+                    {
+                      "key": "HIDETEXT",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOMETA",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "NOPII",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "LIVEONLY",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/csv"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.builtwith.com/change1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "437d0d09-7d4f-4eb7-b223-300dde1f99ef",
+    "name": "BuiltWith Change Bulk Processing Domain Lookup API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.\n\n\nContact Support:\n Name: BuiltWith Support",
+      "type": "text/plain"
+    }
+  }
+}

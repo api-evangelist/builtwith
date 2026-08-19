@@ -1,0 +1,562 @@
+{
+  "item": [
+    {
+      "id": "a001f3da-78f3-4d65-8d86-0c19a01b50f8",
+      "name": "Domain Relationships",
+      "description": {
+        "content": "Identify domain interconnections via shared identifiers",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "de720fe5-86b5-4c94-bcec-14a0e53a070e",
+          "name": "Get domain relationships (JSON)",
+          "request": {
+            "name": "Get domain relationships (JSON)",
+            "description": {
+              "content": "Returns relationships for one or more domains based on shared identifiers such as analytics IDs, IP addresses, and other attributes. Paginate using the next_skip value from the response.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "(Required) Domain or comma-separated list of up to 16 domains"
+                },
+                {
+                  "disabled": false,
+                  "key": "OFFSET",
+                  "value": "<integer>",
+                  "description": "Pagination offset; use next_skip value from previous response"
+                },
+                {
+                  "disabled": false,
+                  "key": "IP",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to include IP address data in results"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b0f8c75e-f3a4-48ff-baa0-f9dad41913c9",
+              "name": "Domain relationship data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "OFFSET",
+                      "value": "500"
+                    },
+                    {
+                      "key": "IP",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": 1250,\n  \"max_per_page\": 500,\n  \"next_skip\": 500,\n  \"more_results\": true,\n  \"Relationships\": [\n    {\n      \"Domain\": \"builtwith.com\",\n      \"Identifiers\": [\n        {\n          \"Type\": \"google-analytics\",\n          \"Value\": \"UA-12345678-1\",\n          \"First\": 1451606400000,\n          \"Last\": 1748736000000,\n          \"Matches\": [\n            {\n              \"Domain\": \"related-site.com\",\n              \"First\": 1451606400000,\n              \"Last\": 1748736000000,\n              \"Overlap\": true\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9606b322-6f07-4c76-9260-8d04291bb633",
+              "name": "Bad request — invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "OFFSET",
+                      "value": "500"
+                    },
+                    {
+                      "key": "IP",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 9026,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 1375,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41f05e29-1826-417d-aa44-78f30aa221c8",
+              "name": "Unauthorized — invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "OFFSET",
+                      "value": "500"
+                    },
+                    {
+                      "key": "IP",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 1953,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 9871,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "535d7d8a-a335-43ee-a05b-4c683e035d13",
+          "name": "Get domain relationships (XML)",
+          "request": {
+            "name": "Get domain relationships (XML)",
+            "description": {},
+            "url": {
+              "path": [
+                "api.xml"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "(Required) Domain or comma-separated list of up to 16 domains"
+                },
+                {
+                  "disabled": false,
+                  "key": "OFFSET",
+                  "value": "<integer>",
+                  "description": "Pagination offset; use next_skip value from previous response"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ddd16c7e-45cd-4c26-8318-74b9e2c5f047",
+              "name": "Domain relationships in XML",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.xml"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "OFFSET",
+                      "value": "500"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2abf32fc-7ea0-4a1c-8ba9-a282a51fd836",
+          "name": "Get domain relationships (CSV)",
+          "request": {
+            "name": "Get domain relationships (CSV)",
+            "description": {},
+            "url": {
+              "path": [
+                "api.csv"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "(Required) Domain or comma-separated list of up to 16 domains"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/csv"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dae0dee9-8694-4f41-8295-6c62aeb1c3fd",
+              "name": "Domain relationships in CSV",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.csv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/csv"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91820d5f-fa37-4f11-8d23-1463dee72d67",
+          "name": "Get domain relationships (TSV)",
+          "request": {
+            "name": "Get domain relationships (TSV)",
+            "description": {},
+            "url": {
+              "path": [
+                "api.tsv"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "(Required) Domain or comma-separated list of up to 16 domains"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/tab-separated-values"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6e4afa0-a11c-4d48-a848-925db55d4964",
+              "name": "Domain relationships in TSV",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.tsv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "builtwith.com"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/tab-separated-values"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/tab-separated-values"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.builtwith.com/change1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8a656563-76f0-4dde-8380-8e5cd60b2f1b",
+    "name": "BuiltWith Change Bulk Processing Domain Relationships API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.\n\n\nContact Support:\n Name: BuiltWith Support",
+      "type": "text/plain"
+    }
+  }
+}

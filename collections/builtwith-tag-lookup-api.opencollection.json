@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BuiltWith Change Bulk Processing Tag Lookup API",
+    "version": "change1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "KEY",
+      "value": "{{KEY}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tag Lookup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get domains by tag/attribute (JSON)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.json",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "LOOKUP",
+                "value": "",
+                "type": "query",
+                "description": "Attribute value(s) to query, prefix with type (e.g. IP-98.158.194.127 or CA-PUB-1894893914772263). Up to 16 comma-separated values.\n"
+              },
+              {
+                "name": "TYPES",
+                "value": "",
+                "type": "query",
+                "description": "Set to 'true' to return list of available attribute types"
+              }
+            ]
+          },
+          "docs": "Returns domains associated with the given attribute (IP address, publisher ID, etc.). Supports up to 16 comma-separated attribute values. Use TYPES=true to retrieve the list of available attribute types.\n"
+        },
+        {
+          "info": {
+            "name": "Get domains by tag/attribute (XML)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.xml",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "LOOKUP",
+                "value": "",
+                "type": "query",
+                "description": "Attribute value(s) to query, prefix with type (e.g. IP-98.158.194.127 or CA-PUB-1894893914772263). Up to 16 comma-separated values.\n"
+              },
+              {
+                "name": "TYPES",
+                "value": "",
+                "type": "query",
+                "description": "Set to 'true' to return list of available attribute types"
+              }
+            ]
+          },
+          "docs": "Get domains by tag/attribute (XML)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

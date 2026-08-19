@@ -1,0 +1,309 @@
+# generated: '2026-08-14'
+# method: generated
+# source: https://api.builtwith.com/live-feed-api and https://api.builtwith.com/llms.txt
+# x-provenance: BuiltWith publishes no AsyncAPI document. Every server, channel, command and
+#   message field below is transcribed from the provider's own published Live Feed API
+#   documentation (channel table, client-command table, message-format samples and
+#   message-field table) and the Live Feed section of llms.txt. Nothing here is invented; where
+#   the docs do not state a type, the field is left untyped rather than guessed.
+asyncapi: 3.0.0
+info:
+  title: BuiltWith Live Feed API
+  version: '1.0.0'
+  description: >
+    Real-time technology detection notifications over WebSocket. Subscribe to technology
+    channels or rule channels and receive an event each time BuiltWith detects a technology on
+    a website. Requires an active plan: Basic allows up to 2 technology subscriptions per API
+    key, Pro up to 50. Trial and expired accounts receive obfuscated domain names.
+  contact:
+    name: BuiltWith Support
+    email: support@builtwith.com
+    url: https://builtwith.com/contact
+  externalDocs:
+    description: BuiltWith Live Feed API documentation
+    url: https://api.builtwith.com/live-feed-api
+  license:
+    name: Commercial - BuiltWith Terms of Use
+    url: https://builtwith.com/terms
+  tags:
+  - name: Live Feed
+    description: Real-time WebSocket technology detections.
+  - name: Technology Detection
+    description: Notifications emitted when BuiltWith detects a technology on a website.
+  x-generated: '2026-08-14'
+  x-method: generated
+  x-source:
+  - https://api.builtwith.com/live-feed-api
+  - https://api.builtwith.com/llms.txt
+  x-authored-by: API Evangelist enrichment pipeline
+  x-provenance-note: >-
+    BuiltWith publishes no AsyncAPI document. Every server, channel, command and message field
+    here is transcribed from the provider's published Live Feed API documentation; this
+    document is an API Evangelist generation, not a provider artifact.
+defaultContentType: application/json
+servers:
+  live:
+    host: sync.builtwith.com
+    pathname: /wss
+    protocol: wss
+    description: BuiltWith live detection stream. Automatic reconnection is supported.
+    security:
+    - $ref: '#/components/securitySchemes/apiKeyQuery'
+channels:
+  new:
+    address: /wss/new
+    title: Live feed connection
+    description: >
+      Connect to the live feed, then send subscribe commands to join channels. Also usable as
+      the `new` rule channel - domains new to the pipeline whose technologies were all first
+      detected within the last day.
+    servers:
+    - $ref: '#/servers/live'
+    messages:
+      connected:
+        $ref: '#/components/messages/Connected'
+      subscribed:
+        $ref: '#/components/messages/Subscribed'
+      detection:
+        $ref: '#/components/messages/Detection'
+      statusChange:
+        $ref: '#/components/messages/StatusChange'
+      error:
+        $ref: '#/components/messages/ErrorMessage'
+      command:
+        $ref: '#/components/messages/ClientCommand'
+  technology:
+    address: '/wss/channel/{technology}'
+    title: Technology channel
+    description: >
+      Connect and auto-subscribe to one technology channel. Technology names use dashes in
+      place of spaces, for example Shopify, WordPress or Google-Analytics.
+    servers:
+    - $ref: '#/servers/live'
+    parameters:
+      technology:
+        description: BuiltWith technology name with spaces replaced by dashes.
+        examples: [Shopify, WordPress, Google-Analytics]
+    messages:
+      connected:
+        $ref: '#/components/messages/Connected'
+      subscribed:
+        $ref: '#/components/messages/Subscribed'
+      detection:
+        $ref: '#/components/messages/Detection'
+      statusChange:
+        $ref: '#/components/messages/StatusChange'
+      error:
+        $ref: '#/components/messages/ErrorMessage'
+      command:
+        $ref: '#/components/messages/ClientCommand'
+operations:
+  receiveDetections:
+    action: receive
+    channel:
+      $ref: '#/channels/new'
+    title: Receive live technology detections
+    summary: Server-sent detection, lifecycle and error frames.
+    description: >
+      Frames the server pushes on an open connection - connection confirmation, subscription
+      confirmation, technology detections, view-mode status changes and errors.
+    messages:
+    - $ref: '#/channels/new/messages/connected'
+    - $ref: '#/channels/new/messages/subscribed'
+    - $ref: '#/channels/new/messages/detection'
+    - $ref: '#/channels/new/messages/statusChange'
+    - $ref: '#/channels/new/messages/error'
+  sendCommand:
+    action: send
+    channel:
+      $ref: '#/channels/new'
+    title: Manage subscriptions
+    description: >
+      Client-sent JSON commands that join or leave channels and list current subscriptions.
+    summary: >
+      Send subscribe / unsubscribe / list_subscriptions commands after connecting. Rule
+      channels are `new`, `new-historical` and `premium`; any technology name is also a channel.
+    messages:
+    - $ref: '#/channels/new/messages/command'
+
+  receiveTechnologyDetections:
+    action: receive
+    channel:
+      $ref: '#/channels/technology'
+    title: Receive detections for one technology
+    summary: Detections for the technology channel joined at connect time.
+    description: >
+      When connecting to /wss/channel/{technology} the client is auto-subscribed to that
+      technology and receives its detection frames without sending a subscribe command.
+    messages:
+    - $ref: '#/channels/technology/messages/detection'
+components:
+  securitySchemes:
+    apiKeyQuery:
+      type: httpApiKey
+      name: KEY
+      in: query
+      description: BuiltWith API key in GUID format, supplied on the WebSocket connect URL.
+  messages:
+    Connected:
+      name: connected
+      title: Connection confirmed
+      payload:
+        $ref: '#/components/schemas/ConnectedPayload'
+      examples:
+      - name: connected
+        payload:
+          type: connected
+          message: Connected successfully...
+          available_commands: [subscribe, unsubscribe, list_subscriptions]
+          view_mode: full
+    Subscribed:
+      name: subscribed
+      title: Subscription confirmed
+      payload:
+        $ref: '#/components/schemas/SubscribedPayload'
+      examples:
+      - name: subscribed
+        payload:
+          type: subscribed
+          channel: Shopify
+          channel_id: a1b2c3d4-...
+    Detection:
+      name: message
+      title: Technology detection
+      payload:
+        $ref: '#/components/schemas/DetectionPayload'
+      examples:
+      - name: detection
+        payload:
+          type: message
+          channel: Shopify
+          channel_id: a1b2c3d4-...
+          data:
+            channel_name: Shopify
+            website_domain: example.com
+            epoch_secs: 1770508800
+    StatusChange:
+      name: status_change
+      title: Subscription level changed
+      payload:
+        $ref: '#/components/schemas/StatusChangePayload'
+      examples:
+      - name: upgraded
+        payload:
+          type: status_change
+          view_mode: full
+          message: Your subscription has been upgraded. You now have full data access.
+    ErrorMessage:
+      name: error
+      title: Error
+      payload:
+        $ref: '#/components/schemas/ErrorPayload'
+      examples:
+      - name: unknown-technology
+        payload:
+          type: error
+          message: Technology 'unknown-tech' not found
+    ClientCommand:
+      name: command
+      title: Client subscription command
+      payload:
+        $ref: '#/components/schemas/ClientCommandPayload'
+      examples:
+      - name: subscribe-technology
+        payload: {action: subscribe, channel: Shopify}
+      - name: subscribe-new
+        payload: {action: subscribe, channel: new}
+      - name: subscribe-new-historical
+        payload: {action: subscribe, channel: new-historical}
+      - name: subscribe-premium
+        payload: {action: subscribe, channel: premium}
+      - name: unsubscribe
+        payload: {action: unsubscribe, channel: Shopify}
+      - name: list-subscriptions
+        payload: {action: list_subscriptions}
+  schemas:
+    ViewMode:
+      type: string
+      description: >
+        'full' for paid subscribers; redacted (trial/preview) for trial and expired accounts,
+        which receive obfuscated domains such as grxxt.cxm instead of great.com.
+      enum: [full, 'redacted (trial/preview)']
+    ConnectedPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          const: connected
+        message:
+          type: string
+        available_commands:
+          type: array
+          items:
+            type: string
+            enum: [subscribe, unsubscribe, list_subscriptions]
+        view_mode:
+          $ref: '#/components/schemas/ViewMode'
+    SubscribedPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [subscribed, unsubscribed]
+        channel:
+          type: string
+          description: Friendly channel name, for example Shopify or new.
+        channel_id:
+          type: string
+          description: Internal channel id - the technology GUID, or 'new' for rule channels.
+    DetectionPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          const: message
+        channel:
+          type: string
+        channel_id:
+          type: string
+        data:
+          type: object
+          properties:
+            channel_name:
+              type: string
+            website_domain:
+              type: string
+              description: Domain where the technology was detected; redacted for trial users.
+            epoch_secs:
+              type: integer
+              description: Unix epoch seconds for when the detection was queued.
+    StatusChangePayload:
+      type: object
+      properties:
+        type:
+          type: string
+          const: status_change
+        view_mode:
+          $ref: '#/components/schemas/ViewMode'
+        message:
+          type: string
+    ErrorPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          const: error
+        message:
+          type: string
+    ClientCommandPayload:
+      type: object
+      required: [action]
+      properties:
+        action:
+          type: string
+          enum: [subscribe, unsubscribe, list_subscriptions]
+        channel:
+          type: string
+          description: >
+            A rule channel (new, new-historical, premium) or any BuiltWith technology name with
+            dashes for spaces. Not used with list_subscriptions.

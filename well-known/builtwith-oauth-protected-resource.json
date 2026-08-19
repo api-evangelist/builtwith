@@ -1,0 +1,15 @@
+{
+  "resource": "https://api.builtwith.com/",
+  "resource_name": "BuiltWith API",
+  "resource_logo_uri": "https://builtwith.com/img/logo/logoSquare.png",
+  "authorization_servers": [
+    "https://api.builtwith.com/"
+  ],
+  "scopes_supported": [
+    "api.read",
+    "api.write"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ]
+}

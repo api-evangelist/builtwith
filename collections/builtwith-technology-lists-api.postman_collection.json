@@ -1,0 +1,820 @@
+{
+  "item": [
+    {
+      "id": "291143f1-bebe-4f83-b99d-9f36f0fd5965",
+      "name": "Technology Lists",
+      "description": {
+        "content": "Retrieve websites using specific technologies",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ef8c23d2-9249-4f66-af63-8fc4cca7d102",
+          "name": "Get technology website list (JSON)",
+          "request": {
+            "name": "Get technology website list (JSON)",
+            "description": {
+              "content": "Returns a paginated list of websites using the specified technology, with optional filters for country, spend, revenue, followers, and rank.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TECH",
+                  "value": "<string>",
+                  "description": "(Required) Technology name (spaces replaced with dashes, e.g. Google-Analytics)"
+                },
+                {
+                  "disabled": false,
+                  "key": "OTHERTECHS",
+                  "value": "<string>",
+                  "description": "Additional technologies to filter by (comma-separated, max 16)"
+                },
+                {
+                  "disabled": false,
+                  "key": "META",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to include metadata (names, titles, social links)"
+                },
+                {
+                  "disabled": false,
+                  "key": "COUNTRY",
+                  "value": "<string>",
+                  "description": "ISO 3166-1 alpha-2 country code(s), comma-separated"
+                },
+                {
+                  "disabled": false,
+                  "key": "OFFSET",
+                  "value": "<string>",
+                  "description": "Pagination anchor from the previous response's NextOffset field"
+                },
+                {
+                  "disabled": false,
+                  "key": "SINCE",
+                  "value": "<string>",
+                  "description": "Filter for recent detections only ('30 Days Ago' or ISO date, incompatible with ALL)"
+                },
+                {
+                  "disabled": false,
+                  "key": "ALL",
+                  "value": "<string>",
+                  "description": "Set to 'yes' to include historical data (incompatible with SINCE)"
+                },
+                {
+                  "disabled": false,
+                  "key": "SPEND",
+                  "value": "<string>",
+                  "description": "Filter by monthly tech spend using 'amount|operator' (e.g. 100|GT)"
+                },
+                {
+                  "disabled": false,
+                  "key": "REVENUE",
+                  "value": "<string>",
+                  "description": "Filter by eCommerce revenue using 'amount|operator'"
+                },
+                {
+                  "disabled": false,
+                  "key": "FOLLOWERS",
+                  "value": "<string>",
+                  "description": "Filter by social follower count using 'count|operator'"
+                },
+                {
+                  "disabled": false,
+                  "key": "PAGERANK",
+                  "value": "<string>",
+                  "description": "Filter by traffic rank using 'rank|operator'"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8ce1a69-9103-4161-b050-9fe7be9bd4fc",
+              "name": "Paginated list of websites using the technology",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "OTHERTECHS",
+                      "value": "Google-Analytics,Meta-Pixel"
+                    },
+                    {
+                      "key": "META",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "COUNTRY",
+                      "value": "US,AU,NZ"
+                    },
+                    {
+                      "key": "OFFSET",
+                      "value": "oQEwEnH2FJuIzeXOEk2T"
+                    },
+                    {
+                      "key": "SINCE",
+                      "value": "30 Days Ago"
+                    },
+                    {
+                      "key": "ALL",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "SPEND",
+                      "value": "100|GT"
+                    },
+                    {
+                      "key": "REVENUE",
+                      "value": "100000|GT"
+                    },
+                    {
+                      "key": "FOLLOWERS",
+                      "value": "10000|GTE"
+                    },
+                    {
+                      "key": "PAGERANK",
+                      "value": "1000000|LT"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"NextOffset\": \"oQEwEnH2FJuIzeXOEk2T\",\n  \"Results\": [\n    {\n      \"D\": \"shopify.com\",\n      \"S\": 50000,\n      \"FD\": 1451606400000,\n      \"LD\": 1748736000000\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f40b9808-20d3-4be2-91e0-cd1f32ee62e1",
+              "name": "Bad request — invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "OTHERTECHS",
+                      "value": "Google-Analytics,Meta-Pixel"
+                    },
+                    {
+                      "key": "META",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "COUNTRY",
+                      "value": "US,AU,NZ"
+                    },
+                    {
+                      "key": "OFFSET",
+                      "value": "oQEwEnH2FJuIzeXOEk2T"
+                    },
+                    {
+                      "key": "SINCE",
+                      "value": "30 Days Ago"
+                    },
+                    {
+                      "key": "ALL",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "SPEND",
+                      "value": "100|GT"
+                    },
+                    {
+                      "key": "REVENUE",
+                      "value": "100000|GT"
+                    },
+                    {
+                      "key": "FOLLOWERS",
+                      "value": "10000|GTE"
+                    },
+                    {
+                      "key": "PAGERANK",
+                      "value": "1000000|LT"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 611,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 8664,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7afe8da6-ffde-4064-ad1f-aba050ad804c",
+              "name": "Unauthorized — invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "OTHERTECHS",
+                      "value": "Google-Analytics,Meta-Pixel"
+                    },
+                    {
+                      "key": "META",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "COUNTRY",
+                      "value": "US,AU,NZ"
+                    },
+                    {
+                      "key": "OFFSET",
+                      "value": "oQEwEnH2FJuIzeXOEk2T"
+                    },
+                    {
+                      "key": "SINCE",
+                      "value": "30 Days Ago"
+                    },
+                    {
+                      "key": "ALL",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "SPEND",
+                      "value": "100|GT"
+                    },
+                    {
+                      "key": "REVENUE",
+                      "value": "100000|GT"
+                    },
+                    {
+                      "key": "FOLLOWERS",
+                      "value": "10000|GTE"
+                    },
+                    {
+                      "key": "PAGERANK",
+                      "value": "1000000|LT"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 9632,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 5558,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c5d964a7-c85e-4f04-a51f-da37fe34966b",
+          "name": "Get technology website list (XML)",
+          "request": {
+            "name": "Get technology website list (XML)",
+            "description": {
+              "content": "Returns the technology website list in XML format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.xml"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TECH",
+                  "value": "<string>",
+                  "description": "(Required) Technology name (spaces replaced with dashes, e.g. Google-Analytics)"
+                },
+                {
+                  "disabled": false,
+                  "key": "COUNTRY",
+                  "value": "<string>",
+                  "description": "ISO 3166-1 alpha-2 country code(s), comma-separated"
+                },
+                {
+                  "disabled": false,
+                  "key": "OFFSET",
+                  "value": "<string>",
+                  "description": "Pagination anchor from the previous response's NextOffset field"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "527d0e58-b2f2-4e60-ba2e-260e900264fb",
+              "name": "Technology website list in XML",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.xml"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "COUNTRY",
+                      "value": "US,AU,NZ"
+                    },
+                    {
+                      "key": "OFFSET",
+                      "value": "oQEwEnH2FJuIzeXOEk2T"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7481beef-b01e-464f-bd0a-7fc73f40bfdc",
+          "name": "Get technology website list (TXT)",
+          "request": {
+            "name": "Get technology website list (TXT)",
+            "description": {
+              "content": "Returns plain text list of domains using the technology.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.txt"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TECH",
+                  "value": "<string>",
+                  "description": "(Required) Technology name (spaces replaced with dashes, e.g. Google-Analytics)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cfcb799c-e0f6-4afb-9bbd-02fbe07cd607",
+              "name": "Domain list as plain text",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.txt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bbf6d473-cdd5-4fde-a4ca-49f36c263056",
+          "name": "Get technology website list (CSV)",
+          "request": {
+            "name": "Get technology website list (CSV)",
+            "description": {
+              "content": "Returns domain list in CSV format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.csv"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TECH",
+                  "value": "<string>",
+                  "description": "(Required) Technology name (spaces replaced with dashes, e.g. Google-Analytics)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/csv"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "de4c675f-5cd6-4493-a2e8-0ae4fe393689",
+              "name": "Domain list as CSV",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.csv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/csv"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5b5a83b-fe14-4dff-a288-85dfa846b82d",
+          "name": "Get technology website list (TSV)",
+          "request": {
+            "name": "Get technology website list (TSV)",
+            "description": {
+              "content": "Returns domain list in TSV format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.tsv"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "TECH",
+                  "value": "<string>",
+                  "description": "(Required) Technology name (spaces replaced with dashes, e.g. Google-Analytics)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/tab-separated-values"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "09c551aa-598f-45ad-8594-b3428fa6ad80",
+              "name": "Domain list as TSV",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.tsv"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "TECH",
+                      "value": "Shopify"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/tab-separated-values"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/tab-separated-values"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.builtwith.com/change1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2b36de65-8e1f-452a-8f19-782b4b6a9515",
+    "name": "BuiltWith Change Bulk Processing Technology Lists API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.\n\n\nContact Support:\n Name: BuiltWith Support",
+      "type": "text/plain"
+    }
+  }
+}

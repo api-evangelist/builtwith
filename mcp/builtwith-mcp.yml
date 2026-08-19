@@ -1,0 +1,121 @@
+generated: '2026-08-14'
+method: searched
+status: published
+source: https://builtwith.com/.well-known/mcp.json
+docs:
+- https://api.builtwith.com/mcp-api
+- https://api.builtwith.com/x402-api
+- https://api.builtwith.com/llms.txt
+- https://github.com/builtwith/builtwith-mcp
+deployment:
+  mode: both
+  endpoint: https://api.builtwith.com/mcp
+  install: npx -y @builtwith/mcp-server
+  package: https://www.npmjs.com/package/@builtwith/mcp-server
+  auth: api-key
+  verified: probed
+server:
+  name: builtwith
+  manifest_name: BuiltWith MCP
+  manifest_version: 1.6.0
+  server_info_version: 2.0.0
+  transport: streamable-http
+  url: https://api.builtwith.com/mcp
+  http_method: POST
+  stateless: true
+  protocol_version: '2025-06-18'
+  capabilities:
+    tools:
+      listChanged: true
+    resources:
+      listChanged: true
+    prompts:
+      listChanged: true
+  authentication:
+    type: bearer
+    header: Authorization
+    format: 'Authorization: Bearer YOUR_BUILTWITH_API_KEY'
+    note: >-
+      tools/list and initialize answer anonymously; tool invocation requires either a
+      BuiltWith API key or, for the x402-* tools, a prepaid creditKey bought with Base USDC.
+  payment:
+    protocol: x402
+    version: 2
+    network: eip155:8453
+    asset: USDC
+    discovery: https://api.builtwith.com/.well-known/x402
+    prepaid_credential: creditKey
+x-evidence:
+  fetched: '2026-08-14'
+  initialize:
+    url: https://api.builtwith.com/mcp
+    http_status: 200
+    server_info: {name: builtwith, version: 2.0.0}
+    protocol_version: '2025-06-18'
+  tools_list:
+    url: https://api.builtwith.com/mcp
+    http_status: 200
+    gated: false
+    tool_count: 48
+    raw: mcp/builtwith-mcp-tools.json
+tool_count: 48
+tools:
+- {name: domain-lookup, title: Domain Technologies, description: Returns the live web technologies used on the root domain name., inputs: [domain, liveOnly]}
+- {name: domain-api, title: Domain API, description: Domain API JSON lookup for technology and metadata by domain., inputs: [lookup]}
+- {name: domain-api-json, description: Raw Domain API JSON lookup for technology and metadata by domain., inputs: [lookup]}
+- {name: change-api, description: Change API JSON lookup for technology additions and removals by domain., inputs: [lookup, since]}
+- {name: relationships-api, description: Relationships API JSON lookup for related websites by domain., inputs: [lookup]}
+- {name: free-api, description: Free API JSON lookup for category/group counts by domain., inputs: [lookup]}
+- {name: company-to-url, description: Company to URL API JSON lookup for domains from a company name., inputs: [company]}
+- {name: tags-api, description: Tags API JSON lookup for related domains from IP or attributes., inputs: [lookup]}
+- {name: recommendations-api, description: Recommendations API JSON lookup for technology recommendations by domain., inputs: [lookup]}
+- {name: redirects-api, description: Redirects API JSON lookup for live and historical redirects by domain., inputs: [lookup]}
+- {name: keywords-api, description: Keywords API JSON lookup for keyword data by domain., inputs: [lookup]}
+- {name: keywords-search-api, description: Keyword Search API - find websites containing a specific keyword., inputs: [keyword, limit, offset]}
+- {name: trends-api, description: Trends API JSON lookup for technology trend data., inputs: [tech]}
+- {name: product-api, description: Product API JSON lookup for ecommerce product searches., inputs: [query]}
+- {name: trust-api, description: Trust API JSON lookup for trust scoring by domain., inputs: [lookup]}
+- {name: vat-api, description: VAT API JSON lookup for VAT, GST, CNPJ, ABN and other company registration numbers., inputs: [lookup]}
+- {name: vat-types-api, description: List every company registration type the VAT API may return., inputs: []}
+- {name: whoami-api, description: WhoAmI API JSON lookup for account limits, credit costs and privacy flags., inputs: []}
+- {name: usage-api, description: Usage API JSON lookup for current credit balance., inputs: []}
+- {name: mcp-list-api, description: Search and browse remote MCP servers in the BuiltWith MCP registry., inputs: [search, category, offset]}
+- {name: mcp-list-categories, description: List valid BuiltWith MCP registry category slugs, labels and entry counts., inputs: []}
+- {name: list-api, description: List API JSON lookup for websites using a primary technology., inputs: [tech, otherTechs, meta, country, offset, since, all, spend, revenue, sku, followers, employees, sitemap, pageRank, bwRank, tranco, majestic, bws, ecommerceCategory, aiMaturity, aiOpenness, aiReadiness, aiVisibility]}
+- {name: payment-balance, description: Check an account's API-credit balance through the saved-Stripe-method service., inputs: [billingKey]}
+- {name: payment-config, description: Retrieve saved-Stripe-method account top-up limits and monthly period status., inputs: [billingKey]}
+- {name: payment-purchase, description: Charge an account's saved Stripe payment method and add API credits., inputs: [credits, billingKey, idempotencyKey]}
+- {name: vector-api, description: Search BuiltWith technologies and categories by text query using vector similarity., inputs: [query, limit]}
+- {name: ask-api, title: Ask API, description: Ask API lookup for natural language website list queries., inputs: [query, commit, nextOffset, meta]}
+- {name: ask-api-json, title: Raw Ask API JSON, description: Raw Ask API JSON lookup for app/internal use., inputs: [query, commit, nextOffset, meta]}
+- {name: x402-pricing, description: Show prepaid batch-credit pricing, x402 configuration and List pass tiers., inputs: [credits]}
+- {name: x402-credit-purchase, description: Purchase a batch of at least 2,000 non-expiring BuiltWith credits with one x402 payment., inputs: [credits, payer, creditKey]}
+- {name: x402-credit-balance, description: Check purchased, used, pending and available credits for a reusable prepaid key., inputs: [creditKey]}
+- {name: x402-domain-lookup, description: Live web technologies for one domain using one prepaid credit., inputs: [domain, liveOnly, creditKey]}
+- {name: x402-domain-api, description: Domain API technology and metadata lookup using one prepaid credit., inputs: [lookup, creditKey]}
+- {name: x402-domain-api-json, description: Raw Domain API JSON lookup for comma-separated domains, prepaid., inputs: [lookup, creditKey]}
+- {name: x402-change-api, description: Technology additions and removals for domains, prepaid., inputs: [lookup, since, creditKey]}
+- {name: x402-relationships-api, description: Related websites for a domain, prepaid., inputs: [lookup, creditKey]}
+- {name: x402-company-to-url, description: Domains associated with a company name, prepaid., inputs: [company, creditKey]}
+- {name: x402-tags-api, description: Related domains from an IP address or attributes, prepaid., inputs: [lookup, creditKey]}
+- {name: x402-recommendations-api, description: Technology recommendations for a domain, prepaid., inputs: [lookup, creditKey]}
+- {name: x402-redirects-api, description: Live and historical redirects for a domain, prepaid., inputs: [lookup, creditKey]}
+- {name: x402-keywords-api, description: Keyword data for a domain, prepaid., inputs: [lookup, creditKey]}
+- {name: x402-trust-api, description: Trust score for a domain, prepaid., inputs: [lookup, creditKey]}
+- {name: x402-vat-api, description: Public company registration identifiers for up to sixteen domains, prepaid., inputs: [lookup, creditKey]}
+- {name: x402-vector-api, description: Vector similarity search across BuiltWith technologies and categories, prepaid., inputs: [query, limit, creditKey]}
+- {name: x402-ask-api, description: Natural-language website query using one prepaid credit., inputs: [query, commit, nextOffset, meta, payer, creditKey, passToken]}
+- {name: x402-list-pass-purchase, description: Purchase a 30-day Basic or Pro List pass with Base USDC., inputs: [tier, payer]}
+- {name: x402-list-api, description: List websites using a primary technology with a valid x402 List pass., inputs: [tech, otherTechs, meta, country, offset, since, all, spend, revenue, sku, followers, employees, sitemap, pageRank, bwRank, tranco, majestic, bws, ecommerceCategory, aiMaturity, aiOpenness, aiReadiness, aiVisibility, payer, passToken]}
+- {name: x402-keywords-search-api, description: Search websites containing a keyword with a valid x402 List pass., inputs: [keyword, limit, offset, payer, passToken]}
+prompts:
+- analyze-tech-stack
+- find-related-websites
+- get-technology-recommendations
+- research-company
+- check-domain-trust
+- discover-technologies-by-concept
+resources:
+- {name: Domain Technologies Table, uri: 'ui://widget/domain-technologies.html', description: Interactive table for BuiltWith domain technology results.}
+- {name: Ask API Sites Table, uri: 'ui://widget/ask-sites.html', description: Interactive table for BuiltWith Ask API website list results.}
+crosswalk: mcp/builtwith-tool-crosswalk.yml

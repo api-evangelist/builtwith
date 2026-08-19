@@ -1,3 +1,8 @@
+generated: '2026-08-14'
+method: searched
+source: https://api.builtwith.com/domain-api, https://api.builtwith.com/llms.txt
+docs: https://api.builtwith.com/domain-api
+limit_count: 7
 name: BuiltWith API Rate Limits
 description: Rate limits and throttling policies for the BuiltWith API platform across all available endpoints.
 specificationVersion: '0.1'
@@ -20,17 +25,30 @@ rateLimits:
         description: Returns HTTP 429 Too Many Requests when limits are exceeded
     headers:
       - name: X-RATELIMIT-CURRENT-CONCURRENT
+        example: 2
         description: Current number of concurrent requests in flight
       - name: X-RATELIMIT-CURRENT-PERSECOND
+        example: 2
         description: Current requests per second being made
+      - name: X-RATELIMIT-LIMIT-CONCURRENT
+        example: 8
+        description: The maximum concurrent rate before 429 errors
+      - name: X-RATELIMIT-LIMIT-PERSECOND
+        example: 10
+        description: The maximum requests per second before 429 errors
       - name: X-API-CREDITS-AVAILABLE
         description: Total API credits available on the account
       - name: X-API-CREDITS-USED
         description: API credits used in the current billing period
       - name: X-API-CREDITS-REMAINING
         description: API credits remaining in the current billing period
+    errorFormat:
+      status: 429
+      body: '{"error":"Rate limit exceeded","maxConcurrentRequests":8,"maxRequestsPerSecond":1,"currentConcurrentRequests":0,"currentRequestsInWindow":1,"retryAfterSeconds":1}'
+      retryHint: retryAfterSeconds
     notes:
       - Contact BuiltWith for dedicated endpoints to remove rate limits for high-volume use cases
+      - Live per-account ceilings are also reported by GET /whoamiv1/api.json under rate_limits (requests_per_second, concurrency)
 
   - name: Free API Rate Limit
     description: Rate limit applied to the BuiltWith Free API tier.
@@ -83,6 +101,27 @@ rateLimits:
       - Rate limits apply per account; contact BuiltWith for high-volume batch processing
       - Results available via GET /v22/domain/bulk/{job_id}
 
+  - name: MCP Registry API Rate Limit
+    description: Free MCP registry search endpoint, rate limited more tightly than the general API.
+    api: MCP Registry API
+    endpoint: https://api.builtwith.com/mcp2/api.json
+    limits:
+      - type: per-second
+        max: 1
+        description: Maximum 1 request per second per API key
+    headers:
+      - name: X-TOTAL-COUNT
+        description: Total matching registry entries
+      - name: X-OFFSET
+        description: Current pagination offset
+      - name: X-PAGE-SIZE
+        description: Results per page (100)
+      - name: X-HAS-MORE
+        description: Whether more pages remain
+    notes:
+      - Free - no API credits used
+      - Stricter than the general API rate limit because the endpoint is free
+
   - name: Live Feed API Limits
     description: WebSocket connection limits for the BuiltWith Live Feed API.
     api: Live Feed API
@@ -90,9 +129,17 @@ rateLimits:
     limits:
       - type: connection
         description: Real-time WebSocket stream; connection limits apply per account
+    subscriptionLimits:
+      - plan: Basic
+        max: 2
+        description: Up to 2 technology subscriptions per API key
+      - plan: Pro
+        max: 50
+        description: Up to 50 technology subscriptions per API key
     notes:
       - WebSocket protocol requires persistent connection management
       - Disconnects and reconnects count against connection limits
+      - Trial and expired accounts receive obfuscated domain names rather than being blocked
 
 authentication:
   methods:

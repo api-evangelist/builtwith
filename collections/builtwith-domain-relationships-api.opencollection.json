@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BuiltWith Change Bulk Processing Domain Relationships API",
+    "version": "change1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "KEY",
+      "value": "{{KEY}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Domain Relationships",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get domain relationships (JSON)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.json",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "LOOKUP",
+                "value": "",
+                "type": "query",
+                "description": "Domain or comma-separated list of up to 16 domains"
+              },
+              {
+                "name": "OFFSET",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset; use next_skip value from previous response"
+              },
+              {
+                "name": "IP",
+                "value": "",
+                "type": "query",
+                "description": "Set to 'yes' to include IP address data in results"
+              }
+            ]
+          },
+          "docs": "Returns relationships for one or more domains based on shared identifiers such as analytics IDs, IP addresses, and other attributes. Paginate using the next_skip value from the response.\n"
+        },
+        {
+          "info": {
+            "name": "Get domain relationships (XML)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.xml",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "LOOKUP",
+                "value": "",
+                "type": "query",
+                "description": "Domain or comma-separated list of up to 16 domains"
+              },
+              {
+                "name": "OFFSET",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset; use next_skip value from previous response"
+              }
+            ]
+          },
+          "docs": "Get domain relationships (XML)"
+        },
+        {
+          "info": {
+            "name": "Get domain relationships (CSV)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.csv",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "LOOKUP",
+                "value": "",
+                "type": "query",
+                "description": "Domain or comma-separated list of up to 16 domains"
+              }
+            ]
+          },
+          "docs": "Get domain relationships (CSV)"
+        },
+        {
+          "info": {
+            "name": "Get domain relationships (TSV)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.tsv",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "LOOKUP",
+                "value": "",
+                "type": "query",
+                "description": "Domain or comma-separated list of up to 16 domains"
+              }
+            ]
+          },
+          "docs": "Get domain relationships (TSV)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

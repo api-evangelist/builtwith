@@ -1,0 +1,101 @@
+generated: '2026-08-14'
+method: probed
+source: >-
+  live probes of https://api.builtwith.com/.well-known/*, https://api.builtwith.com/mcp,
+  https://api.builtwith.com/openapi.json, https://builtwith.com/.well-known/openai.json,
+  plus the artifacts already in this repo
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: 'https://builtwith.com/.well-known/openai.json parses as OpenAPI 3.0.3 with 29 operations across 22 tags.'
+- id: openapi-3.1
+  conforms: true
+  evidence: 'https://api.builtwith.com/openapi.json (3.1.0, 14 ops) and https://api.builtwith.com/mppx/openapi.json (3.1.0, 3 ops).'
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: '/.well-known/security.txt returns 200 with Contact, Encryption and Expires on both hosts.'
+- id: rfc9727-api-catalog
+  conforms: true
+  evidence: '/.well-known/api-catalog returns a 200 linkset with five anchors (API root, MCP endpoint, x402 descriptor, mppx aliases, website) using service-desc / service-doc / service-meta / related / sitemap relations.'
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: '/.well-known/oauth-authorization-server returns issuer, authorization_endpoint, token_endpoint, registration_endpoint, response_types_supported, grant_types_supported, code_challenge_methods_supported.'
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: '/.well-known/oauth-protected-resource returns resource, authorization_servers, scopes_supported [api.read, api.write], bearer_methods_supported [header].'
+- id: rfc7636-pkce
+  conforms: true
+  evidence: 'code_challenge_methods_supported: [S256] in the authorization-server metadata.'
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: 'registration_endpoint https://api.builtwith.com/oauth/register advertised in the authorization-server metadata.'
+- id: oauth2
+  conforms: true
+  evidence: 'authorization_code grant with PKCE published via RFC 8414 discovery; not declared in any OpenAPI securityScheme.'
+- id: oidc
+  conforms: false
+  evidence: '/.well-known/openid-configuration returns 404 on both hosts.'
+- id: mcp
+  conforms: true
+  version: '2025-06-18'
+  evidence: 'POST https://api.builtwith.com/mcp initialize returns protocolVersion 2025-06-18, serverInfo {builtwith, 2.0.0} and tools/resources/prompts capabilities; tools/list returns 48 tools with JSON Schema draft-07 inputSchema and outputSchema.'
+- id: a2a-agent-card
+  conforms: true
+  version: 0.3.0
+  grade: conformant
+  evidence: '/.well-known/agent-card.json and the legacy /.well-known/agent.json both return the same A2A 0.3.0 card; capabilities is an object, skills is an array, protocolVersion is present. See a2a/builtwith-a2a.yml.'
+- id: llms-txt
+  conforms: true
+  evidence: 'https://api.builtwith.com/llms.txt (200, 28KB) and https://builtwith.com/llms.txt (200) both serve real llms.txt documents; a llms-full.txt is also published.'
+- id: x402
+  conforms: true
+  version: 2
+  evidence: '/.well-known/x402 declares x402Version 2 on Base mainnet (eip155:8453) with USDC, a Coinbase CDP facilitator, PAYMENT-REQUIRED / PAYMENT-SIGNATURE / PAYMENT-RESPONSE headers and a 402 challenge on every /agent/* route.'
+- id: json-schema-draft-07
+  conforms: true
+  evidence: 'Every MCP tool inputSchema declares $schema http://json-schema.org/draft-07/schema#.'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'No response declares application/problem+json. Errors use a vendor {"Errors":[{"Code","Message"}]} envelope; see errors/builtwith-error-codes.yml.'
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: 'No Sunset or Deprecation response header is documented; deprecations are announced only in prose. See lifecycle/builtwith-lifecycle.yml.'
+- id: idempotency
+  conforms: true
+  evidence: 'Idempotency-Key is a required header parameter on POST /mppx/api-purchase, with an Idempotency-Replayed response header and a 409 conflict response. See conventions/builtwith-conventions.yml.'
+- id: pagination
+  conforms: true
+  evidence: 'Opaque NextOffset cursors (Lists, Ask, Keyword Search), numeric next_skip (Relationships) and X-TOTAL-COUNT / X-OFFSET / X-PAGE-SIZE / X-HAS-MORE headers (MCP registry).'
+- id: asyncapi
+  conforms: false
+  evidence: 'No AsyncAPI document is published. The WebSocket Live Feed protocol is fully documented in HTML and llms.txt; asyncapi/builtwith-live-feed-asyncapi.yml is an API Evangelist generation from those docs, not a provider artifact.'
+- id: graphql
+  conforms: false
+  evidence: No GraphQL endpoint is published or documented.
+- id: grpc
+  conforms: false
+  evidence: No .proto definitions found in the builtwith GitHub account, on buf.build, or in the docs.
+- id: json-api
+  conforms: false
+  evidence: 'Responses are vendor-shaped JSON (Results/Result/Paths/Technologies), not JSON:API.'
+- id: odata
+  conforms: false
+- id: scim
+  conforms: false
+- id: fhir
+  conforms: false
+- id: fapi
+  conforms: false
+compliance_program:
+  published: false
+  certifications: []
+  checked:
+  - {url: 'https://builtwith.com/trust', http_status: 200, result: 'soft 404 - site-wide search-results template'}
+  - {url: 'https://builtwith.com/security', http_status: 200, result: 'soft 404 - site-wide search-results template'}
+  - {url: 'https://builtwith.com/compliance', http_status: 202}
+  - {url: 'https://trust.builtwith.com', result: 'probe-security-programs.py found no trust center'}
+  note: >-
+    No SOC 2, ISO 27001, PCI DSS, HIPAA or FedRAMP certification is published, so no
+    `Compliance` or `TrustCenter` pointer is emitted. BuiltWith does publish a GDPR-shaped
+    privacy policy, a modern-slavery statement and a data-removal page, which are policy
+    documents rather than an audited compliance program.

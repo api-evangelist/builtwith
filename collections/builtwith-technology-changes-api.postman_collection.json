@@ -1,0 +1,258 @@
+{
+  "item": [
+    {
+      "id": "7a9bfa89-0c34-4a91-a6b9-297a1d70df38",
+      "name": "Technology Changes",
+      "description": {
+        "content": "Track technology additions and removals on websites",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "446411b6-93c6-4ac1-be8b-ce24b78382f3",
+          "name": "Get technology changes for domain(s)",
+          "request": {
+            "name": "Get technology changes for domain(s)",
+            "description": {
+              "content": "Returns technology additions and removals for one or more domains, with optional SINCE parameter to scope the detection window. AI-generated summaries explain the business significance of each change. 1 API credit per domain with changes; no charge for domains with none.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "(Required) Single domain or comma-separated list of domains"
+                },
+                {
+                  "disabled": false,
+                  "key": "SINCE",
+                  "value": "<string>",
+                  "description": "Time window for change detection; natural language or ISO 8601 date"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4a63a561-29e7-467d-98ef-a197fd1cca33",
+              "name": "Technology changes for the requested domain(s)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "hotelscombined.com"
+                    },
+                    {
+                      "key": "SINCE",
+                      "value": "last month"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Results\": [\n    {\n      \"Lookup\": \"example.com\",\n      \"Changes\": {\n        \"since_utc\": \"2026-05-01T00:00:00Z\",\n        \"last_checked_utc\": \"2026-06-10T12:00:00Z\",\n        \"summary\": \"Example.com adopted HubSpot CRM and removed Salesforce.\",\n        \"events\": [\n          {\n            \"type\": \"technology_added\",\n            \"technology\": \"HubSpot CRM\",\n            \"category\": [\n              \"CRM\",\n              \"Marketing Automation\"\n            ],\n            \"tag\": \"analytics\",\n            \"first_seen_utc\": \"2026-05-15T08:00:00Z\",\n            \"importance\": \"high\",\n            \"why_this_matters\": \"Switching to HubSpot typically signals a focus on inbound marketing.\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a23ce04c-6126-4dbf-aebd-7fc310d25a4c",
+              "name": "Bad request — invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "hotelscombined.com"
+                    },
+                    {
+                      "key": "SINCE",
+                      "value": "last month"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 4327,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 5606,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e12ab17-7d69-4d7a-bbf3-5786933ccda8",
+              "name": "Unauthorized — invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "hotelscombined.com"
+                    },
+                    {
+                      "key": "SINCE",
+                      "value": "last month"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 4511,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 1296,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.builtwith.com/change1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bcad184a-cb40-4dda-a61f-6f12c0bfde20",
+    "name": "BuiltWith Change Bulk Processing Technology Changes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.\n\n\nContact Support:\n Name: BuiltWith Support",
+      "type": "text/plain"
+    }
+  }
+}

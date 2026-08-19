@@ -1,0 +1,1892 @@
+{
+  "tools": [
+    {
+      "name": "domain-lookup",
+      "title": "Domain Technologies",
+      "description": "Returns the live web technologies used on the root domain name.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "liveOnly": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "domain"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://widget/domain-technologies.html"
+        },
+        "ui/resourceUri": "ui://widget/domain-technologies.html"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "count": {
+            "type": "number"
+          },
+          "profile": {
+            "type": "object",
+            "properties": {
+              "companyName": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "vertical": {
+                "type": "string"
+              },
+              "isDb": {
+                "type": "string"
+              },
+              "spend": {
+                "type": "number"
+              },
+              "pathCount": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          },
+          "technologies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                },
+                "Tag": {
+                  "type": "string"
+                },
+                "Link": {
+                  "type": "string"
+                },
+                "Path": {
+                  "type": "string"
+                },
+                "PathDomain": {
+                  "type": "string"
+                },
+                "SubDomain": {
+                  "type": "string"
+                },
+                "Categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "IsPremium": {
+                  "type": "string"
+                },
+                "FirstDetected": {
+                  "type": "number"
+                },
+                "LastDetected": {
+                  "type": "number"
+                },
+                "PathLastIndexed": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "Name",
+                "Description",
+                "Tag",
+                "Link"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "domain",
+          "count",
+          "technologies"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "domain-api",
+      "title": "Domain API",
+      "description": "Domain API JSON lookup for technology and metadata by domain.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://widget/domain-technologies.html"
+        },
+        "ui/resourceUri": "ui://widget/domain-technologies.html"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "count": {
+            "type": "number"
+          },
+          "profile": {
+            "type": "object",
+            "properties": {
+              "companyName": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "vertical": {
+                "type": "string"
+              },
+              "isDb": {
+                "type": "string"
+              },
+              "spend": {
+                "type": "number"
+              },
+              "pathCount": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          },
+          "technologies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                },
+                "Tag": {
+                  "type": "string"
+                },
+                "Link": {
+                  "type": "string"
+                },
+                "Path": {
+                  "type": "string"
+                },
+                "PathDomain": {
+                  "type": "string"
+                },
+                "SubDomain": {
+                  "type": "string"
+                },
+                "Categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "IsPremium": {
+                  "type": "string"
+                },
+                "FirstDetected": {
+                  "type": "number"
+                },
+                "LastDetected": {
+                  "type": "number"
+                },
+                "PathLastIndexed": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "Name",
+                "Description",
+                "Tag",
+                "Link"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "domain",
+          "count",
+          "technologies"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "domain-api-json",
+      "description": "Raw Domain API JSON lookup for technology and metadata by domain.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "change-api",
+      "description": "Change API JSON lookup for technology additions and removals by domain. Supports one or more comma-separated domains and optional natural language SINCE values such as 'last month'.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string",
+            "description": "Domain name, or comma-separated domain names, to check for technology changes"
+          },
+          "since": {
+            "type": "string",
+            "description": "Optional natural language date range such as 'last month'; defaults to 3 months"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "relationships-api",
+      "description": "Relationships API JSON lookup for related websites by domain.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "free-api",
+      "description": "Free API JSON lookup for category/group counts by domain.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "company-to-url",
+      "description": "Company to URL API JSON lookup for domains from a company name.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "company"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "tags-api",
+      "description": "Tags API JSON lookup for related domains from IP or attributes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "recommendations-api",
+      "description": "Recommendations API JSON lookup for technology recommendations by domain.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "redirects-api",
+      "description": "Redirects API JSON lookup for live and historical redirects by domain.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "keywords-api",
+      "description": "Keywords API JSON lookup for keyword data by domain.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "keywords-search-api",
+      "description": "Keyword Search API \u2014 find websites containing a specific keyword. Returns a list of matching domains and a NextOffset value for pagination. Costs API credits per query.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "keyword": {
+            "type": "string",
+            "description": "The keyword to search for (e.g. 'perfume')"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 1000,
+            "description": "Results per request (16\u20131000, default 100)"
+          },
+          "offset": {
+            "type": "string",
+            "description": "Domain name from the previous response's NextOffset for pagination"
+          }
+        },
+        "required": [
+          "keyword"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "trends-api",
+      "description": "Trends API JSON lookup for technology trend data.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tech": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tech"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "product-api",
+      "description": "Product API JSON lookup for ecommerce product searches.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "trust-api",
+      "description": "Trust API JSON lookup for trust scoring by domain.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "vat-api",
+      "description": "VAT API JSON lookup for VAT, GST, CNPJ, ABN, and other publicly displayed company registration numbers associated with websites. Accepts 1\u201316 comma-separated domains. Uses 1 API credit only for each domain that returns registration data; domains with no results use no credits. Returned identifiers are found on public websites and are not verified or validated by BuiltWith.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string",
+            "description": "One to 16 domain names, separated by commas"
+          }
+        },
+        "required": [
+          "lookup"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "vat-types-api",
+      "description": "List every company registration type that the VAT API may return, including its code, friendly name, and description. This public endpoint requires no API key and uses no API credits.",
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "whoami-api",
+      "description": "WhoAmI API JSON lookup for account limits, credit costs, privacy flags, max batch sizes, and endpoint inventory. Uses no API credits. Call this first to make account-aware decisions.",
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "usage-api",
+      "description": "Usage API JSON lookup for current credit balance (used, purchased, remaining). Uses no API credits.",
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "mcp-list-api",
+      "description": "Search and browse remote MCP servers in the BuiltWith MCP registry (v2). Requires a BuiltWith API key supplied as a bearer token. Provide search, category, or both. Returns up to 100 results per page as a JSON array of {Domain, Category, Description, Endpoints: [{Endpoint, AuthRequired, Tools: [{Name, Description}]}], first_detected, last_detected}, and preserves the complete API response including any fields added in the future. Uses no API credits.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "search": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Keyword matched against MCP server domains and descriptions; required when category is omitted"
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1,
+            "description": "MCP registry category slug; required when search is omitted"
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Zero-based pagination offset (default 0; page size is 100)"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "mcp-list-categories",
+      "description": "List valid BuiltWith MCP registry category slugs, labels, and entry counts (v2). This public endpoint requires no API key and uses no API credits.",
+      "inputSchema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {}
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "list-api",
+      "description": "List API JSON lookup for websites using a primary technology. Requires an active BuiltWith plan. OTHERTECHS are subordinate filters and do not consume additional primary technology report slots.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tech": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Primary technology name, such as Shopify"
+          },
+          "otherTechs": {
+            "type": "string",
+            "description": "Optional comma-separated subordinate technology filters; these do not consume additional report slots"
+          },
+          "meta": {
+            "type": "boolean"
+          },
+          "country": {
+            "type": "string"
+          },
+          "offset": {
+            "type": "string"
+          },
+          "since": {
+            "type": "string"
+          },
+          "all": {
+            "type": "boolean"
+          },
+          "spend": {
+            "type": "string"
+          },
+          "revenue": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "followers": {
+            "type": "string"
+          },
+          "employees": {
+            "type": "string"
+          },
+          "sitemap": {
+            "type": "string"
+          },
+          "pageRank": {
+            "type": "string"
+          },
+          "bwRank": {
+            "type": "string"
+          },
+          "tranco": {
+            "type": "string"
+          },
+          "majestic": {
+            "type": "string"
+          },
+          "bws": {
+            "type": "string"
+          },
+          "ecommerceCategory": {
+            "type": "string"
+          },
+          "aiMaturity": {
+            "type": "string"
+          },
+          "aiOpenness": {
+            "type": "string"
+          },
+          "aiReadiness": {
+            "type": "string"
+          },
+          "aiVisibility": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "tech"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "payment-balance",
+      "description": "Check an existing account's API-credit balance through the saved-Stripe-method top-up service. This is not x402.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "billingKey": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Separately scoped Agent Billing Key; optional when the MCP request uses a compatible credential"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "payment-config",
+      "description": "Retrieve saved-Stripe-method account top-up limits, UTC monthly period, purchase increment, and idempotency rules. This is not x402.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "billingKey": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Separately scoped Agent Billing Key; optional when the MCP request uses a compatible credential"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "payment-purchase",
+      "description": "Charge an existing account's saved Stripe payment method and add account API credits. This is not x402. Requires the separately scoped Agent Billing Key, fixed 2,000-credit increments, and an idempotency key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "credits": {
+            "type": "integer",
+            "minimum": 2000,
+            "multipleOf": 2000,
+            "description": "Number of account API credits to purchase in fixed increments of 2,000"
+          },
+          "billingKey": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Separately scoped Agent Billing Key from payments.builtwith.com/agent-payment-api-config"
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 200,
+            "description": "Unique operation identifier; reuse only when retrying the identical purchase"
+          }
+        },
+        "required": [
+          "credits",
+          "billingKey",
+          "idempotencyKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "vector-api",
+      "description": "Search BuiltWith technologies and categories by text query using vector similarity. Returns ranked results with similarity scores (0\u20131), descriptions, and category info. Useful for discovering what technologies match a concept or description (e.g. 'react framework', 'payment gateway', 'live chat'). Costs 1 API credit per query.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Text to search for (e.g. 'javascript framework', 'email marketing')"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Max results to return (default 10, max 100)"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "ask-api",
+      "title": "Ask API",
+      "description": "Ask API lookup for natural language website list queries. OpenAI requests are served as preview results and do not commit full reports.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The natural language query (e.g. 'Magento websites in Spain')"
+          },
+          "commit": {
+            "type": "boolean",
+            "description": "Ignored for OpenAI/ChatGPT requests; preview mode is always used there"
+          },
+          "nextOffset": {
+            "type": "string",
+            "description": "Pagination offset from the previous response's NextOffset"
+          },
+          "meta": {
+            "type": "boolean",
+            "description": "Set to true to include metadata in the results"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://widget/ask-sites.html"
+        },
+        "ui/resourceUri": "ui://widget/ask-sites.html"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "count": {
+            "type": "number"
+          },
+          "committed": {
+            "type": "boolean"
+          },
+          "requestedCommit": {
+            "type": "boolean"
+          },
+          "openAiPreview": {
+            "type": "boolean"
+          },
+          "nextOffset": {
+            "type": "string"
+          },
+          "sites": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Domain": {
+                  "type": "string"
+                },
+                "Title": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                },
+                "Company": {
+                  "type": "string"
+                },
+                "Location": {
+                  "type": "string"
+                },
+                "Country": {
+                  "type": "string"
+                },
+                "Vertical": {
+                  "type": "string"
+                },
+                "SalesRevenue": {
+                  "type": "number"
+                },
+                "Spend": {
+                  "type": "number"
+                },
+                "ProductCount": {
+                  "type": "number"
+                },
+                "Employees": {
+                  "type": "number"
+                },
+                "BrandFollowers": {
+                  "type": "number"
+                },
+                "Traffic": {
+                  "type": "number"
+                },
+                "Technologies": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "LinkedOnSites": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "Domain"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "query",
+          "count",
+          "committed",
+          "requestedCommit",
+          "openAiPreview",
+          "sites"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "ask-api-json",
+      "title": "Raw Ask API JSON",
+      "description": "Raw Ask API JSON lookup for app/internal use. OpenAI requests never send COMMIT=true.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The natural language query (e.g. 'Magento websites in Spain')"
+          },
+          "commit": {
+            "type": "boolean",
+            "description": "Set to true to run a full report returning up to 1000 results"
+          },
+          "nextOffset": {
+            "type": "string",
+            "description": "Pagination offset from the previous response's NextOffset"
+          },
+          "meta": {
+            "type": "boolean",
+            "description": "Set to true to include metadata in the results"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      },
+      "_meta": {
+        "ui": {
+          "visibility": [
+            "app"
+          ]
+        }
+      }
+    },
+    {
+      "name": "x402-pricing",
+      "description": "Show prepaid batch-credit pricing, x402 configuration, and List pass tiers. Optionally quote a credit quantity. Uses no payment.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "credits": {
+            "type": "integer",
+            "minimum": 2000
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-credit-purchase",
+      "description": "Purchase a batch of at least 2,000 non-expiring BuiltWith API credits with one x402 payment. Returns a reusable secret credit key; provide an existing key to top it up.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "credits": {
+            "type": "integer",
+            "minimum": 2000
+          },
+          "payer": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Base wallet address that will sign the x402 payment"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "credits",
+          "payer"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-credit-balance",
+      "description": "Check purchased, used, pending, and available credits for a reusable prepaid key. Uses no payment and consumes no credits.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-domain-lookup",
+      "description": "Returns live web technologies for one domain using one prepaid credit.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "liveOnly": {
+            "type": "boolean"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "domain",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-domain-api",
+      "description": "Domain API technology and metadata lookup for one domain using one prepaid credit.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "lookup",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-domain-api-json",
+      "description": "Raw Domain API JSON lookup for one or more comma-separated domains. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "lookup",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-change-api",
+      "description": "Technology additions and removals for one or more comma-separated domains. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          },
+          "since": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "lookup",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-relationships-api",
+      "description": "Related websites for a domain. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "lookup",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-company-to-url",
+      "description": "Domains associated with a company name. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "company",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-tags-api",
+      "description": "Related domains from an IP address or attributes. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "lookup",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-recommendations-api",
+      "description": "Technology recommendations for a domain. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "lookup",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-redirects-api",
+      "description": "Live and historical redirects for a domain. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "lookup",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-keywords-api",
+      "description": "Keyword data for a domain. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "lookup",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-trust-api",
+      "description": "Trust score for a domain. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "lookup",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-vat-api",
+      "description": "Public company registration identifiers for one to sixteen domains. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lookup": {
+            "type": "string"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "lookup",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-vector-api",
+      "description": "Vector similarity search across BuiltWith technologies and categories. Deducts prepaid credits from a reusable key.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          }
+        },
+        "required": [
+          "query",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-list-pass-purchase",
+      "description": "Purchase a 30-day Basic ($295, 2 technology and 2 keyword reports) or Pro ($495, 50 and 50) List API pass with Base USDC.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tier": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "pro"
+            ]
+          },
+          "payer": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Base wallet address that will sign the x402 payment"
+          }
+        },
+        "required": [
+          "tier",
+          "payer"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-list-api",
+      "description": "List websites using a primary technology with a valid x402 List pass. OTHERTECHS are subordinate filters and never consume additional technology report slots.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tech": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Primary technology name, such as Shopify"
+          },
+          "otherTechs": {
+            "type": "string",
+            "description": "Optional comma-separated subordinate technology filters; these do not consume additional report slots"
+          },
+          "meta": {
+            "type": "boolean"
+          },
+          "country": {
+            "type": "string"
+          },
+          "offset": {
+            "type": "string"
+          },
+          "since": {
+            "type": "string"
+          },
+          "all": {
+            "type": "boolean"
+          },
+          "spend": {
+            "type": "string"
+          },
+          "revenue": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "followers": {
+            "type": "string"
+          },
+          "employees": {
+            "type": "string"
+          },
+          "sitemap": {
+            "type": "string"
+          },
+          "pageRank": {
+            "type": "string"
+          },
+          "bwRank": {
+            "type": "string"
+          },
+          "tranco": {
+            "type": "string"
+          },
+          "majestic": {
+            "type": "string"
+          },
+          "bws": {
+            "type": "string"
+          },
+          "ecommerceCategory": {
+            "type": "string"
+          },
+          "aiMaturity": {
+            "type": "string"
+          },
+          "aiOpenness": {
+            "type": "string"
+          },
+          "aiReadiness": {
+            "type": "string"
+          },
+          "aiVisibility": {
+            "type": "string"
+          },
+          "payer": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Base wallet address that will sign the x402 payment"
+          },
+          "passToken": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Opaque token returned by x402-list-pass-purchase"
+          }
+        },
+        "required": [
+          "tech",
+          "payer",
+          "passToken"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-keywords-search-api",
+      "description": "Search websites containing a keyword with a valid x402 List pass.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "keyword": {
+            "type": "string",
+            "minLength": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 16,
+            "maximum": 1000
+          },
+          "offset": {
+            "type": "string"
+          },
+          "payer": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Base wallet address that will sign the x402 payment"
+          },
+          "passToken": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Opaque token returned by x402-list-pass-purchase"
+          }
+        },
+        "required": [
+          "keyword",
+          "payer",
+          "passToken"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "x402-ask-api",
+      "description": "Natural-language website query using one prepaid credit. Committed reports and pagination also require a Basic or Pro List pass.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "commit": {
+            "type": "boolean"
+          },
+          "nextOffset": {
+            "type": "string"
+          },
+          "meta": {
+            "type": "boolean"
+          },
+          "payer": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$",
+            "description": "Base wallet address that will sign the x402 payment"
+          },
+          "creditKey": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Reusable prepaid key returned by x402-credit-purchase"
+          },
+          "passToken": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Opaque token returned by x402-list-pass-purchase"
+          }
+        },
+        "required": [
+          "query",
+          "payer",
+          "creditKey"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    }
+  ]
+}

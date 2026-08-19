@@ -1,0 +1,62 @@
+generated: '2026-08-14'
+method: probed
+source: https://api.builtwith.com/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: api.builtwith.com
+  also_served_at:
+  - https://builtwith.com/.well-known/agent-card.json
+  - https://api.builtwith.com/.well-known/agent.json
+  - https://builtwith.com/.well-known/agent.json
+  note: >-
+    All four paths return the byte-identical document (md5 64f4a6e4242bba9021f3bafb288c3b27),
+    so BuiltWith serves both the A2A canonical path and the pre-0.3 legacy path on both
+    the API host and the marketing host. The card is also advertised from the provider's
+    own RFC 9727 api-catalog linkset.
+conformance:
+  spec: A2A 1.0.0
+  grade: conformant
+  protocol_version: 0.3.0
+  preferred_transport: HTTP+JSON
+  checks:
+    capabilities_is_object: true
+    protocol_version_present: true
+    skills_is_array: true
+    preferred_transport_present: true
+    default_input_modes_present: true
+    default_output_modes_present: true
+  deviations: []
+card:
+  name: BuiltWith
+  url: https://api.builtwith.com/mcp
+  version: 1.3.0
+  provider: BuiltWith Pty Ltd
+  documentation_url: https://api.builtwith.com/llms.txt
+  skills: 7
+  skill_ids:
+  - domain-technology-profile
+  - technology-changes
+  - website-relationships
+  - technology-lists-and-trends
+  - company-and-firmographics
+  - keywords-and-recommendations
+  - natural-language-site-discovery
+  security_schemes:
+  - name: builtwithApiKey
+    type: http
+    scheme: bearer
+  additional_interfaces:
+  - url: https://api.builtwith.com/mcp
+    transport: HTTP+JSON
+  file: builtwith-agent-card.json
+notes:
+- >-
+  The card's url and its only additionalInterface both point at the MCP endpoint
+  (https://api.builtwith.com/mcp) rather than a dedicated A2A JSON-RPC endpoint, so the
+  agent surface this card advertises is the MCP server captured in mcp/builtwith-mcp.yml.
+x-evidence:
+  fetched: '2026-08-14'
+  url: https://api.builtwith.com/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json

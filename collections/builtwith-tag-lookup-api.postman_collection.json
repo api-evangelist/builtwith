@@ -1,0 +1,360 @@
+{
+  "item": [
+    {
+      "id": "255b33e7-42c4-42af-bc44-cd100e9bc3b5",
+      "name": "Tag Lookup",
+      "description": {
+        "content": "Lookup domains by IP or attribute identifier",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0df2bade-169c-4009-ae5d-3ed3bf2fae29",
+          "name": "Get domains by tag/attribute (JSON)",
+          "request": {
+            "name": "Get domains by tag/attribute (JSON)",
+            "description": {
+              "content": "Returns domains associated with the given attribute (IP address, publisher ID, etc.). Supports up to 16 comma-separated attribute values. Use TYPES=true to retrieve the list of available attribute types.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "Attribute value(s) to query, prefix with type (e.g. IP-98.158.194.127 or CA-PUB-1894893914772263). Up to 16 comma-separated values.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "TYPES",
+                  "value": "<string>",
+                  "description": "Set to 'true' to return list of available attribute types"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "299961f3-98f5-4fb8-8a4a-bba1c299d0ea",
+              "name": "Domains matching the attribute or list of attribute types",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "IP-98.158.194.127"
+                    },
+                    {
+                      "key": "TYPES",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Identifiers\": [\n    {\n      \"Value\": \"IP-98.158.194.127\",\n      \"Matches\": [\n        {\n          \"Domain\": \"example.com\",\n          \"First\": \"2020-01-01\",\n          \"Last\": \"2026-06-01\"\n        },\n        {\n          \"Domain\": \"example2.com\",\n          \"First\": \"2021-03-15\",\n          \"Last\": \"2025-12-01\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "913477f6-7691-4fdc-b757-c7c636392def",
+              "name": "Bad request — invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "IP-98.158.194.127"
+                    },
+                    {
+                      "key": "TYPES",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 8543,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 1390,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8364cd8c-ebc4-4fdd-80e3-26a8d603c858",
+              "name": "Unauthorized — invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "IP-98.158.194.127"
+                    },
+                    {
+                      "key": "TYPES",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Errors\": [\n    {\n      \"Code\": 7357,\n      \"Message\": \"string\"\n    },\n    {\n      \"Code\": 4570,\n      \"Message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8cd6c502-2e34-47d5-9ff7-92b7fb52de34",
+          "name": "Get domains by tag/attribute (XML)",
+          "request": {
+            "name": "Get domains by tag/attribute (XML)",
+            "description": {},
+            "url": {
+              "path": [
+                "api.xml"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "KEY",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "LOOKUP",
+                  "value": "<string>",
+                  "description": "Attribute value(s) to query, prefix with type (e.g. IP-98.158.194.127 or CA-PUB-1894893914772263). Up to 16 comma-separated values.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "TYPES",
+                  "value": "<string>",
+                  "description": "Set to 'true' to return list of available attribute types"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ba3d6709-45b1-421c-802c-a200dba6301e",
+              "name": "Tag domains in XML",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api.xml"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "LOOKUP",
+                      "value": "IP-98.158.194.127"
+                    },
+                    {
+                      "key": "TYPES",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.builtwith.com/change1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d56fe744-50fd-42bc-987d-3dac2eac0fc7",
+    "name": "BuiltWith Change Bulk Processing Tag Lookup API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.\n\n\nContact Support:\n Name: BuiltWith Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,139 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  openapi/builtwith-rest-api-openapi.json, openapi/builtwith-domain-lookup-api-openapi.yml,
+  openapi/builtwith-technology-lists-api-openapi.yml,
+  openapi/builtwith-technology-trends-api-openapi.yml,
+  openapi/builtwith-domain-relationships-api-openapi.yml,
+  openapi/builtwith-tag-lookup-api-openapi.yml, openapi/builtwith-free-lookup-api-openapi.yml,
+  openapi/builtwith-technology-changes-api-openapi.yml, mcp/builtwith-mcp-tools.json (outputSchema),
+  json-schema/, vocabulary/builtwith-vocabulary.yml
+description: >-
+  BuiltWith has no customer-object CRUD model. Its data model is a bipartite graph: DOMAINS on
+  one side, TECHNOLOGIES on the other, joined by dated DETECTION edges, with IDENTIFIERS
+  (analytics ids, IPs, publisher ids) linking domains to each other. Every published endpoint
+  is a different projection of that one graph, which is why the entities below are read-only
+  and carry no server-assigned resource ids.
+identifier_conventions:
+  primary_key: root domain name (there are no opaque object ids)
+  technology_key: canonical technology Name with spaces replaced by dashes (e.g. Google-Analytics)
+  timestamps:
+    domain_api: Unix milliseconds (FirstDetected, LastDetected)
+    free_api: Unix seconds (first, last, latest, oldest)
+    lists_api: Unix milliseconds (FD, LD) / seconds (FI, LI)
+    change_api: ISO 8601 UTC strings (since_utc, first_seen_utc, last_seen_utc)
+    live_feed: Unix seconds (epoch_secs)
+  note: >-
+    Timestamp units are inconsistent across products - milliseconds on Domain/Lists, seconds on
+    Free and the Live Feed, ISO strings on Change. An agent must branch on the endpoint.
+entities:
+- name: Domain
+  description: A root website. The subject of almost every lookup.
+  key: Lookup / D / domain / website_domain
+  attributes: [Lookup, Spend, SpendHistory, SalesRevenue, Country, first, last]
+  schemas: [Result, FreeResult, ListResultItem]
+- name: DomainMeta
+  description: Firmographic metadata for a domain - company name, vertical, contacts, address.
+  attributes: [CompanyName, Vertical, Telephones, Emails, Names, City, State, Postcode, Country]
+  privacy: 'Suppressed by NOPII (contacts) and NOMETA (whole block).'
+  schemas: [DomainMeta, ListMeta]
+- name: Path
+  description: A scanned subdomain or path under a domain; carries its own technology list.
+  attributes: [Domain, Technologies]
+  schemas: [Path]
+- name: Technology
+  description: A detected web technology.
+  key: Name
+  attributes: [Name, Description, Link, Tag, Categories, IsPremium, FirstDetected, LastDetected, Live, Attributes]
+  schemas: [Technology, TechTrend]
+- name: TechCategory
+  description: A category label applied to a technology.
+  attributes: [Category]
+  schemas: [TechCategory, TechGroup, TechSubcategory]
+- name: Attribute
+  description: Extra field/value data captured for a technology on a domain.
+  attributes: [Field, Value]
+  schemas: [Attribute]
+- name: TrendCoverage
+  description: Adoption counts for a technology across traffic segments.
+  attributes: [TenK, HundredK, Mil, Internet, Live, Historical]
+  schemas: [TrendCoverage]
+- name: Identifier
+  description: A shared identifier (analytics id, GTM container, IP, publisher id) that links domains.
+  attributes: [Type, Value, First, Last, Matches]
+  schemas: [Identifier, TagIdentifier]
+- name: RelationshipMatch
+  description: Another domain that shares an identifier, with the overlap window.
+  attributes: [Domain, First, Last, Overlap]
+  schemas: [RelationshipMatch, TagMatch]
+- name: ChangeEvent
+  description: A dated technology addition or removal with an AI-generated business rationale.
+  attributes: [type, technology, category, tag, first_seen_utc, last_seen_utc, importance, why_this_matters]
+  schemas: [ChangeEvent, ChangeSet]
+- name: Recommendation
+  description: A suggested technology for a domain with a match score.
+  attributes: [name, tag, categories, stars, match]
+- name: Redirect
+  description: Inbound or outbound redirect edge between two domains, with a detection window.
+  attributes: [Domain, FirstDetected, LastDetected]
+- name: TrustAssessment
+  description: Trust level, reasons, content-safety flags and business profile for a domain.
+  attributes: [TrustLevel, Summary, Reasons, ContentSafety, BusinessProfile, LiveVerification]
+  enums:
+    TrustLevel: [Unverified, RestrictedContent, HighRisk, Caution, VerificationRecommended, Neutral, Trusted]
+- name: Product
+  description: An ecommerce product offered by a shop domain.
+  attributes: [Title, Url, Price]
+- name: CompanyRegistration
+  description: A public company registration identifier (VAT, GST, CNPJ, ABN) tied to a domain.
+  attributes: [Domain, Type, Number]
+- name: BulkJob
+  description: An asynchronous bulk domain lookup job.
+  key: job_id
+  attributes: [job_id, status, count, sync_max, created_utc, completed_utc, result_url]
+  enums:
+    status: [queued, processing, completed, complete, error]
+  lifecycle: 'submit -> poll -> retrieve once (results are deleted after the first successful read)'
+- name: Account
+  description: The calling account's plan, limits, credit balance and privacy posture.
+  attributes: [email, plan, plan_expiry, max_batch_size, rate_limits, credits, privacy]
+  source_operation: whoami_v1
+- name: CreditLedger
+  description: Prepaid credit balance, either account credits or an x402 creditKey ledger.
+  attributes: [purchased, used, pending, remaining, credits_total, credits_used, credits_available]
+relationships:
+- {from: Domain, to: Path, type: has_many, via: Paths}
+- {from: Domain, to: DomainMeta, type: has_one, via: Meta}
+- {from: Path, to: Technology, type: has_many, via: Technologies}
+- {from: Technology, to: TechCategory, type: has_many, via: Categories}
+- {from: Technology, to: Attribute, type: has_many, via: Attributes}
+- {from: Technology, to: TrendCoverage, type: has_one, via: Coverage}
+- {from: Domain, to: Identifier, type: has_many, via: Identifiers}
+- {from: Identifier, to: RelationshipMatch, type: has_many, via: Matches}
+- {from: RelationshipMatch, to: Domain, type: belongs_to, via: Domain}
+- {from: Domain, to: ChangeEvent, type: has_many, via: Changes.events}
+- {from: ChangeEvent, to: Technology, type: belongs_to, via: technology}
+- {from: Domain, to: Recommendation, type: has_many, via: Recommendations}
+- {from: Domain, to: Redirect, type: has_many, via: Inbound/Outbound}
+- {from: Domain, to: TrustAssessment, type: has_one, via: Assessment}
+- {from: Domain, to: Product, type: has_many, via: 'shops[].Products'}
+- {from: Domain, to: CompanyRegistration, type: has_many, via: Type/Number records}
+- {from: TechGroup, to: TechSubcategory, type: has_many, via: categories}
+- {from: BulkJob, to: Domain, type: has_many, via: lookups}
+- {from: Account, to: CreditLedger, type: has_one, via: credits}
+projections:
+  by_domain: [domain_lookup_v22, free_v1, change_v1, relationships_v4, tags_v1, recommendations_v1, redirects_v1, keywords_v2, trust_v1, financial_v1, social_v1]
+  by_technology: [lists_v12, trends_v6, vector_search_v1]
+  by_company: [company_to_url_v3]
+  by_keyword: [keyword_search_v1]
+  by_query: [ask_v1, product_v1]
+  by_account: [whoami_v1, usage_v2, agent_payment_api_discovery]
+render: null
+notes:
+- >-
+  Lists API results use single-letter field names (D domain, S spend, FD/LD detection window,
+  R revenue, F followers, E employees, A/Q/M traffic ranks, U country) to keep large exports
+  small; the same concepts are spelled out on the Domain API.
+- >-
+  There is no create/update/delete surface anywhere in the published contract except credit
+  purchases, so the model has no write-side entities.

@@ -1,4 +1,4 @@
-generated: '2026-07-11'
+generated: '2026-08-14'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -6,27 +6,28 @@ hosts:
   https: true
   tls_version: TLSv1.2
   cert_expires: Oct  4 16:38:25 2026 GMT
-  hsts: false
+  hsts: true
+  hsts_max_age: 31536000
 - host: api.builtwith.com
   https: true
   tls_version: TLSv1.2
-  cert_expires: Sep  6 16:00:28 2026 GMT
+  cert_expires: Nov  1 16:10:36 2026 GMT
   hsts: true
   hsts_max_age: 31536000
 - host: sync.builtwith.com
   https: true
   tls_version: TLSv1.2
-  cert_expires: Aug 24 16:26:05 2026 GMT
+  cert_expires: Oct 18 17:14:14 2026 GMT
   hsts: null
 domains:
 - domain: builtwith.com
   dnssec: true
   caa:
-  - 0 iodef "mailto:support@builtwith.com"
-  - 0 issue "amazontrust.com"
   - 0 issue "comodoca.com"
   - 0 issue "letsencrypt.org"
   - 0 issue "symantec.com"
+  - 0 iodef "mailto:support@builtwith.com"
+  - 0 issue "amazontrust.com"
   spf: true
   dmarc: true
   dmarc_policy: quarantine

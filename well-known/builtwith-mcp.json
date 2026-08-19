@@ -1,0 +1,106 @@
+{
+  "name": "BuiltWith MCP",
+  "version": "1.6.0",
+  "description": "Official BuiltWith Model Context Protocol (MCP) server for querying website technology stacks, relationships, trends, products, and metadata directly from AI tools, with API-key and x402 paid access.",
+  "endpoint": "https://api.builtwith.com/mcp",
+  "protocol": "mcp",
+  "transport": "streamable-http",
+  "authentication": {
+    "type": "bearer",
+    "header": "Authorization",
+    "description": "Bring your own BuiltWith API key. Use: Authorization: Bearer YOUR_BUILTWITH_API_KEY"
+  },
+  "discovery_manifest": "https://builtwith.com/.well-known/mcp.json",
+  "tools": [
+    "domain-lookup",
+    "domain-api",
+    "domain-api-json",
+    "change-api",
+    "relationships-api",
+    "free-api",
+    "company-to-url",
+    "tags-api",
+    "recommendations-api",
+    "redirects-api",
+    "keywords-api",
+    "keywords-search-api",
+    "trends-api",
+    "product-api",
+    "trust-api",
+    "vat-api",
+    "vat-types-api",
+    "whoami-api",
+    "usage-api",
+    "payment-balance",
+    "payment-config",
+    "payment-purchase",
+    "vector-api",
+    "ask-api",
+    "ask-api-json",
+    "list-api",
+    "mcp-list-api",
+    "mcp-list-categories",
+    "x402-pricing",
+    "x402-credit-purchase",
+    "x402-credit-balance",
+    "x402-domain-lookup",
+    "x402-domain-api",
+    "x402-domain-api-json",
+    "x402-change-api",
+    "x402-relationships-api",
+    "x402-company-to-url",
+    "x402-tags-api",
+    "x402-recommendations-api",
+    "x402-redirects-api",
+    "x402-keywords-api",
+    "x402-trust-api",
+    "x402-vat-api",
+    "x402-vector-api",
+    "x402-ask-api",
+    "x402-list-pass-purchase",
+    "x402-list-api",
+    "x402-keywords-search-api"
+  ],
+  "resources": [
+    {
+      "name": "Domain Technologies Table",
+      "uri": "ui://widget/domain-technologies.html",
+      "description": "Interactive table for BuiltWith domain technology results."
+    },
+    {
+      "name": "Ask API Sites Table",
+      "uri": "ui://widget/ask-sites.html",
+      "description": "Interactive table for BuiltWith Ask API website list results."
+    }
+  ],
+  "prompts": [
+    "analyze-tech-stack",
+    "find-related-websites",
+    "get-technology-recommendations",
+    "research-company",
+    "check-domain-trust",
+    "discover-technologies-by-concept"
+  ],
+  "docs": "https://github.com/builtwith/builtwith-mcp",
+  "source": "https://github.com/builtwith/builtwith-mcp",
+  "client_config_example": {
+    "mcpServers": {
+      "builtwith": {
+        "url": "https://api.builtwith.com/mcp",
+        "headers": {
+          "Authorization": "Bearer YOUR_BUILTWITH_API_KEY"
+        }
+      }
+    }
+  },
+  "notes": [
+    "https://api.builtwith.com/.well-known/mcp.json redirects to https://builtwith.com/.well-known/mcp.json.",
+    "x402 v2 payment configuration, current pricing, and the authoritative paid-tool inventory are published at https://api.builtwith.com/.well-known/x402.",
+    "Use x402-pricing, pay once with x402-credit-purchase, then use the returned reusable creditKey with prepaid x402 lookup tools.",
+    "For one-off HTTP payments, discover the fixed-price AgentCash routes at https://api.builtwith.com/openapi.json."
+  ],
+  "maintainer": {
+    "name": "BuiltWith Pty Ltd",
+    "url": "https://builtwith.com"
+  }
+}

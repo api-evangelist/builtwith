@@ -1,0 +1,106 @@
+generated: '2026-08-14'
+method: searched
+source: live probes of https://api.builtwith.com/.well-known/* and https://builtwith.com/.well-known/*
+hosts:
+- https://api.builtwith.com
+- https://builtwith.com
+summary:
+  probed: 20
+  hits: 14
+  note: >-
+    api.builtwith.com and builtwith.com serve the same /.well-known/ surface. Both hosts
+    return real documents (not SPA shells) on every path recorded as 200 below; the two
+    404s return the api.builtwith.com HTML error page and are recorded as misses.
+documents:
+- path: /.well-known/security.txt
+  host: api.builtwith.com
+  status: 200
+  file: builtwith-security.txt
+  spec: RFC 9116
+- path: /.well-known/security.txt
+  host: builtwith.com
+  status: 200
+  file: builtwith-security.txt
+  spec: RFC 9116
+- path: /.well-known/oauth-authorization-server
+  host: api.builtwith.com
+  status: 200
+  file: builtwith-oauth-authorization-server.json
+  spec: RFC 8414
+- path: /.well-known/oauth-authorization-server
+  host: builtwith.com
+  status: 200
+  file: builtwith-oauth-authorization-server.json
+  spec: RFC 8414
+- path: /.well-known/oauth-protected-resource
+  host: api.builtwith.com
+  status: 200
+  file: builtwith-oauth-protected-resource.json
+  spec: RFC 9728
+- path: /.well-known/oauth-protected-resource
+  host: builtwith.com
+  status: 200
+  file: builtwith-oauth-protected-resource.json
+  spec: RFC 9728
+- path: /.well-known/api-catalog
+  host: api.builtwith.com
+  status: 200
+  file: builtwith-api-catalog.json
+  spec: RFC 9727
+- path: /.well-known/api-catalog
+  host: builtwith.com
+  status: 200
+  file: builtwith-api-catalog.json
+  spec: RFC 9727
+- path: /.well-known/agent-card.json
+  host: api.builtwith.com
+  status: 200
+  file: ../a2a/builtwith-agent-card.json
+  spec: A2A 0.3.0
+- path: /.well-known/agent.json
+  host: api.builtwith.com
+  status: 200
+  file: ../a2a/builtwith-agent-card.json
+  spec: A2A pre-0.3 legacy path (identical body)
+- path: /.well-known/mcp.json
+  host: builtwith.com
+  status: 200
+  file: builtwith-mcp.json
+  spec: MCP server discovery manifest (vendor-defined)
+- path: /.well-known/mcp.json
+  host: api.builtwith.com
+  status: 200
+  file: builtwith-mcp.json
+  note: redirects to the builtwith.com copy
+- path: /.well-known/x402
+  host: api.builtwith.com
+  status: 200
+  file: builtwith-x402.json
+  spec: x402 v2 payment discovery
+- path: /.well-known/openai.json
+  host: builtwith.com
+  status: 200
+  file: ../openapi/builtwith-rest-api-openapi.json
+  note: >-
+    Despite the filename this is a full OpenAPI 3.0.3 document for the BuiltWith REST API,
+    not an ai-plugin manifest. Harvested into openapi/.
+- path: /.well-known/openid-configuration
+  host: api.builtwith.com
+  status: 404
+- path: /.well-known/openid-configuration
+  host: builtwith.com
+  status: 404
+- path: /.well-known/ai-plugin.json
+  host: api.builtwith.com
+  status: 404
+- path: /.well-known/ai-plugin.json
+  host: builtwith.com
+  status: 404
+also_referenced_by_provider:
+- path: /.well-known/publickey.txt
+  host: builtwith.com
+  note: PGP public key for encrypted security reports, named by security.txt Encryption
+- path: /.well-known/apple-developer-domain-association.txt
+  host: builtwith.com
+- path: /.well-known/apple-developer-merchantid-domain-association
+  host: builtwith.com

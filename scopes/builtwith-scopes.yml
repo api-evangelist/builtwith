@@ -1,0 +1,53 @@
+generated: '2026-08-14'
+method: probed
+source: https://api.builtwith.com/.well-known/oauth-protected-resource
+docs: null
+note: >-
+  derive-oauth-scopes.py found no oauth2 securityScheme in any OpenAPI (BuiltWith's specs
+  declare apiKey and bearer only). The OAuth surface is not in the specs - it is published as
+  RFC 8414 / RFC 9728 discovery documents at the well-known paths below, which is how an MCP
+  client negotiates access to https://api.builtwith.com/mcp. Scopes are recorded from those
+  probed documents, not derived or invented.
+protected_resource:
+  spec: RFC 9728
+  url: https://api.builtwith.com/.well-known/oauth-protected-resource
+  http_status: 200
+  resource: https://api.builtwith.com/
+  resource_name: BuiltWith API
+  authorization_servers:
+  - https://api.builtwith.com/
+  bearer_methods_supported: [header]
+authorization_server:
+  spec: RFC 8414
+  url: https://api.builtwith.com/.well-known/oauth-authorization-server
+  http_status: 200
+  issuer: https://api.builtwith.com
+  authorization_endpoint: https://api.builtwith.com/authorize
+  token_endpoint: https://api.builtwith.com/token
+  registration_endpoint: https://api.builtwith.com/oauth/register
+  response_types_supported: [code]
+  grant_types_supported: [authorization_code]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none]
+  dynamic_client_registration: true
+  pkce_required: true
+scopes:
+- scope: api.read
+  description: >-
+    Read access to the BuiltWith API resource. Not further described by the provider; every
+    intelligence endpoint (domain, lists, trends, relationships, change, trust, keywords,
+    product, vector, ask) is a read.
+  flows: [authorizationCode]
+  sources: [.well-known/oauth-protected-resource]
+- scope: api.write
+  description: >-
+    Write access to the BuiltWith API resource. Not further described by the provider; the only
+    mutating published operations are account credit purchases and x402 credit/List-pass
+    purchases.
+  flows: [authorizationCode]
+  sources: [.well-known/oauth-protected-resource]
+gaps:
+- No scopes reference page is published on the docs site; the two scope strings above are the
+  complete published set and carry no provider-authored descriptions.
+- The authorization server advertises token_endpoint_auth_methods_supported=[none] with PKCE
+  S256 and open dynamic client registration, which is the standard MCP public-client shape.

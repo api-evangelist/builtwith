@@ -1,0 +1,35 @@
+generated: '2026-08-14'
+method: generated
+source: >-
+  openapi/builtwith-rest-api-openapi.json, openapi/builtwith-x402-pay-per-call-openapi.json,
+  openapi/builtwith-agent-stripe-topup-openapi.json, conventions/builtwith-conventions.yml,
+  errors/builtwith-error-codes.yml, rate-limits/builtwith-rate-limits.yml
+note: >-
+  Authored by the API Evangelist enrichment pipeline. BuiltWith publishes no AGENTS.md or skill
+  files of its own; it publishes llms.txt, which these skills draw on. Every operationId below
+  was verified present in the named spec.
+skills:
+- file: builtwith-profile-a-domain.md
+  name: Profile a domain's technology stack
+  api: openapi/builtwith-rest-api-openapi.json
+  operations: [whoami_v1, usage_v2, free_v1, domain_lookup_v22, change_v1]
+- file: builtwith-find-prospects-by-technology.md
+  name: Find and qualify websites using a technology
+  api: openapi/builtwith-rest-api-openapi.json
+  operations: [trends_v6, vector_search_v1, lists_v12, ask_v1, domain_lookup_v22]
+- file: builtwith-research-a-company.md
+  name: Research a company from its name to its web estate
+  api: openapi/builtwith-rest-api-openapi.json
+  operations: [company_to_url_v3, domain_lookup_v22, relationships_v4, tags_v1, redirects_v1, trust_v1]
+- file: builtwith-bulk-enrich-domains.md
+  name: Bulk enrich a large domain list
+  api: openapi/builtwith-rest-api-openapi.json
+  operations: [whoami_v1, domain_bulk_submit_v22, domain_bulk_status_v22, domain_bulk_result_v22, usage_v2]
+- file: builtwith-pay-per-call-with-x402.md
+  name: Call BuiltWith with no account using x402
+  api: openapi/builtwith-x402-pay-per-call-openapi.json
+  operations: [lookupDomainTechnologies, findRelatedWebsites, getDomainTechnologyChanges, findCompanyDomains, getDomainTrust, askForWebsites, purchaseBasicListPass, purchaseProListPass]
+- file: builtwith-top-up-api-credits.md
+  name: Top up account API credits safely
+  api: openapi/builtwith-agent-stripe-topup-openapi.json
+  operations: [getStripeTopUpBalance, getStripeTopUpConfiguration, purchaseAccountCreditsWithStripe]

@@ -1,0 +1,94 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  registry.npmjs.org, azuresearch-usnc.nuget.org, pypi.org/pypi, api.github.com/users/builtwith/repos,
+  and the "SDKs & Libraries / NPM & Nuget" section of https://api.builtwith.com/domain-api
+checked:
+  registries: [npm, nuget, pypi, rubygems, packagist, crates.io, maven-central, pkg.go.dev]
+  note: >-
+    Only npm and NuGet carry first-party BuiltWith packages. The PyPI package `builtwith`
+    (1.3.4, 2020-06-17) is a third-party scraper by richardpenman and the npm package
+    `builtwith` (1.0.2, 2017-09-05) is a third-party scraper by ecrmnn - neither is BuiltWith
+    Pty Ltd and neither is recorded as official below.
+packages:
+- language: javascript
+  registry: npm
+  name: builtwith-official-cli
+  url: https://www.npmjs.com/package/builtwith-official-cli
+  install: npm install -g builtwith-official-cli
+  binary: bw
+  repo: https://github.com/builtwith/builtwith-official-cli
+  license: MIT
+  official: true
+  version: 1.6.0
+  published: '2026-07-22'
+  note: First-party CLI; also ships a local MCP stdio server via `bw mcp`. Command surface in cli/builtwith-cli.yml.
+- language: javascript
+  registry: npm
+  name: '@builtwith/mcp-server'
+  url: https://www.npmjs.com/package/@builtwith/mcp-server
+  install: npx -y @builtwith/mcp-server
+  repo: https://github.com/builtwith/builtwith-mcp
+  license: MIT
+  official: true
+  version: 1.8.0
+  published: '2026-07-07'
+  note: >-
+    First-party local-stdio MCP server (author Gary Brewer <gary@builtwith.com>). The repo's
+    package.json declares 1.11.1 while npm's latest is 1.8.0, so the published artifact trails
+    the source tree; its repository field also points at builtwith/mcp-server while the code
+    lives at builtwith/builtwith-mcp.
+- language: javascript
+  registry: npm
+  name: builtwith-tui
+  url: https://www.npmjs.com/package/builtwith-tui
+  install: npm install -g builtwith-tui
+  repo: https://github.com/builtwith/builtwith-tui
+  license: MIT
+  official: true
+  version: 0.2.0
+  published: '2026-04-03'
+  note: Terminal UI over the BuiltWith API endpoints; published under the builtwith GitHub account.
+- language: csharp
+  registry: nuget
+  name: BuiltWith
+  url: https://www.nuget.org/packages/BuiltWith
+  install: dotnet add package BuiltWith
+  repo: https://github.com/builtwith/BuiltWith-C-Client-API
+  official: true
+  version: 1.0.1
+  published: null
+  note: >-
+    Client REST API for the BuiltWith.com API. The NuGet registration index exposes only the
+    version range (upper 1.0.1); no publish date was returned by api.nuget.org, so `published`
+    is an honest null rather than a guess.
+- language: javascript
+  registry: null
+  name: builtwith-node-api
+  url: https://github.com/builtwith/builtwith-node-api
+  install: null
+  repo: https://github.com/builtwith/builtwith-node-api
+  official: true
+  version: null
+  published: null
+  note: >-
+    First-party Node wrapper published as source only - checked npm for `builtwith-node-api`
+    and it is absent (404), so there is no registry metadata endpoint to read a version from.
+    Consumers must install from git.
+- language: csharp
+  registry: null
+  name: builtwith-ai-sdk
+  url: https://github.com/builtwith/builtwith-ai-sdk
+  install: null
+  repo: https://github.com/builtwith/builtwith-ai-sdk
+  official: true
+  version: null
+  published: null
+  note: >-
+    "AI First SDK using BuiltWith MCP"; source-only, no registry listing found on NuGet or npm.
+    Its README is the reference BuiltWith points agents at from every docs page.
+third_party:
+- {language: typescript, registry: npm, name: builtwith-api, version: 3.3.0, published: '2026-07-08', repo: 'https://github.com/zcaceres/builtwith-api', official: false, note: 'Community TypeScript library and CLI; also publishes the npm alias `builtwith-mcp` (3.3.0, 2026-07-08). Not BuiltWith Pty Ltd.'}
+- {language: python, registry: pypi, name: builtwith, version: 1.3.4, published: '2020-06-17', repo: 'https://github.com/richardpenman/builtwith', official: false, note: Third-party local detection library, not a client for the BuiltWith API.}
+gaps:
+- No first-party Python, Go, Java, Ruby, PHP or Rust client library is published to any registry, although the docs ship copy-paste code examples for curl, C#, Go, Java, Node.js, PHP, Python and Ruby.

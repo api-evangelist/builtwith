@@ -1,0 +1,164 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://api.builtwith.com/llms.txt, https://api.builtwith.com/domain-api,
+  https://api.builtwith.com/errorCodes, https://api.builtwith.com/live-feed-api,
+  openapi/builtwith-rest-api-openapi.json, openapi/builtwith-x402-pay-per-call-openapi.json,
+  openapi/builtwith-agent-stripe-topup-openapi.json
+transport:
+  https_only: true
+  base_url: https://api.builtwith.com
+  note: 'Docs state "Our endpoints are HTTPS only, providing key encryption."'
+authentication:
+  style: api-key
+  preferred: 'Authorization: API {key}'
+  alternatives:
+  - 'query parameter ?KEY={guid} (retained for compatibility; the mppx billing service calls the ?KEY= form deprecated)'
+  - 'Authorization: Bearer {key} on the MCP endpoint https://api.builtwith.com/mcp'
+  - 'Authorization: Bearer {agent-billing-key} on the Stripe credit top-up service'
+  key_format: GUID (UUID v4)
+  temporary_tokens:
+    prefix: bw-
+    issued_by: Agent Device-Code Authorization (POST /agent-auth/start then POST /agent-auth/token)
+    lifetime_seconds: 86400
+    usage: passed as KEY= exactly like a permanent key
+  detail: authentication/builtwith-authentication.yml
+idempotency:
+  supported: true
+  scope: account credit purchases (the only mutating money operation in the published contract)
+  header: Idempotency-Key
+  required: true
+  value_constraints: 8-200 printable characters
+  replay_signal:
+    header: Idempotency-Replayed
+    type: boolean
+  conflict_status: 409
+  operations:
+  - openapi/builtwith-agent-stripe-topup-openapi.json#purchaseAccountCreditsWithStripe
+  - openapi/builtwith-rest-api-openapi.json#agent_payment_api_purchase
+  mcp_input: payment-purchase tool accepts idempotencyKey
+  guidance: 'Reuse an Idempotency-Key only when retrying an identical purchase.'
+  not_applicable: >-
+    Every other published operation is a read (GET, or POST used only to carry a JSON body for
+    lookups), so no idempotency key is offered or needed on the intelligence endpoints.
+pagination:
+  styles:
+  - name: opaque-cursor
+    apis: [Lists API, Ask API, Keyword Search API]
+    request_param: OFFSET (Lists, Keyword Search) / NEXTOFFSET (Ask)
+    response_field: NextOffset
+    terminator: 'NextOffset == "END"'
+  - name: numeric-skip
+    apis: [Relationships API]
+    request_param: OFFSET
+    response_fields: [next_skip, more_results, max_per_page, results]
+    page_size: 500
+  - name: page-size-limit
+    apis: [Keyword Search API, Vector Search API, MCP Registry API]
+    request_params: [LIMIT, OFFSET]
+    defaults: {keyword_search_limit: 100, keyword_search_max: 1000, vector_limit: 10, vector_max: 100, mcp_registry_page_size: 100}
+    response_headers: [X-TOTAL-COUNT, X-OFFSET, X-PAGE-SIZE, X-HAS-MORE]
+batching:
+  multi_lookup: 'LOOKUP accepts up to 16 comma-separated root domains on the Domain, Change, Relationships, Tags and VAT APIs'
+  discovery: 'GET /whoamiv1/api.json reports account.max_batch_size.domain_lookup and account.max_batch_size.domain_bulk_submit'
+  bulk_jobs:
+    submit: POST /v23/domain/bulk
+    poll: GET /v23/domain/bulk/{job_id}
+    fetch: GET /v23/domain/bulk/{job_id}/result
+    sync_threshold_field: sync_max
+    async_status: 202
+    caution: 'Bulk results are deleted after the first successful read - store the response.'
+field_selection:
+  style: exclusion flags rather than sparse fieldsets
+  params:
+    NOMETA: skip address and company metadata
+    NOPII: remove personally identifiable information (names/emails)
+    NOATTR: exclude technology attributes
+    HIDETEXT: exclude technology descriptions and links
+    HIDEDL: exclude download links
+    LIVEONLY: return only currently active technologies
+    TRUST: include trust/safety data (costs additional credits)
+  privacy_discovery: 'GET /whoamiv1/api.json returns privacy.pii_allowed and privacy.flags_supported'
+filtering:
+  numeric_operator_syntax: 'value|OPERATOR where OPERATOR is EQ, LT, LTE, GT or GTE (GTE assumed when omitted)'
+  combination: attribute filters are ANDed
+  example: 'REVENUE=100000|GT&SPEND=100|GTE&COUNTRY=US'
+content_negotiation:
+  style: extension-in-path, not Accept header
+  pattern: /{version}/api.{json|xml|csv|txt|tsv}
+  note: The response format is chosen by the file extension on the path, so a single operationId exists per format in the refined specs.
+versioning:
+  scheme: per-API version segment in the URI path
+  current:
+    domain: v23
+    lists: lists12
+    change: change1
+    relationships: rv4
+    trends: trends/v6
+    free: free1
+    trust: trustv2
+    tags: tag1
+    company_to_url: ctu3
+    keywords: kw2
+    keyword_search: kws1
+    recommendations: rec1
+    redirects: redirect1
+    product: productv1
+    vector: vector/v1
+    ask: ask1
+    vat: vat1
+    mcp_registry: mcp2
+    whoami: whoamiv1
+    usage: usagev2
+    billing: v1
+  detail: lifecycle/builtwith-lifecycle.yml
+errors:
+  envelope: '{"Errors":[{"Code":<negative integer>,"Message":"<text>"}]}'
+  transport_note: >-
+    Docs warn the JSON error envelope is not guaranteed - clients must also treat non-200
+    HTTP status codes as errors, and Lookup is null (JSON) or absent (XML) on server errors.
+  rate_limit_envelope: '{"error":"Rate limit exceeded","maxConcurrentRequests":8,"maxRequestsPerSecond":1,"currentConcurrentRequests":0,"currentRequestsInWindow":1,"retryAfterSeconds":1}'
+  typed_envelope_specs:
+  - openapi/builtwith-agent-stripe-topup-openapi.json (components.schemas.Error shared across 400/401/402/403/409)
+  rfc9457: false
+  catalog: errors/builtwith-error-codes.yml
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  headers:
+  - X-RATELIMIT-CURRENT-CONCURRENT
+  - X-RATELIMIT-CURRENT-PERSECOND
+  - X-RATELIMIT-LIMIT-CONCURRENT
+  - X-RATELIMIT-LIMIT-PERSECOND
+  - X-API-CREDITS-AVAILABLE
+  - X-API-CREDITS-USED
+  - X-API-CREDITS-REMAINING
+  retry_hint: retryAfterSeconds field in the rate-limit error body
+  detail: rate-limits/builtwith-rate-limits.yml
+request_tracing:
+  request_id_header: null
+  note: No request-id / correlation-id header is documented on any endpoint.
+metering:
+  model: prepaid API credits per lookup
+  free_endpoints: [WhoAmI, Usage, Trends, MCP registry search, VAT registration types]
+  conditional_charging: 'Change API and VAT API charge only for domains that return data; Trends returns error code -8 for an unknown technology at no cost, which the docs recommend as a free validation step before a paid Lists call.'
+  alternative_rails:
+  - {name: x402 v2 pay-per-call, discovery: 'https://api.builtwith.com/.well-known/x402', unit: USD 0.0495 per call, account_required: false}
+  - {name: x402 prepaid lookup units, credential: creditKey, minimum: 2000 units, expiry: none}
+  - {name: Stripe agent top-up, credential: Agent Billing Key, increment: 2000 credits}
+payment_challenge:
+  protocol: x402 v2
+  challenge_header: PAYMENT-REQUIRED
+  proof_header: PAYMENT-SIGNATURE
+  settlement_header: PAYMENT-RESPONSE
+  status: 402
+  settlement_rule: validation failures and upstream failures are not settled
+event_surface:
+  transport: websocket
+  detail: asyncapi/builtwith-live-feed-asyncapi.yml
+cross_links:
+  authentication: authentication/builtwith-authentication.yml
+  scopes: scopes/builtwith-scopes.yml
+  errors: errors/builtwith-error-codes.yml
+  rate_limits: rate-limits/builtwith-rate-limits.yml
+  lifecycle: lifecycle/builtwith-lifecycle.yml
+  plans: plans/builtwith-plans-pricing.yml

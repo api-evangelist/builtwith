@@ -1,0 +1,630 @@
+﻿# BuiltWith API (LLMs)
+
+This file is a compact reference for AI agents using the BuiltWith API. The full reference with complete parameter and response field documentation is at `https://api.builtwith.com/llms-full.txt`.
+
+## Choose an Access Method
+- Have a BuiltWith API key: use normal REST or the standard MCP tools; calls spend account API credits.
+- Have an existing BuiltWith account with a saved Stripe method: use the **Agent Stripe Credit Top-Up API** to add account API credits. It requires a separately scoped Agent Billing Key and is **not x402**.
+- Have Base USDC and no BuiltWith account: use **x402 v2**.
+  - One lookup: use the fixed-price `/agent/*` HTTP operations at `https://api.builtwith.com/openapi.json`.
+  - Repeated MCP lookups: buy reusable x402 lookup units with `x402-credit-purchase`, then use the returned `creditKey` with `x402-*` tools.
+- Human x402 documentation: `https://api.builtwith.com/x402-api`
+- Authoritative x402 configuration: `https://api.builtwith.com/.well-known/x402`
+
+## Quick Start
+- Base URL: `https://api.builtwith.com`
+- Most REST endpoints are `GET` requests. Prefer `Authorization: API YOUR_KEY`; `?KEY=YOUR_KEY` remains available for compatibility.
+- Start account-aware agents with:
+  - WhoAmI: `https://api.builtwith.com/whoamiv1/api.json?KEY=YOUR_KEY`
+  - Usage: `https://api.builtwith.com/usagev2/api.json?KEY=YOUR_KEY`
+- Use `KEY=bw-...` temporary tokens from Agent Device-Code Authorization the same way as normal API keys.
+
+## Account and Usage
+
+### WhoAmI
+- Endpoint: `GET /whoamiv1/api.json?KEY=YOUR_KEY`
+- Credits: no API credits used.
+- Purpose: discover account limits, credit costs, privacy flags, max batch sizes, supported formats, and endpoint inventory.
+- Important fields:
+  - `account.max_batch_size.domain_lookup`: max domains in normal Domain API lookup batches.
+  - `account.max_batch_size.domain_bulk_submit`: max domains in Bulk Domain API jobs.
+  - `rate_limits`: current requests-per-second and concurrency guidance.
+  - `credits.costs`: per-endpoint credit cost hints.
+  - `privacy.flags_supported`: supported privacy flags such as `NOPII`.
+
+Example response shape:
+```json
+{
+  "account": {
+    "email": "user@example.com",
+    "plan": "pro",
+    "plan_expiry": "2026-12-31T00:00:00Z",
+    "max_batch_size": {
+      "domain_lookup": 16,
+      "vat_lookup": 16,
+      "domain_bulk_submit": 5000
+    }
+  },
+  "rate_limits": {
+    "requests_per_second": 10,
+    "concurrency": 8
+  },
+  "credits": {
+    "purchased": 200000,
+    "used": 1234,
+    "remaining": 198766
+  },
+  "privacy": {
+    "pii_allowed": true,
+    "flags_supported": ["NOPII"]
+  }
+}
+```
+
+### Usage
+- Endpoint: `GET /usagev2/api.{json|xml}?KEY=YOUR_KEY`
+- Credits: no API credits used.
+- Purpose: quick credit balance check.
+
+Example JSON response:
+```json
+{
+  "used": 1234,
+  "purchased": 200000,
+  "remaining": 198766
+}
+```
+
+API responses also include credit headers where available:
+- `X-API-CREDITS-AVAILABLE`
+- `X-API-CREDITS-USED`
+- `X-API-CREDITS-REMAINING`
+
+## REST Endpoints
+- Domain API: `/v23/api.{json|xml|csv}` - technology and metadata for a domain.
+  - Example: `https://api.builtwith.com/v23/api.json?KEY=YOUR_KEY&LOOKUP=example.com`
+  - Optional flags include `NOPII`, `NOMETA`, `NOATTR`, `FDRANGE`, `LDRANGE`, `LIVEONLY`, `HIDETEXT`, `HIDEDL`, `IP`, and `TRUST`.
+  - `v23` adds `Result.SpendHistory` (historic monthly spend as `{D, S}` pairs) and per-result `SalesRevenue`; the previous `/v22/` endpoints remain available.
+- MCP API: `/mcp2/api.{json|xml|csv|txt}` - search and browse the BuiltWith MCP registry (other remote MCP servers BuiltWith has discovered - not an MCP protocol endpoint itself). Returns each server's endpoint URL(s), tools (methods), and its complete `Overview` discovery object when available, including `instructions`, `protocolVersion`, `serverInfo`, and `capabilities`; `SEARCH` matches domain, description, endpoint URL, tool names/descriptions, and overview instructions. Especially useful for AI agents/MCP clients discovering remote MCP servers and methods to connect to.
+  - Example: `https://api.builtwith.com/mcp2/api.json?KEY=YOUR_KEY&SEARCH=payments`
+  - Example: `https://api.builtwith.com/mcp2/api.json?KEY=YOUR_KEY&CATEGORY=developer-tools&OFFSET=100`
+  - Cost: free - no API credits used. Rate limited to 1 request per second per API key (stricter than the general API rate limit since it's free).
+  - Requires `SEARCH` and/or `CATEGORY`; results are flat `Domain`, `Category`, `Description` records, 100 per page, paged with `OFFSET`. Pagination metadata (`X-TOTAL-COUNT`, `X-OFFSET`, `X-PAGE-SIZE`, `X-HAS-MORE`) is returned as response headers.
+  - Valid categories: `GET /mcp2/categories.{json|xml|csv}` returns `Slug`, `Label`, and `Count` for every category (public; no key or credits required).
+  - Also exposed as a tool via the BuiltWith MCP server (see the MCP Server section below).
+- VAT API: `/vat1/api.{json|xml|csv}` - VAT, GSTIN, CNPJ and other company registration numbers for websites.
+  - Example: `https://api.builtwith.com/vat1/api.json?KEY=YOUR_KEY&LOOKUP=example.com`
+  - Cost: 1 API credit for each domain that returns registration data; domains with no results use no credit.
+  - Registration types: `GET /vat1/types.{json|xml|csv}` returns `Type`, friendly `Name`, and `Description` (public; no key or credits required).
+  - `LOOKUP` accepts 1 to 16 comma-separated domains.
+  - Results are flat `Domain`, `Type`, `Number` records; a domain can have multiple records or none when registration data is unavailable.
+- Change API: `/change1/api.json` - technology additions and removals for one or more domains.
+  - Example: `https://api.builtwith.com/change1/api.json?KEY=YOUR_KEY&LOOKUP=example.com&SINCE=last+month`
+  - `SINCE` accepts natural language dates such as `last+month`; default is 3 months.
+- Lists API: `/lists12/api.{json|xml|txt|csv|tsv}` - sites using a technology.
+  - Example: `https://api.builtwith.com/lists12/api.json?KEY=YOUR_KEY&TECH=Shopify`
+  - Validate `TECH` names for free first with the Trends API (`/trends/v6/`) - see below.
+  - Pagination: use `OFFSET` with the previous response's `NextOffset`; `END` means no more pages.
+  - Common optional filters: `COUNTRY=US,CA`, `SINCE=30+days+ago`, `ALL=yes`, `META=yes`, `OTHERTECHS=Google-Analytics,Meta-Pixel`.
+  - Numeric filters use `number|operator`, where operator is `EQ`, `LT`, `LTE`, `GT`, or `GTE`; if omitted, `GTE` is used.
+  - Spend filter: `SPEND=100|GT` filters monthly technology spend.
+  - Attribute filters are combined with AND, so `REVENUE=100000|GT&EMPLOYEES=50|GTE` requires both attributes to match.
+  - Attribute filter keys: `REVENUE` (estimated ecommerce sales revenue), `SKU` (product count), `FOLLOWERS`, `EMPLOYEES`, `SITEMAP`, `PAGERANK`, `BWRANK`, `TRANCO`, `MAJESTIC`, `BWS`, `ECAT` (ecommerce category id), `AIM` (AI maturity), `AIO` (AI openness), `AIR` (AI readiness), `AIV` (AI visibility).
+  - Example filtered request: `https://api.builtwith.com/lists12/api.json?KEY=YOUR_KEY&TECH=Shopify&REVENUE=100000|GT&SPEND=100|GTE&COUNTRY=US`
+- Ask API: `/ask1/api.{json|xml|txt|csv|tsv}` - natural language website list lookups.
+  - Example sample request: `https://api.builtwith.com/ask1/api.json?KEY=YOUR_KEY&QUERY=Magento%20websites%20in%20Spain`
+  - `QUERY` accepts normal URL-encoded spaces or dash-separated words, for example `Magento-websites-in-Spain`.
+  - Each lookup uses 1 API credit and normal requests always return a sample.
+  - Use `COMMIT=true` to create and run a full Ask report, returning up to 1000 results ordered by sequence.
+  - Pagination: use `NEXTOFFSET` with the previous response's `NextOffset`; `END` means no more pages.
+  - Optional: `META=yes` includes metadata. Results use Lists API result attributes, but Ask does not return `LOS`.
+- Relationships API: `/rv4/api.{json|xml|csv|tsv}` - relationships between sites.
+  - Example: `https://api.builtwith.com/rv4/api.json?KEY=YOUR_KEY&LOOKUP=example.com`
+- Free API: `/free1/api.{json|xml}` - summary counts and update ranges for technology groups.
+  - Example: `https://api.builtwith.com/free1/api.json?KEY=YOUR_KEY&LOOKUP=example.com`
+- Company to URL API: `/ctu3/api.{json|xml}` - discover domains from company names.
+  - Example: `https://api.builtwith.com/ctu3/api.json?KEY=YOUR_KEY&COMPANY=Example`
+- Tags API: `/tag1/api.{json|xml}` - domains related to IPs and site attributes.
+  - Example: `https://api.builtwith.com/tag1/api.json?KEY=YOUR_KEY&LOOKUP=IP-1.2.3.4`
+- Recommendations API: `/rec1/api.{json|xml}` - related technology recommendations for a domain.
+  - Example: `https://api.builtwith.com/rec1/api.json?KEY=YOUR_KEY&LOOKUP=example.com`
+- Redirects API: `/redirect1/api.{json|xml}` - redirect history.
+  - Example: `https://api.builtwith.com/redirect1/api.json?KEY=YOUR_KEY&LOOKUP=example.com`
+- Keywords API: `/kw2/api.{json|xml}` - keywords for a domain.
+  - Example: `https://api.builtwith.com/kw2/api.json?KEY=YOUR_KEY&LOOKUP=example.com`
+- Keyword Search API: `/kws1/api.{json|csv}` - websites containing a keyword.
+  - Example: `https://api.builtwith.com/kws1/api.json?KEY=YOUR_KEY&KEYWORD=perfume`
+  - Optional: `LIMIT` (16-1000, default 100), `OFFSET` from the previous page's `NextOffset`.
+- Trends API: `/trends/v6/api.{json|xml}` - technology trend metadata.
+  - Example: `https://api.builtwith.com/trends/v6/api.json?KEY=YOUR_KEY&TECH=Shopify`
+  - Credits: free. Use it to validate a `TECH` name before spending credits on Lists API calls: a valid name returns `Tech` metadata (canonical `name`, `tag`, `categories`, `description`, `coverage` counts), an unknown name returns `Errors` with code `-8`.
+  - To discover the right name when validation fails, use the Vector Search API (`/vector/v1/`) or browse `https://trends.builtwith.com`.
+- Product API: `/productv1/api.json` - websites selling products.
+  - Example: `https://api.builtwith.com/productv1/api.json?KEY=YOUR_KEY&QUERY=Adidas%20Yeezy`
+- Trust API: `/trustv2/api.{json|xml}` - trust and fraud signals, with a self-describing TrustLevel/Reasons assessment plus content-safety flags (gambling, adult, scam, placeholder content).
+  - Example: `https://api.builtwith.com/trustv2/api.json?KEY=YOUR_KEY&LOOKUP=example.com`
+- Vector Search API: `/vector/v1/api.{json|xml|csv}` - semantic search across technologies and categories.
+  - Example: `https://api.builtwith.com/vector/v1/api.json?KEY=YOUR_KEY&QUERY=react+framework`
+  - Optional: `LIMIT` (default 10, max 100). Uses 1 API credit per search.
+
+## Bulk Domain API
+Use this for high-volume Domain API lookups.
+
+### Submit
+- Endpoint: `POST /v23/domain/bulk?KEY=YOUR_KEY`
+- Content-Type: `application/json`
+- Max lookups: use WhoAmI `account.max_batch_size.domain_bulk_submit` (currently 5000 in the API response).
+
+Request body:
+```json
+{
+  "lookups": ["example.com", "builtwith.com"],
+  "options": {
+    "noMeta": false,
+    "noPii": true,
+    "hideText": false,
+    "hideDL": false,
+    "liveOnly": false
+  }
+}
+```
+
+Small batches may return the normal Domain API result synchronously. Larger batches return `202`:
+```json
+{
+  "job_id": "00000000-0000-0000-0000-000000000000",
+  "status": "queued",
+  "count": 250,
+  "sync_max": 32
+}
+```
+
+### Poll Status
+- Endpoint: `GET /v23/domain/bulk/{job_id}?KEY=YOUR_KEY`
+
+Example response:
+```json
+{
+  "job_id": "00000000-0000-0000-0000-000000000000",
+  "status": "completed",
+  "created_utc": "2026-02-03T12:00:00Z",
+  "completed_utc": "2026-02-03T12:01:15Z",
+  "result_url": "/v23/domain/bulk/00000000-0000-0000-0000-000000000000/result",
+  "count": 250
+}
+```
+
+### Retrieve Results
+- Endpoint: `GET /v23/domain/bulk/{job_id}/result?KEY=YOUR_KEY`
+- Response: Domain API JSON result.
+- Important: results are deleted after first successful access, so store the response if you need to reuse it.
+
+## Live Feed API (WebSocket)
+- Requires an active plan.
+- Trial/preview users receive redacted domain names.
+- Supports automatic reconnection.
+- Connect to all new detections: `wss://sync.builtwith.com/wss/new?KEY=YOUR_KEY`
+- Connect and auto-subscribe to a technology: `wss://sync.builtwith.com/wss/channel/Shopify?KEY=YOUR_KEY`
+
+Commands:
+```json
+{"action":"subscribe","channel":"Shopify"}
+{"action":"subscribe","channel":"new"}
+{"action":"subscribe","channel":"new-historical"}
+{"action":"subscribe","channel":"premium"}
+{"action":"unsubscribe","channel":"Shopify"}
+{"action":"list_subscriptions"}
+```
+
+## Agent Device-Code Authorization
+Allows an AI agent to obtain a temporary `bw-` prefixed API token without asking the user to paste an API key.
+
+1. Start:
+   - `POST https://api.builtwith.com/agent-auth/start`
+   - No body and no API key required.
+
+Response:
+```json
+{
+  "device_code": "11c3dd0e3a014816a5c62a04b0f00097",
+  "verification_uri": "https://api.builtwith.com/device-auth?code=11c3dd0e3a014816a5c62a04b0f00097",
+  "expires_in": 900,
+  "interval": 5
+}
+```
+
+2. Send the user to `verification_uri` in a browser where they can log in to BuiltWith and approve access.
+3. Poll:
+   - `POST https://api.builtwith.com/agent-auth/token`
+   - Body: `{"device_code":"<device_code>"}`
+   - Poll no faster than `interval` seconds.
+
+Token responses:
+```json
+{"error":"authorization_pending"}
+{"access_token":"bw-...","token_type":"bearer","expires_in":86400}
+{"error":"access_denied"}
+{"error":"expired_token"}
+```
+
+Denied and expired responses use HTTP 400. Always parse the response body even on 4xx.
+
+Use approved tokens as `KEY=bw-...` on REST endpoints:
+```text
+https://api.builtwith.com/v23/api.json?KEY=bw-11c3dd0e3a014816a5c62a04b0f00097&LOOKUP=example.com
+```
+
+## Agent Stripe Credit Top-Up API (Not x402)
+- Base URL: `https://payments.builtwith.com`
+- Purpose: charge an existing account's saved Stripe payment method and add account API credits. This is not an x402 payment-challenge flow.
+- Auth: `Authorization: Bearer YOUR_AGENT_BILLING_KEY`; obtain this separately scoped credential from the setup page. General API keys and temporary `bw-` tokens cannot purchase.
+- Setup: `https://payments.builtwith.com/agent-payment-api-config`
+- Purchases require `Idempotency-Key` (8-200 printable characters). Reuse it only when retrying an identical purchase.
+- Quantities must be fixed increments of 2,000 credits. Monthly limits use UTC calendar months.
+- The legacy `?KEY=` query parameter is deprecated.
+
+Endpoints:
+- `GET /v1/billing/api-discovery` - returns `credits_total`, `credits_used`, `credits_available`.
+- `GET /v1/billing/api-configuration` - returns spending limits and monthly purchase status.
+- `POST /v1/billing/api-purchase` - body `{"credits":2000}` plus `Idempotency-Key`; fixed increments of 2,000 credits.
+
+### Legacy mppx Stripe Top-Up Path Aliases (Not x402)
+- Base URL: `https://api.builtwith.com/mppx`
+- Purpose: API-domain path aliases for the same saved-Stripe-method operations above; these aliases are not an x402 or MPP payment-challenge protocol.
+- Availability: requires manual enablement.
+- Auth: same scoped Agent Billing Key as the primary service.
+- Behavior: uses the existing Stripe top-up API, saved payment method, configured spending limits, idempotency behavior, and JSON errors.
+- Discovery: `GET https://api.builtwith.com/mppx/openapi.json`
+
+Endpoints:
+- `GET /mppx/api-discovery` - alias for `/v1/billing/api-discovery`.
+- `GET /mppx/api-configuration` - alias for `/v1/billing/api-configuration`.
+- `POST /mppx/api-purchase` - alias for `/v1/billing/api-purchase`; body `{"credits":2000}`.
+- Short aliases are also accepted: `/mppx/balance`, `/mppx/configuration`, and `/mppx/purchase`.
+
+## MCP Server
+- Discovery manifest: `https://builtwith.com/.well-known/mcp.json`
+- Hosted MCP endpoint: `https://api.builtwith.com/mcp`
+- Transport: streamable HTTP (stateless; the endpoint only accepts `POST`).
+- Standard tools: authenticate with `Authorization: Bearer YOUR_BUILTWITH_API_KEY`.
+- x402 tools: buy non-expiring lookup units with Base USDC, then use the returned reusable `creditKey`; these are held in a separate x402 ledger, not a BuiltWith account.
+- x402 pay-per-call discovery (AgentCash-compatible): `GET https://api.builtwith.com/openapi.json`.
+- x402 pay-per-call routes: `GET /agent/domain` plus JSON `POST` routes `/agent/relationships`, `/agent/changes`, `/agent/company-domains`, `/agent/tags`, `/agent/recommendations`, `/agent/redirects`, `/agent/keywords`, `/agent/trust`, `/agent/company-identifiers`, `/agent/technology-search`, and `/agent/ask`. Each costs $0.0495 USDC and returns the BuiltWith result directly, with no account, API key, or prepaid key.
+- Clients send the intended query/body, read `PAYMENT-REQUIRED`, sign Base USDC, and retry the identical request with `PAYMENT-SIGNATURE`. Validation and upstream failures are not settled. Contact: support@builtwith.com.
+- x402 discovery: `https://api.builtwith.com/.well-known/x402`
+- x402 protocol/network: version 2 on Base mainnet (`eip155:8453`), using USDC (6 decimals; contract `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`).
+- The x402 descriptor is authoritative for the facilitator, network, asset, payment address, available tools, pricing tiers, and List passes; clients should not hard-code those values.
+- Credit flow: call `x402-pricing` with an optional `credits` quantity, then call `x402-credit-purchase` with at least 2000 credits and the payer wallet. Sign a returned payment requirement and retry with the payment payload in MCP request metadata at `_meta["x402/payment"]`. Store the returned `creditKey` and supply it to credit-based lookup tools.
+- Top-ups: pass an existing `creditKey` to `x402-credit-purchase`; the payer wallet must match the wallet that created the key.
+- x402 lookup units do not expire. A 2,000-unit batch costs $99 and a 10,000-unit batch costs $259. Failed BuiltWith API calls release reserved units.
+- Docs/source: `https://github.com/builtwith/builtwith-mcp`
+- Note: `https://api.builtwith.com/.well-known/mcp.json` redirects to the BuiltWith `.well-known` host.
+
+Tools (names map to the REST endpoints above):
+- `domain-lookup`, `domain-api`, `domain-api-json` - Domain API (`v23`); `domain-lookup` defaults to live technologies only.
+- `change-api`, `relationships-api`, `free-api`, `company-to-url`, `tags-api`, `recommendations-api`, `redirects-api` - per-domain lookups.
+- `keywords-api`, `keywords-search-api`, `trends-api`, `product-api`, `trust-api`, `vector-api` - keyword, trend, product, trust, and semantic search lookups.
+- `ask-api`, `ask-api-json` - natural language website list queries (Ask API).
+- `whoami-api`, `usage-api` - account limits and credit balance; use no API credits.
+- `payment-balance`, `payment-config`, `payment-purchase` - saved-Stripe-method account-credit operations; not x402.
+- `mcp-list-api`, `mcp-list-categories` - search the MCP registry and list its public categories.
+- `x402-pricing` - public configuration, prepaid batch-credit tiers, List pass tiers, and an optional batch quote. Optional input: `credits` (integer, minimum 2000); no payment required.
+- `x402-credit-purchase` - buy or top up non-expiring credits with one x402 payment. Inputs: `credits` (integer, minimum 2000), `payer`, and optional existing `creditKey`.
+- `x402-credit-balance` - purchased, used, pending, and available credits. Input: `creditKey`; no payment or credit required.
+- `x402-domain-lookup`, `x402-domain-api`, `x402-domain-api-json`, `x402-change-api`, `x402-relationships-api`, `x402-company-to-url`, `x402-tags-api`, `x402-recommendations-api`, `x402-redirects-api`, `x402-keywords-api`, `x402-trust-api`, `x402-vat-api`, `x402-vector-api` - prepaid lookup tools. Each requires `creditKey`; other inputs mirror its standard tool.
+- `x402-ask-api` - prepaid Ask lookup. Inputs include `query`, `payer`, and `creditKey`; committed reports and pagination also require a valid List `passToken`.
+- `x402-list-pass-purchase` - purchase a 30-day Basic or Pro List pass with Base USDC.
+- `x402-list-api`, `x402-keywords-search-api` - use a valid x402 List pass with `payer` and `passToken`.
+
+Prompts: `analyze-tech-stack`, `find-related-websites`, `get-technology-recommendations`, `research-company`, `check-domain-trust`, `discover-technologies-by-concept`.
+
+Example MCP client config:
+```json
+{
+  "mcpServers": {
+    "builtwith": {
+      "url": "https://api.builtwith.com/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_BUILTWITH_API_KEY"
+      }
+    }
+  }
+}
+```
+
+## CLI
+- GitHub: `https://github.com/builtwith/builtwith-official-cli`
+- Install: `npm install -g builtwith-official-cli`
+- Example: `bw domain lookup example.com --key YOUR_KEY`
+- Supports JSON, table, CSV, dry-run mode, and MCP stdio server (`bw mcp`).
+
+## Common Agent Workflows
+- Account-aware startup: call WhoAmI -> call Usage -> choose endpoints based on remaining credits, per-endpoint costs, privacy flags, and max batch sizes.
+- Research a company: Company to URL API (`ctu3`) -> choose likely domain -> Domain API (`v23`) -> Relationships API (`rv4`) -> optional Trust API (`trustv2`) and Redirects API (`redirect1`).
+- Research a domain stack: Free API (`free1`) for quick counts -> Domain API (`v23`) for full stack -> Change API (`change1`) for recent technology changes.
+- Find prospects by technology or natural language audience: Vector Search API (`vector/v1`) or known tech name -> validate the name for free with Trends API (`trends/v6`) -> Lists API (`lists12`), or Ask API (`ask1`) for natural language criteria -> enrich selected domains with Domain API (`v23`).
+- Product or ecommerce research: Product API (`productv1`) -> enrich shops with Domain API (`v23`) -> check Trust API (`trustv2`).
+- Relationship investigation: Domain API (`v23`) to identify technologies and metadata -> Relationships API (`rv4`) for linked sites -> Tags API (`tag1`) for IP or attribute expansion.
+- High-volume enrichment: WhoAmI to confirm `domain_bulk_submit` size -> Bulk Domain submit -> poll status -> retrieve one-time result.
+
+## Compact Response Shapes
+Full sample payloads are available under `https://api.builtwith.com/samples/*.json`. Use these shapes for field orientation.
+
+### Domain API (`/samples/domain_api_v22.json`)
+`v23` uses the same shape and additionally includes `Result.SpendHistory` and per-result `SalesRevenue`.
+```json
+{
+  "Results": [
+    {
+      "Lookup": "example.com",
+      "Result": {
+        "Paths": [
+          {
+            "Technologies": [
+              {
+                "Name": "nginx",
+                "Tag": "Web Server",
+                "Categories": ["Web Server"],
+                "FirstDetected": 1700000000000,
+                "LastDetected": 1760000000000,
+                "IsPremium": "No"
+              }
+            ]
+          }
+        ],
+        "Spend": 11390
+      },
+      "Meta": {
+        "CompanyName": "Example Inc",
+        "Country": "US"
+      }
+    }
+  ],
+  "Errors": []
+}
+```
+
+### Change API (`/samples/change_v1.json`)
+```json
+{
+  "Results": [
+    {
+      "Lookup": "example.com",
+      "Changes": {
+        "summary": "example.com added Shopify.",
+        "events": [
+          {
+            "type": "technology_added",
+            "technology": "Shopify",
+            "tag": "shop",
+            "first_seen_utc": "2026-02-24T00:00:00Z",
+            "importance": "medium"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+### Company to URL API (`/samples/ctu_api_v3.json`)
+```json
+[
+  {
+    "Domain": "example.com",
+    "CompanyName": "Example",
+    "Spend": 1024,
+    "Country": "US",
+    "Socials": ["linkedin.com/company/example"]
+  }
+]
+```
+
+### Relationships API (`/samples/relationship_api_v4.json`)
+```json
+{
+  "Relationships": [
+    {
+      "Domain": "example.com",
+      "Identifiers": [
+        {
+          "Value": "GTM-ABC123",
+          "Type": "GTM",
+          "Matches": [
+            {
+              "Domain": "related-example.com",
+              "Overlap": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "more_results": true,
+  "next_skip": 500
+}
+```
+
+### Lists API (`/samples/list_api_v12.json`)
+```json
+{
+  "NextOffset": "opaque-next-offset",
+  "Results": [
+    {
+      "D": "example-shop.com",
+      "FI": 1725494400,
+      "LI": 1767657600,
+      "Country": "US"
+    }
+  ]
+}
+```
+
+### Ask API
+```json
+{
+  "Explanation": "Matched websites using Magento with a Spain location signal.",
+  "NextOffset": "opaque-next-offset-or-END",
+  "Results": [
+    {
+      "D": "example-shop.es",
+      "FI": 1725494400,
+      "LI": 1767657600,
+      "Country": "ES",
+      "Q": 565,
+      "S": 323
+    }
+  ]
+}
+```
+
+### Keyword Search API (`/samples/keyword_search_api_v1.json`)
+```json
+{
+  "Keyword": "perfume",
+  "Domains": ["example-store.com"],
+  "NextOffset": "example-store.com"
+}
+```
+
+### Recommendations API (`/samples/recommendations_api_v1.json`)
+```json
+[
+  {
+    "Domain": "example.com",
+    "Recommendations": [
+      {
+        "name": "Zendesk",
+        "tag": "mx",
+        "categories": [],
+        "stars": 4,
+        "match": 0.126
+      }
+    ]
+  }
+]
+```
+
+### Redirects API (`/samples/redirect_apiv_v1.json`)
+```json
+{
+  "Lookup": "example.com",
+  "Inbound": [
+    {
+      "Domain": "old-example.com",
+      "FirstDetected": "2019-09-03T00:00:00Z",
+      "LastDetected": "2021-12-01T00:00:00Z"
+    }
+  ],
+  "Outbound": []
+}
+```
+
+### Trends API
+Valid `TECH` (use `Tech.name` as the canonical name for Lists API calls):
+```json
+{
+  "Tech": {
+    "name": "Shopify",
+    "tag": "shop",
+    "categories": ["Ecommerce"],
+    "description": "Hosted shopping cart solution.",
+    "is_premium": "false",
+    "trends_link": "//trends.builtwith.com/shop/Shopify",
+    "coverage": {
+      "ten_k": 500,
+      "hundred_k": 5000,
+      "milly": 50000,
+      "live": 1000000,
+      "expired": 2000000
+    }
+  }
+}
+```
+Unknown `TECH`:
+```json
+{
+  "Errors": [
+    {
+      "Message": "Not a valid technology to lookup sorry - find the exact name with the Vector Search API https://api.builtwith.com/vector/v1/api.json?KEY=YOUR_KEY&QUERY=... or browse trends.builtwith.com",
+      "Code": -8
+    }
+  ]
+}
+```
+
+### Product API (`/samples/product_api_v1.json`)
+```json
+{
+  "query": "Adidas Yeezy",
+  "is_more": true,
+  "next_page": "/productv1/api.json?KEY=[your-key]&QUERY=Adidas Yeezy&PAGE=1&LIMIT=50",
+  "shops": [
+    {
+      "Domain": "example-shop.com",
+      "Products": [
+        {
+          "Title": "Adidas Yeezy",
+          "Url": "adidas-yeezy",
+          "Price": 129.95
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Trust API (`/samples/trust_api_v2.json`)
+```json
+{
+  "Domain": "example.com",
+  "Assessment": {
+    "TrustLevel": "Trusted",
+    "Summary": "Established technology history and meaningful ad/tool spend indicate an ongoing, real business.",
+    "Reasons": [
+      "Site has been indexed with technology detections for over 1 year.",
+      "Estimated monthly technology spend of $11,284 USD.",
+      "No gambling, adult, scam, or placeholder content detected."
+    ]
+  },
+  "ContentSafety": {
+    "Gambling": false,
+    "AdultContent": false,
+    "SuspectedScam": false,
+    "PlaceholderContent": false
+  },
+  "BusinessProfile": {
+    "IsIndexed": true,
+    "DomainAgeDays": 6772,
+    "LastCrawledDaysAgo": 0,
+    "PremiumTechnologyCount": 21,
+    "HasActiveTechnologyStack": true,
+    "IsParkedDomain": false,
+    "IsEcommerceSite": false,
+    "HasPaymentProcessing": true,
+    "HasAffiliateLinks": false,
+    "IsEstablishedBusiness": true,
+    "EstimatedMonthlySpendUSD": 11284
+  },
+  "LiveVerification": null
+}
+```
+`TrustLevel` is always one of: `Unverified`, `RestrictedContent`, `HighRisk`, `Caution`, `VerificationRecommended`, `Neutral`, `Trusted`. `LiveVerification` is only populated when the request includes `&LIVE=yes`.
+
+### Vector Search API
+```json
+{
+  "Query": "react framework",
+  "Results": [
+    {
+      "Type": "tech",
+      "Name": "React",
+      "Tag": "javascript",
+      "Score": 0.9812,
+      "Categories": ["JavaScript Library", "Framework"]
+    }
+  ],
+  "Errors": []
+}
+```
+

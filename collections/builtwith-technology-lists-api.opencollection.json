@@ -1,0 +1,218 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BuiltWith Change Bulk Processing Technology Lists API",
+    "version": "change1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "KEY",
+      "value": "{{KEY}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Technology Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get technology website list (JSON)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.json",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "TECH",
+                "value": "",
+                "type": "query",
+                "description": "Technology name (spaces replaced with dashes, e.g. Google-Analytics)"
+              },
+              {
+                "name": "OTHERTECHS",
+                "value": "",
+                "type": "query",
+                "description": "Additional technologies to filter by (comma-separated, max 16)"
+              },
+              {
+                "name": "META",
+                "value": "",
+                "type": "query",
+                "description": "Set to 'yes' to include metadata (names, titles, social links)"
+              },
+              {
+                "name": "COUNTRY",
+                "value": "",
+                "type": "query",
+                "description": "ISO 3166-1 alpha-2 country code(s), comma-separated"
+              },
+              {
+                "name": "OFFSET",
+                "value": "",
+                "type": "query",
+                "description": "Pagination anchor from the previous response's NextOffset field"
+              },
+              {
+                "name": "SINCE",
+                "value": "",
+                "type": "query",
+                "description": "Filter for recent detections only ('30 Days Ago' or ISO date, incompatible with ALL)"
+              },
+              {
+                "name": "ALL",
+                "value": "",
+                "type": "query",
+                "description": "Set to 'yes' to include historical data (incompatible with SINCE)"
+              },
+              {
+                "name": "SPEND",
+                "value": "",
+                "type": "query",
+                "description": "Filter by monthly tech spend using 'amount|operator' (e.g. 100|GT)"
+              },
+              {
+                "name": "REVENUE",
+                "value": "",
+                "type": "query",
+                "description": "Filter by eCommerce revenue using 'amount|operator'"
+              },
+              {
+                "name": "FOLLOWERS",
+                "value": "",
+                "type": "query",
+                "description": "Filter by social follower count using 'count|operator'"
+              },
+              {
+                "name": "PAGERANK",
+                "value": "",
+                "type": "query",
+                "description": "Filter by traffic rank using 'rank|operator'"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of websites using the specified technology, with optional filters for country, spend, revenue, followers, and rank.\n"
+        },
+        {
+          "info": {
+            "name": "Get technology website list (XML)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.xml",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "TECH",
+                "value": "",
+                "type": "query",
+                "description": "Technology name (spaces replaced with dashes, e.g. Google-Analytics)"
+              },
+              {
+                "name": "COUNTRY",
+                "value": "",
+                "type": "query",
+                "description": "ISO 3166-1 alpha-2 country code(s), comma-separated"
+              },
+              {
+                "name": "OFFSET",
+                "value": "",
+                "type": "query",
+                "description": "Pagination anchor from the previous response's NextOffset field"
+              }
+            ]
+          },
+          "docs": "Returns the technology website list in XML format."
+        },
+        {
+          "info": {
+            "name": "Get technology website list (TXT)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.txt",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "TECH",
+                "value": "",
+                "type": "query",
+                "description": "Technology name (spaces replaced with dashes, e.g. Google-Analytics)"
+              }
+            ]
+          },
+          "docs": "Returns plain text list of domains using the technology."
+        },
+        {
+          "info": {
+            "name": "Get technology website list (CSV)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.csv",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "TECH",
+                "value": "",
+                "type": "query",
+                "description": "Technology name (spaces replaced with dashes, e.g. Google-Analytics)"
+              }
+            ]
+          },
+          "docs": "Returns domain list in CSV format."
+        },
+        {
+          "info": {
+            "name": "Get technology website list (TSV)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.builtwith.com/change1/api.tsv",
+            "params": [
+              {
+                "name": "KEY",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "TECH",
+                "value": "",
+                "type": "query",
+                "description": "Technology name (spaces replaced with dashes, e.g. Google-Analytics)"
+              }
+            ]
+          },
+          "docs": "Returns domain list in TSV format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

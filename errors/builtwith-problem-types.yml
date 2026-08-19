@@ -1,0 +1,65 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  openapi/builtwith-agent-stripe-topup-openapi.json,
+  openapi/builtwith-x402-pay-per-call-openapi.json,
+  openapi/builtwith-domain-lookup-api-openapi.yml,
+  openapi/builtwith-free-lookup-api-openapi.yml
+format: vendor-json
+rfc9457: false
+note: >-
+  No BuiltWith response declares application/problem+json. The Stripe credit top-up spec is
+  the only one with a typed, shared error envelope ($ref components/schemas/Error across every
+  4xx); the x402 pay-per-call spec documents statuses with prose descriptions and no schema.
+  The vendor error-code registry lives in errors/builtwith-error-codes.yml.
+shared_error_schema:
+  spec: openapi/builtwith-agent-stripe-topup-openapi.json
+  schema: '#/components/schemas/Error'
+  referenced_by: [BadRequest, Unauthorized, PaymentFailed, Forbidden, Conflict]
+problems:
+- status: 400
+  title: Validation failure
+  schema: '#/components/schemas/Error'
+  source_operation: openapi/builtwith-agent-stripe-topup-openapi.json#purchaseAccountCreditsWithStripe
+- status: 401
+  title: Missing or invalid Agent Billing Key
+  schema: '#/components/schemas/Error'
+  headers: [WWW-Authenticate]
+  source_operation: openapi/builtwith-agent-stripe-topup-openapi.json#getStripeTopUpBalance
+- status: 402
+  title: Stripe payment failed or no chargeable payment method on file
+  schema: '#/components/schemas/Error'
+  source_operation: openapi/builtwith-agent-stripe-topup-openapi.json#purchaseAccountCreditsWithStripe
+- status: 403
+  title: Billing credential required, account suspended, or spending permission denied
+  schema: '#/components/schemas/Error'
+  source_operation: openapi/builtwith-agent-stripe-topup-openapi.json#getStripeTopUpConfiguration
+- status: 409
+  title: Idempotency key is in progress or conflicts with an earlier request
+  schema: '#/components/schemas/Error'
+  source_operation: openapi/builtwith-agent-stripe-topup-openapi.json#purchaseAccountCreditsWithStripe
+  remediation: Reuse an Idempotency-Key only for an identical retry; a conflicting body under the same key is rejected.
+- status: 400
+  title: Invalid JSON input
+  detail: Verified x402 payments are not settled for validation failures.
+  source_operation: openapi/builtwith-x402-pay-per-call-openapi.json#lookupDomainTechnologies
+- status: 402
+  title: Payment Required
+  headers: [PAYMENT-REQUIRED]
+  detail: Base64-encoded x402 v2 payment requirements; sign with Base USDC and retry the identical request with PAYMENT-SIGNATURE.
+  source_operation: openapi/builtwith-x402-pay-per-call-openapi.json#askForWebsites
+- status: 502
+  title: Upstream BuiltWith API request failed
+  detail: The verified x402 payment is not settled.
+  source_operation: openapi/builtwith-x402-pay-per-call-openapi.json#getDomainTrust
+- status: 503
+  title: x402 payments are not configured on this server
+  source_operation: openapi/builtwith-x402-pay-per-call-openapi.json#getDomainRedirects
+- status: 429
+  title: Too many requests
+  detail: Max 10 requests per second or 8 concurrent requests exceeded.
+  source_operation: openapi/builtwith-domain-lookup-api-openapi.yml#getDomainTechnologiesJson
+- status: 401
+  title: Unauthorized - invalid or missing API key
+  schema: '#/components/schemas/ErrorResponse'
+  source_operation: openapi/builtwith-domain-lookup-api-openapi.yml#getDomainTechnologiesJson

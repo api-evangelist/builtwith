@@ -1,0 +1,44 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://api.builtwith.com/llms.txt (CLI section),
+  https://github.com/builtwith/builtwith-official-cli,
+  https://registry.npmjs.org/builtwith-official-cli
+name: BuiltWith Official CLI
+binary: bw
+package: builtwith-official-cli
+version: 1.6.0
+published: '2026-07-22'
+license: MIT
+repo: https://github.com/builtwith/builtwith-official-cli
+official: true
+description: >-
+  Non-interactive, scriptable CLI for the BuiltWith API - pipeline-friendly with JSON, table
+  and CSV output, structured exit codes, a dry-run mode, and a bundled MCP stdio server.
+install:
+- method: npm
+  command: npm install -g builtwith-official-cli
+authentication:
+- flag: --key
+  description: >-
+    BuiltWith API key (GUID) passed per invocation; the same key the REST API accepts as KEY=
+    or as an "Authorization: API {key}" header.
+output_formats: [json, table, csv]
+modes:
+- name: dry-run
+  description: Resolve and print the request the CLI would make without spending API credits.
+- name: mcp stdio server
+  command: bw mcp
+  description: >-
+    Runs the BuiltWith tool surface as a local stdio MCP server, the local-stdio counterpart
+    to the hosted https://api.builtwith.com/mcp endpoint.
+examples:
+- command: bw domain lookup example.com --key YOUR_KEY
+  description: Domain API technology profile for a single domain (published verbatim in llms.txt).
+- command: bw mcp
+  description: Start the local MCP stdio server.
+notes:
+- >-
+  The published command surface in the provider's own documentation is limited to the two
+  examples above plus the output/dry-run flags; the full verb list is not published on a docs
+  page, so no further commands are recorded here rather than inferred.

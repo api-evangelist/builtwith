@@ -1,0 +1,163 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://api.builtwith.com/",
+      "service-desc": [
+        {
+          "href": "https://builtwith.com/.well-known/openai.json",
+          "type": "application/json",
+          "title": "BuiltWith REST API — OpenAPI 3.0 specification"
+        },
+        {
+          "href": "https://builtwith.com/.well-known/agent-card.json",
+          "type": "application/json",
+          "title": "BuiltWith A2A Agent Card (Agent2Agent protocol)"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://api.builtwith.com/llms.txt",
+          "type": "text/plain",
+          "title": "BuiltWith API documentation for LLMs (llms.txt)"
+        },
+        {
+          "href": "https://api.builtwith.com/",
+          "type": "text/html",
+          "title": "BuiltWith API documentation"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://builtwith.com/.well-known/openai.json",
+          "type": "application/json",
+          "title": "ChatGPT Apps / OpenAI plugin manifest"
+        },
+        {
+          "href": "https://api.builtwith.com/.well-known/x402",
+          "type": "application/json",
+          "title": "BuiltWith x402 v2 payment and paid-tool discovery"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.builtwith.com/mcp",
+      "service-desc": [
+        {
+          "href": "https://builtwith.com/.well-known/mcp.json",
+          "type": "application/json",
+          "title": "BuiltWith MCP server discovery manifest"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://github.com/builtwith/builtwith-mcp",
+          "type": "text/html",
+          "title": "BuiltWith MCP server documentation"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.builtwith.com/.well-known/x402",
+      "service-desc": [
+        {
+          "href": "https://api.builtwith.com/.well-known/x402",
+          "type": "application/json",
+          "title": "Canonical BuiltWith x402 v2 configuration, pricing, and tool inventory"
+        }
+      ],
+      "related": [
+        {
+          "href": "https://api.builtwith.com/mcp",
+          "type": "application/json",
+          "title": "BuiltWith MCP endpoint exposing x402 paid tools"
+        },
+        {
+          "href": "https://builtwith.com/.well-known/x402",
+          "type": "application/json",
+          "title": "BuiltWith.com redirect alias for x402 discovery"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.builtwith.com/mppx/",
+      "service-desc": [
+        {
+          "href": "https://api.builtwith.com/mppx/openapi.json",
+          "type": "application/openapi+json",
+          "title": "BuiltWith MPPX credit and billing aliases — OpenAPI specification"
+        },
+        {
+          "href": "https://builtwith.com/mppx/openapi.json",
+          "type": "application/openapi+json",
+          "title": "BuiltWith.com redirect alias for MPPX OpenAPI discovery"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://builtwith.com/llms.txt",
+          "type": "text/plain",
+          "title": "BuiltWith LLM guide with MPPX alias endpoints"
+        }
+      ],
+      "related": [
+        {
+          "href": "https://builtwith.com/mppx/api-discovery",
+          "type": "application/json",
+          "title": "Credit balance endpoint alias"
+        },
+        {
+          "href": "https://builtwith.com/mppx/api-configuration",
+          "type": "application/json",
+          "title": "Spending limits endpoint alias"
+        },
+        {
+          "href": "https://builtwith.com/mppx/api-purchase",
+          "type": "application/json",
+          "title": "Credit purchase endpoint alias"
+        }
+      ]
+    },
+    {
+      "anchor": "https://builtwith.com/",
+      "sitemap": [
+        {
+          "href": "https://builtwith.com/sitemap.xml",
+          "type": "application/xml",
+          "title": "BuiltWith XML sitemap (referenced from robots.txt)"
+        }
+      ],
+      "related": [
+        {
+          "href": "https://builtwith.com/.well-known/agent-card.json",
+          "type": "application/json",
+          "title": "BuiltWith A2A Agent Card (Agent2Agent protocol)"
+        },
+        {
+          "href": "https://builtwith.com/robots.txt",
+          "type": "text/plain",
+          "title": "Robots exclusion policy"
+        },
+        {
+          "href": "https://builtwith.com/.well-known/security.txt",
+          "type": "text/plain",
+          "title": "Security contact and disclosure policy (RFC 9116)"
+        },
+        {
+          "href": "https://builtwith.com/.well-known/publickey.txt",
+          "type": "application/pgp-keys",
+          "title": "PGP public key for encrypted security reports"
+        },
+        {
+          "href": "https://builtwith.com/.well-known/apple-developer-domain-association.txt",
+          "type": "text/plain",
+          "title": "Apple developer domain association"
+        },
+        {
+          "href": "https://builtwith.com/.well-known/apple-developer-merchantid-domain-association",
+          "type": "text/plain",
+          "title": "Apple Pay merchant ID domain association"
+        }
+      ]
+    }
+  ]
+}

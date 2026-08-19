@@ -1,0 +1,39 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://builtwith.com/.well-known/mcp.json (resources[]),
+  live tools/list on https://api.builtwith.com/mcp (_meta.ui.resourceUri),
+  https://builtwith.com/toolbar, https://builtwith.com/crm-integrations
+description: >-
+  BuiltWith ships no JavaScript element library or embeddable web components for developers.
+  What it does ship on the client side are MCP UI widgets rendered inside an agent client, and
+  end-user browser extensions. Both are recorded here; neither is an SDK (see packages/).
+families:
+- name: MCP UI widgets
+  kind: agent-client embedded UI
+  loader: MCP resources over https://api.builtwith.com/mcp
+  description: >-
+    Interactive HTML surfaces the hosted MCP server returns alongside tool results. Tools carry
+    an _meta.ui.resourceUri pointing at the widget an MCP client should render.
+  components:
+  - name: Domain Technologies Table
+    uri: 'ui://widget/domain-technologies.html'
+    description: Interactive table for BuiltWith domain technology results.
+    bound_tools: [domain-lookup, x402-domain-lookup]
+  - name: Ask API Sites Table
+    uri: 'ui://widget/ask-sites.html'
+    description: Interactive table for BuiltWith Ask API website list results.
+    bound_tools: [ask-api, x402-ask-api]
+- name: Browser extensions
+  kind: end-user client
+  loader: browser extension stores
+  description: >-
+    The BuiltWith toolbar surfaces a site's technology profile in the browser. Distributed
+    through extension stores rather than a package registry.
+  components:
+  - name: BuiltWith Technology Profiler toolbar
+    url: https://builtwith.com/toolbar
+not_found:
+- web-components / custom elements
+- hosted embeddable dashboards or iframe widgets for developers
+- prebuilt checkout or auth surfaces

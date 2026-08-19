@@ -1,0 +1,147 @@
+{
+  "item": [
+    {
+      "id": "34401b15-c010-483d-9c27-9fe797f0a089",
+      "name": "Bulk Processing",
+      "description": {
+        "content": "Asynchronous batch domain processing",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1a8d049-dca3-41a9-8ba6-8a9e43d4d672",
+          "name": "Bulk domain technology lookup",
+          "request": {
+            "name": "Bulk domain technology lookup",
+            "description": {
+              "content": "Submit a list of domains for batch processing. Small batches return synchronously; large batches return a job ID for polling.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "domain",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"KEY\": \"<uuid>\",\n  \"LOOKUP\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d4073a49-fdab-4b66-b5b2-a2c2e2e45b4c",
+              "name": "Bulk results or async job reference",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "domain",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "KEY",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"KEY\": \"00000000-0000-0000-0000-000000000000\",\n  \"LOOKUP\": [\n    \"example.com\",\n    \"shopify.com\",\n    \"wordpress.org\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Results\": [\n    {\n      \"Result\": {\n        \"Lookup\": \"example.com\",\n        \"Meta\": {\n          \"CompanyName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Vertical\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Telephones\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Emails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"City\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"State\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Postcode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Country\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Names\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"Paths\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    },\n    {\n      \"Result\": {\n        \"Lookup\": \"example.com\",\n        \"Meta\": {\n          \"CompanyName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Vertical\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Telephones\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Emails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"City\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"State\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Postcode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Country\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"Names\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"Paths\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.builtwith.com/change1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e74ff9ab-b4b1-4b48-8c63-32909804b936",
+    "name": "BuiltWith Change Bulk Processing API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.\n\n\nContact Support:\n Name: BuiltWith Support",
+      "type": "text/plain"
+    }
+  }
+}
