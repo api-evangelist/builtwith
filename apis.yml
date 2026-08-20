@@ -30,6 +30,19 @@ tags:
   - Technographics
   - Sales Intelligence
   - AI Agents
+  - MCP
+  - Agentic Commerce
+  - Real-Time Data
+tags_raw:
+  - Technology Profiling
+  - Lead Generation
+  - Web Intelligence
+  - Technology Detection
+  - Website Analysis
+  - Market Research
+  - Technographics
+  - Sales Intelligence
+  - AI Agents
   - Model Context Protocol
   - Agentic Commerce
   - Real-time Data
@@ -130,6 +143,10 @@ apis:
   humanURL: https://api.builtwith.com/ask-api
   baseURL: https://api.builtwith.com/ask1
   tags:
+  - Natural-Language
+  - Artificial Intelligence
+  - Domain Lookup
+  tags_raw:
   - Natural Language
   - AI
   - Domain Lookup
@@ -144,6 +161,10 @@ apis:
   humanURL: https://api.builtwith.com/live-feed-api
   baseURL: wss://sync.builtwith.com/wss/
   tags:
+  - Real-Time
+  - WebSocket
+  - Streaming
+  tags_raw:
   - Real-time
   - WebSocket
   - Streaming
@@ -231,6 +252,10 @@ apis:
   baseURL: https://api.builtwith.com/vector/v1
   tags:
   - Vector Search
+  - Artificial Intelligence
+  - Semantic Search
+  tags_raw:
+  - Vector Search
   - AI
   - Semantic Search
   properties:
@@ -258,6 +283,10 @@ apis:
   humanURL: https://api.builtwith.com/product-api
   baseURL: https://api.builtwith.com/productv1
   tags:
+  - E-Commerce
+  - Product Intelligence
+  - Retail
+  tags_raw:
   - eCommerce
   - Product Intelligence
   - Retail
@@ -319,6 +348,9 @@ apis:
   humanURL: https://api.builtwith.com/mcp-api
   baseURL: https://api.builtwith.com/mcp
   tags:
+  - MCP
+  - AI Integration
+  tags_raw:
   - MCP
   - AI Integration
   - Model Context Protocol
@@ -388,6 +420,11 @@ apis:
   humanURL: https://api.builtwith.com/x402-api
   baseURL: https://api.builtwith.com
   tags:
+  - x402
+  - Agentic Commerce
+  - pay-per-call
+  - AI Agents
+  tags_raw:
   - x402
   - Agentic Commerce
   - Pay Per Call
