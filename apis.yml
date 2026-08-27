@@ -366,79 +366,6 @@ apis:
   contact:
   - FN: BuiltWith Support
     url: https://builtwith.com/contact
-- name: BuiltWith Agent Payment API
-  description: >-
-    Autonomous credit management API enabling AI agents to manage and replenish API credits programmatically.
-    Charges an existing account's saved Stripe payment method against a separately scoped Agent Billing Key,
-    with a required Idempotency-Key on every purchase.
-  humanURL: https://api.builtwith.com/agent-payment-api
-  baseURL: https://payments.builtwith.com
-  tags:
-  - AI Agents
-  - Payments
-  - Credits
-  - Autonomous
-  properties:
-  - type: Documentation
-    url: https://api.builtwith.com/agent-payment-api
-  - type: OpenAPI
-    url: openapi/builtwith-agent-stripe-topup-openapi.json
-  - type: Idempotency
-    url: conventions/builtwith-conventions.yml
-  contact:
-  - FN: BuiltWith Support
-    url: https://builtwith.com/contact
-- name: BuiltWith REST API
-  description: >-
-    The provider-published OpenAPI 3.0.3 document covering the whole BuiltWith REST surface -
-    WhoAmI, Usage, Domain, Change, Lists, Relationships, Free, Company to URL, Tags,
-    Recommendations, Redirects, Keywords, Keyword Search, Trends, Product, Trust, Financial,
-    Social, Vector Search, Ask, agent device-code authorization and agent billing - served by
-    BuiltWith at /.well-known/openai.json.
-  humanURL: https://api.builtwith.com/
-  baseURL: https://api.builtwith.com
-  tags:
-  - REST
-  - Technology Detection
-  - Web Intelligence
-  properties:
-  - type: OpenAPI
-    url: openapi/builtwith-rest-api-openapi.json
-  - type: Documentation
-    url: https://api.builtwith.com/
-  - type: APIReference
-    url: https://api.builtwith.com/domain-api
-  contact:
-  - FN: BuiltWith Support
-    url: https://builtwith.com/contact
-- name: BuiltWith x402 Pay-per-Call API
-  description: >-
-    Accountless pay-per-call access to BuiltWith intelligence over the x402 v2 payment
-    protocol on Base mainnet. Twelve fixed-price /agent/* routes answer 402 with a
-    PAYMENT-REQUIRED challenge, settle in USDC on retry with PAYMENT-SIGNATURE, and require no
-    API key, account or prepaid balance.
-  humanURL: https://api.builtwith.com/x402-api
-  baseURL: https://api.builtwith.com
-  tags:
-  - x402
-  - Agentic Commerce
-  - pay-per-call
-  - AI Agents
-  tags_raw:
-  - x402
-  - Agentic Commerce
-  - Pay Per Call
-  - AI Agents
-  properties:
-  - type: OpenAPI
-    url: openapi/builtwith-x402-pay-per-call-openapi.json
-  - type: Documentation
-    url: https://api.builtwith.com/x402-api
-  - type: AgentSkill
-    url: skills/builtwith-pay-per-call-with-x402.md
-  contact:
-  - FN: BuiltWith Support
-    url: https://builtwith.com/contact
 - aid: builtwith:builtwith-bulk-processing-api
   name: BuiltWith Bulk Processing API
   description: Asynchronous batch domain processing
@@ -519,7 +446,590 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/builtwith-technology-trends-api-openapi.yml
+- aid: builtwith:builtwith-agentauth-api
+  name: BuiltWith Agent Auth API
+  description: The AgentAuth API from BuiltWith — 2 operation(s) for agentauth.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - AgentAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-agentauth-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-agentpayments-api
+  name: BuiltWith Agent Payments API
+  description: The AgentPayments API from BuiltWith — 3 operation(s) for agentpayments.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - AgentPayments
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-agentpayments-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-ask-api
+  name: BuiltWith Ask API
+  description: The Ask API from BuiltWith — 1 operation(s) for ask.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Ask
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-ask-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-change-api
+  name: BuiltWith Change API
+  description: The Change API from BuiltWith — 1 operation(s) for change.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Change
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-change-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-company-research-api
+  name: BuiltWith Company Research API
+  description: The Company Research API from BuiltWith — 4 operation(s) for company research.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Company Research
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-company-research-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-companytourl-api
+  name: BuiltWith Company To URL API
+  description: The CompanyToUrl API from BuiltWith — 1 operation(s) for companytourl.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - CompanyToUrl
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-companytourl-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-domain-api
+  name: BuiltWith Domain API
+  description: The Domain API from BuiltWith — 4 operation(s) for domain.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Domain
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-domain-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-domain-intelligence-api
+  name: BuiltWith Domain Intelligence API
+  description: The Domain Intelligence API from BuiltWith — 2 operation(s) for domain intelligence.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Domain Intelligence
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-domain-intelligence-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-financial-api
+  name: BuiltWith Financial API
+  description: The Financial API from BuiltWith — 1 operation(s) for financial.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Financial
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-financial-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-free-api
+  name: BuiltWith Free API
+  description: The Free API from BuiltWith — 1 operation(s) for free.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Free
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-free-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-keywords-api
+  name: BuiltWith Keywords API
+  description: The Keywords API from BuiltWith — 1 operation(s) for keywords.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Keywords
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-keywords-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-keywordsearch-api
+  name: BuiltWith Keyword Search API
+  description: The KeywordSearch API from BuiltWith — 1 operation(s) for keywordsearch.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - KeywordSearch
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-keywordsearch-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-list-passes-api
+  name: BuiltWith List Passes API
+  description: The List Passes API from BuiltWith — 2 operation(s) for list passes.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - List Passes
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-list-passes-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-lists-api
+  name: BuiltWith Lists API
+  description: The Lists API from BuiltWith — 1 operation(s) for lists.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Lists
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-lists-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-meta-api
+  name: BuiltWith Meta API
+  description: The Meta API from BuiltWith — 2 operation(s) for meta.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Meta
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-meta-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-mppx-api
+  name: BuiltWith Mppx API
+  description: The Mppx API from BuiltWith — 3 operation(s) for mppx.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Mppx
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-mppx-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-product-api
+  name: BuiltWith Product API
+  description: The Product API from BuiltWith — 1 operation(s) for product.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Product
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-product-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-recommendations-api
+  name: BuiltWith Recommendations API
+  description: The Recommendations API from BuiltWith — 1 operation(s) for recommendations.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Recommendations
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-recommendations-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-redirects-api
+  name: BuiltWith Redirects API
+  description: The Redirects API from BuiltWith — 1 operation(s) for redirects.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Redirects
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-redirects-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-relationships-api
+  name: BuiltWith Relationships API
+  description: The Relationships API from BuiltWith — 1 operation(s) for relationships.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Relationships
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-relationships-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-social-api
+  name: BuiltWith Social API
+  description: The Social API from BuiltWith — 1 operation(s) for social.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Social
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-social-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-tags-api
+  name: BuiltWith Tags API
+  description: The Tags API from BuiltWith — 1 operation(s) for tags.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-tags-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-technology-discovery-api
+  name: BuiltWith Technology Discovery API
+  description: The Technology Discovery API from BuiltWith — 1 operation(s) for technology discovery.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Technology Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-technology-discovery-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-technology-intelligence-api
+  name: BuiltWith Technology Intelligence API
+  description: >-
+    The Technology Intelligence API from BuiltWith — 3 operation(s) for technology intelligence.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Technology Intelligence
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-technology-intelligence-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-trends-api
+  name: BuiltWith Trends API
+  description: The Trends API from BuiltWith — 1 operation(s) for trends.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Trends
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-trends-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-trust-and-risk-api
+  name: BuiltWith Trust and Risk API
+  description: The Trust and Risk API from BuiltWith — 1 operation(s) for trust and risk.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Trust and Risk
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-trust-and-risk-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-trust-api
+  name: BuiltWith Trust API
+  description: The Trust API from BuiltWith — 1 operation(s) for trust.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Trust
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-trust-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-vector-api
+  name: BuiltWith Vector API
+  description: The Vector API from BuiltWith — 1 operation(s) for vector.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Vector
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-vector-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
+- aid: builtwith:builtwith-website-search-api
+  name: BuiltWith Website Search API
+  description: The Website Search API from BuiltWith — 1 operation(s) for website search.
+  humanURL: https://api.builtwith.com/domain-api
+  baseURL: https://api.builtwith.com/v22
+  tags:
+  - Website Search
+  properties:
+  - type: OpenAPI
+    url: openapi/builtwith-website-search-api-openapi.yml
+  - type: Documentation
+    url: https://api.builtwith.com/agent-payment-api
+  - type: Idempotency
+    url: conventions/builtwith-conventions.yml
+  - type: Documentation
+    url: https://api.builtwith.com/
+  - type: APIReference
+    url: https://api.builtwith.com/domain-api
+  - type: Documentation
+    url: https://api.builtwith.com/x402-api
 common:
+  - type: AgentSkill
+    url: skills/builtwith-pay-per-call-with-x402.md
   - type: IssueTracker
     url: https://github.com/builtwith/builtwith-mcp/issues
   - type: Releases
