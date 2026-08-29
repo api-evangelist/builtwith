@@ -1042,6 +1042,9 @@ apis:
   - type: Documentation
     url: https://api.builtwith.com/x402-api
 common:
+  - type: CapabilityMap
+    url: capabilities/builtwith-capability-edges.yml
+    name: BuiltWith Business Capability Map
   - type: AgentSkill
     url: skills/builtwith-pay-per-call-with-x402.md
   - type: IssueTracker
