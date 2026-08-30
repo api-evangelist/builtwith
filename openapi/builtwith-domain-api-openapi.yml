@@ -1,0 +1,469 @@
+openapi: 3.2.0
+info:
+  title: BuiltWith API (from llms.txt + samples) Domain API
+  version: '2026-05-08'
+  description: OpenAPI spec generated from https://api.builtwith.com/llms.txt and sample payloads under https://api.builtwith.com/samples/*.json (where available). Endpoints not covered by a sample file use a generic JSON schema.
+servers:
+- url: https://api.builtwith.com
+security:
+- ApiKeyQuery: []
+tags:
+- name: Domain
+paths:
+  /v22/api.json:
+    get:
+      operationId: domain_lookup_v22
+      tags:
+      - Domain
+      summary: Domain API (v22) - lookup
+      description: Technology + metadata for a domain. Sample schema inferred from /samples/domain_api_v22.json.
+      parameters:
+      - $ref: '#/components/parameters/lookup'
+      - $ref: '#/components/parameters/nopii'
+      - $ref: '#/components/parameters/nometa'
+      - $ref: '#/components/parameters/noattr'
+      - $ref: '#/components/parameters/fdrange'
+      - $ref: '#/components/parameters/ldrange'
+      - $ref: '#/components/parameters/liveonly'
+      - $ref: '#/components/parameters/hidetext'
+      - $ref: '#/components/parameters/hidedl'
+      - $ref: '#/components/parameters/ip'
+      - $ref: '#/components/parameters/trust'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainApiV22Response'
+    post:
+      operationId: domain_bulk_v22_legacy
+      tags:
+      - Domain
+      summary: Domain API (v22) - legacy bulk lookup (POST)
+      description: Legacy POST form retained for compatibility. New high-volume lookups should use POST /v22/domain/bulk.
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/nopii'
+      - $ref: '#/components/parameters/nometa'
+      - $ref: '#/components/parameters/noattr'
+      - $ref: '#/components/parameters/fdrange'
+      - $ref: '#/components/parameters/ldrange'
+      - $ref: '#/components/parameters/liveonly'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainBulkRequest'
+            examples:
+              bulk_lookup:
+                value:
+                  lookups:
+                  - example.com
+                  - builtwith.com
+                  options:
+                    nopii: true
+                    nometa: false
+                    noattr: false
+                    liveonly: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DomainApiV22Response'
+  /v22/domain/bulk:
+    post:
+      operationId: domain_bulk_submit_v22
+      tags:
+      - Domain
+      summary: Bulk Domain API - submit
+      description: Submits a high-volume Domain API lookup job. Use WhoAmI account.max_batch_size.domain_bulk_submit for the current maximum.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainBulkRequest'
+            examples:
+              bulk_submit:
+                value:
+                  lookups:
+                  - example.com
+                  - builtwith.com
+                  options:
+                    noMeta: false
+                    noPii: true
+                    hideText: false
+                    hideDL: false
+                    liveOnly: false
+      responses:
+        '200':
+          description: Small batch completed synchronously.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainApiV22Response'
+        '202':
+          description: Bulk job queued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainBulkJobResponse'
+  /v22/domain/bulk/{job_id}:
+    get:
+      operationId: domain_bulk_status_v22
+      tags:
+      - Domain
+      summary: Bulk Domain API - poll status
+      parameters:
+      - $ref: '#/components/parameters/job_id'
+      responses:
+        '200':
+          description: Bulk job status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainBulkJobResponse'
+  /v22/domain/bulk/{job_id}/result:
+    get:
+      operationId: domain_bulk_result_v22
+      tags:
+      - Domain
+      summary: Bulk Domain API - retrieve results
+      description: Returns Domain API JSON results. Results are deleted after first successful access.
+      parameters:
+      - $ref: '#/components/parameters/job_id'
+      responses:
+        '200':
+          description: Domain API results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainApiV22Response'
+components:
+  parameters:
+    hidetext:
+      name: HIDETEXT
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    noattr:
+      name: NOATTR
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    ldrange:
+      name: LDRANGE
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Domain API option. Exact format not specified in llms.txt.
+    trust:
+      name: TRUST
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    nometa:
+      name: NOMETA
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    nopii:
+      name: NOPII
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    fdrange:
+      name: FDRANGE
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Domain API option. Exact format not specified in llms.txt.
+    lookup:
+      name: LOOKUP
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Primary lookup value, typically a root domain (e.g. example.com).
+    ip:
+      name: IP
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    job_id:
+      name: job_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Bulk Domain API job identifier.
+    liveonly:
+      name: LIVEONLY
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    hidedl:
+      name: HIDEDL
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+  schemas:
+    DomainPath:
+      type: object
+      properties:
+        Technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/TechnologyDetection'
+        FirstIndexed:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        LastIndexed:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        Domain:
+          type: string
+        Url:
+          type: string
+        SubDomain:
+          type: string
+      additionalProperties: true
+    DomainApiV22ResultsItem:
+      type: object
+      required:
+      - Result
+      properties:
+        Result:
+          $ref: '#/components/schemas/DomainApiV22Result'
+      additionalProperties: true
+    DomainBulkJobResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+        status:
+          type: string
+        created_utc:
+          type: string
+          format: date-time
+        completed_utc:
+          type: string
+          format: date-time
+        result_url:
+          type: string
+        count:
+          type: integer
+          format: int32
+        sync_max:
+          type: integer
+          format: int32
+      additionalProperties: true
+    DomainApiV22Response:
+      type: object
+      required:
+      - Results
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainApiV22ResultsItem'
+      additionalProperties: true
+    TechnologyDetection:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        Link:
+          type: string
+        Parent:
+          type: string
+        Tag:
+          type: string
+        FirstDetected:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        LastDetected:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        IsPremium:
+          description: String boolean in sample payloads (e.g. "No").
+          type: string
+        Categories:
+          type: array
+          items:
+            type: string
+      additionalProperties: true
+    DomainApiV22Result:
+      type: object
+      properties:
+        SpendHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpendPoint'
+        IsDB:
+          description: String boolean in sample payloads (e.g. "True").
+          type: string
+        Spend:
+          type: integer
+          format: int64
+        Paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainPath'
+      additionalProperties: true
+    DomainBulkRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - lookups
+      properties:
+        lookups:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: List of root domains to look up.
+        options:
+          type: object
+          additionalProperties: true
+          description: Optional flags/options.
+          properties:
+            noMeta:
+              type: boolean
+            noPii:
+              type: boolean
+            hideText:
+              type: boolean
+            hideDL:
+              type: boolean
+            liveOnly:
+              type: boolean
+            noattr:
+              type: boolean
+            fdrange:
+              type: string
+            ldrange:
+              type: string
+    SpendPoint:
+      type: object
+      required:
+      - D
+      - S
+      properties:
+        D:
+          description: Epoch milliseconds.
+          type: integer
+          format: int64
+        S:
+          type: integer
+          format: int64
+      additionalProperties: false
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+      description: BuiltWith API key (KEY).
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: BuiltWith API key or temporary bw- agent token in the Authorization header.
+externalDocs:
+  description: 'Source: BuiltWith llms.txt'
+  url: https://api.builtwith.com/llms.txt
+x-mcp:
+  endpoint: https://api.builtwith.com/mcp
+  server: builtwith
+  version: 1.3.0
+  transport: streamable-http
+  tools:
+  - domain-lookup
+  - domain-api
+  - domain-api-json
+  - change-api
+  - relationships-api
+  - free-api
+  - company-to-url
+  - tags-api
+  - recommendations-api
+  - redirects-api
+  - keywords-api
+  - keywords-search-api
+  - trends-api
+  - product-api
+  - trust-api
+  - financial-api
+  - social-api
+  - payment-balance
+  - payment-config
+  - payment-purchase
+  - vector-api
+  - ask-api
+  - ask-api-json
+  resources:
+  - ui://widget/domain-technologies.html
+  - ui://widget/ask-sites.html
+  prompts:
+  - analyze-tech-stack
+  - find-related-websites
+  - get-technology-recommendations
+  - research-company
+  - check-domain-trust
+  - discover-technologies-by-concept
+x-live-feed-websocket:
+  tag: LiveFeed
+  servers:
+  - url: wss://sync.builtwith.com
+  connection_endpoints:
+  - wss://sync.builtwith.com/wss/new?KEY=YOUR_KEY
+  - wss://sync.builtwith.com/wss/channel/{TECH}?KEY=YOUR_KEY
+  commands:
+  - action: subscribe
+    payload:
+      action: subscribe
+      channel: Shopify
+  - action: unsubscribe
+    payload:
+      action: unsubscribe
+      channel: Shopify
+  - action: list_subscriptions
+    payload:
+      action: list_subscriptions

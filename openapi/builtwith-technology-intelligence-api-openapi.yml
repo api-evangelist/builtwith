@@ -1,0 +1,207 @@
+openapi: 3.2.0
+info:
+  title: BuiltWith x402 Pay-per-Call Technology Intelligence API
+  version: 1.0.0
+  description: Accountless pay-per-call website, company, and technology intelligence using x402 v2 and USDC on Base. AgentCash-compatible clients can discover and pay for every operation in this document.
+  contact:
+    name: BuiltWith Support
+    email: support@builtwith.com
+    url: https://builtwith.com/contact
+  x-guidance: For one-off agent research, choose the narrowest /agent operation and use its documented HTTP method and input. Every /agent operation costs $0.0495; GET /agent/domain accepts query parameters and the other /agent calls accept JSON bodies. No account, API key, payer field, or prepaid key is needed. Send the intended input on the first request, read the x402 v2 challenge from PAYMENT-REQUIRED, sign it for Base USDC, and retry the identical request with PAYMENT-SIGNATURE. Validation and upstream failures are not settled. Use /agent/company-domains before /agent/domain when only a company name is known, /agent/technology-search to resolve a concept to BuiltWith technology names, and /agent/ask for natural-language website discovery. High-volume callers may instead buy prepaid credits through the BuiltWith MCP server. Fixed-price List passes are separate products for List API and committed Ask access.
+servers:
+- url: https://api.builtwith.com
+tags:
+- name: Technology Intelligence
+paths:
+  /agent/domain:
+    get:
+      operationId: lookupDomainTechnologies
+      summary: Look up a domain's technologies and metadata
+      description: Return BuiltWith technology detections and metadata for one domain. Useful for company research, stack analysis, competitive intelligence, and sales qualification.
+      tags:
+      - Technology Intelligence
+      security: []
+      x-payment-info:
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.0495'
+        protocols:
+        - x402: {}
+      parameters:
+      - name: domain
+        in: query
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 253
+          description: Domain name to research, for example example.com. Do not include a URL path.
+        example: example.com
+      - name: liveOnly
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+          description: When true, include only technologies currently detected on the domain.
+        example: true
+      responses:
+        '200':
+          description: BuiltWith result returned after payment settlement
+          headers:
+            PAYMENT-RESPONSE:
+              description: Base64-encoded x402 v2 settlement response.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                description: BuiltWith API JSON response. Fields vary by capability and available data.
+                additionalProperties: true
+        '400':
+          description: Invalid JSON input; verified payments are not settled for validation failures
+        '402':
+          description: Payment Required
+          headers:
+            PAYMENT-REQUIRED:
+              description: Base64-encoded x402 v2 payment requirements.
+              schema:
+                type: string
+        '502':
+          description: The upstream BuiltWith API request failed; the verified payment is not settled
+        '503':
+          description: x402 payments are not configured on this server
+  /agent/changes:
+    post:
+      operationId: getDomainTechnologyChanges
+      summary: Get technology additions and removals for a domain
+      description: Return historical technology changes for one domain, optionally constrained by a human-readable time boundary such as 'last month'.
+      tags:
+      - Technology Intelligence
+      security: []
+      x-payment-info:
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.0495'
+        protocols:
+        - x402: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                domain:
+                  type: string
+                  minLength: 1
+                  maxLength: 253
+                  description: Domain name to research, for example example.com. Do not include a URL path.
+                since:
+                  type: string
+                  minLength: 1
+                  description: Optional BuiltWith time boundary, for example 'last month'.
+              required:
+              - domain
+            example:
+              domain: example.com
+              since: last month
+      responses:
+        '200':
+          description: BuiltWith result returned after payment settlement
+          headers:
+            PAYMENT-RESPONSE:
+              description: Base64-encoded x402 v2 settlement response.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                description: BuiltWith API JSON response. Fields vary by capability and available data.
+                additionalProperties: true
+        '400':
+          description: Invalid JSON input; verified payments are not settled for validation failures
+        '402':
+          description: Payment Required
+          headers:
+            PAYMENT-REQUIRED:
+              description: Base64-encoded x402 v2 payment requirements.
+              schema:
+                type: string
+        '502':
+          description: The upstream BuiltWith API request failed; the verified payment is not settled
+        '503':
+          description: x402 payments are not configured on this server
+  /agent/recommendations:
+    post:
+      operationId: recommendTechnologies
+      summary: Recommend technologies for a domain
+      description: Return technology recommendations inferred from a domain's existing stack and comparable sites.
+      tags:
+      - Technology Intelligence
+      security: []
+      x-payment-info:
+        price:
+          mode: fixed
+          currency: USD
+          amount: '0.0495'
+        protocols:
+        - x402: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                domain:
+                  type: string
+                  minLength: 1
+                  maxLength: 253
+                  description: Domain name to research, for example example.com. Do not include a URL path.
+              required:
+              - domain
+            example:
+              domain: example.com
+      responses:
+        '200':
+          description: BuiltWith result returned after payment settlement
+          headers:
+            PAYMENT-RESPONSE:
+              description: Base64-encoded x402 v2 settlement response.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                description: BuiltWith API JSON response. Fields vary by capability and available data.
+                additionalProperties: true
+        '400':
+          description: Invalid JSON input; verified payments are not settled for validation failures
+        '402':
+          description: Payment Required
+          headers:
+            PAYMENT-REQUIRED:
+              description: Base64-encoded x402 v2 payment requirements.
+              schema:
+                type: string
+        '502':
+          description: The upstream BuiltWith API request failed; the verified payment is not settled
+        '503':
+          description: x402 payments are not configured on this server
+externalDocs:
+  description: BuiltWith x402 USDC API documentation
+  url: https://api.builtwith.com/x402-api
+x-discovery:
+  ownershipProofs:
+  - '0x1ce9d8b85fd8afc523d26bf39eb4080326e4bef016e430f327d1cf6779fcdfdd0302f8e8804599bb3b7e254f26cf7fa3bc6c1311f9c9ae190e0c70e37fb305c11b'
+x-x402-discovery: https://api.builtwith.com/.well-known/x402
+x-agentcash-guidance:
+  llmsTxtUrl: https://api.builtwith.com/llms.txt

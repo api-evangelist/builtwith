@@ -1,0 +1,154 @@
+openapi: 3.2.0
+info:
+  title: BuiltWith API (from llms.txt + samples) Company To URL API
+  version: '2026-05-08'
+  description: OpenAPI spec generated from https://api.builtwith.com/llms.txt and sample payloads under https://api.builtwith.com/samples/*.json (where available). Endpoints not covered by a sample file use a generic JSON schema.
+servers:
+- url: https://api.builtwith.com
+security:
+- ApiKeyQuery: []
+tags:
+- name: CompanyToUrl
+paths:
+  /ctu3/api.json:
+    get:
+      operationId: company_to_url_v3
+      tags:
+      - CompanyToUrl
+      summary: Company to URL API
+      description: Discover domains from company names. Sample schema inferred from /samples/ctu_api_v3.json.
+      parameters:
+      - $ref: '#/components/parameters/company'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompanyToUrlItem'
+components:
+  schemas:
+    CompanyToUrlItem:
+      type: object
+      required:
+      - Domain
+      - CompanyName
+      - Spend
+      - PageRank
+      - BuiltWithRank
+      - Parked
+      - Country
+      - State
+      - Postcode
+      - City
+      - Socials
+      properties:
+        Domain:
+          type: string
+        CompanyName:
+          type: string
+        Spend:
+          type: integer
+          format: int64
+        PageRank:
+          type: integer
+          format: int64
+        BuiltWithRank:
+          type: integer
+          format: int64
+        Parked:
+          type: boolean
+        Country:
+          type: string
+        State:
+          type: string
+        Postcode:
+          type: string
+        City:
+          type: string
+        Socials:
+          type: array
+          items:
+            type: string
+      additionalProperties: true
+  parameters:
+    company:
+      name: COMPANY
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Company name to discover domains.
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+      description: BuiltWith API key (KEY).
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: BuiltWith API key or temporary bw- agent token in the Authorization header.
+externalDocs:
+  description: 'Source: BuiltWith llms.txt'
+  url: https://api.builtwith.com/llms.txt
+x-mcp:
+  endpoint: https://api.builtwith.com/mcp
+  server: builtwith
+  version: 1.3.0
+  transport: streamable-http
+  tools:
+  - domain-lookup
+  - domain-api
+  - domain-api-json
+  - change-api
+  - relationships-api
+  - free-api
+  - company-to-url
+  - tags-api
+  - recommendations-api
+  - redirects-api
+  - keywords-api
+  - keywords-search-api
+  - trends-api
+  - product-api
+  - trust-api
+  - financial-api
+  - social-api
+  - payment-balance
+  - payment-config
+  - payment-purchase
+  - vector-api
+  - ask-api
+  - ask-api-json
+  resources:
+  - ui://widget/domain-technologies.html
+  - ui://widget/ask-sites.html
+  prompts:
+  - analyze-tech-stack
+  - find-related-websites
+  - get-technology-recommendations
+  - research-company
+  - check-domain-trust
+  - discover-technologies-by-concept
+x-live-feed-websocket:
+  tag: LiveFeed
+  servers:
+  - url: wss://sync.builtwith.com
+  connection_endpoints:
+  - wss://sync.builtwith.com/wss/new?KEY=YOUR_KEY
+  - wss://sync.builtwith.com/wss/channel/{TECH}?KEY=YOUR_KEY
+  commands:
+  - action: subscribe
+    payload:
+      action: subscribe
+      channel: Shopify
+  - action: unsubscribe
+    payload:
+      action: unsubscribe
+      channel: Shopify
+  - action: list_subscriptions
+    payload:
+      action: list_subscriptions

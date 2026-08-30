@@ -1,0 +1,120 @@
+openapi: 3.2.0
+info:
+  title: BuiltWith API (from llms.txt + samples) Financial API
+  version: '2026-05-08'
+  description: OpenAPI spec generated from https://api.builtwith.com/llms.txt and sample payloads under https://api.builtwith.com/samples/*.json (where available). Endpoints not covered by a sample file use a generic JSON schema.
+servers:
+- url: https://api.builtwith.com
+security:
+- ApiKeyQuery: []
+tags:
+- name: Financial
+paths:
+  /financial1/api.json:
+    get:
+      operationId: financial_v1
+      tags:
+      - Financial
+      summary: Financial API
+      description: Financial API JSON lookup for financial data by domain.
+      parameters:
+      - $ref: '#/components/parameters/lookup'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnyJson'
+components:
+  schemas:
+    AnyJson:
+      description: A generic JSON payload.
+      oneOf:
+      - type: object
+        additionalProperties: true
+      - type: array
+        items: {}
+      - type: string
+      - type: number
+      - type: boolean
+      - type: 'null'
+  parameters:
+    lookup:
+      name: LOOKUP
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Primary lookup value, typically a root domain (e.g. example.com).
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: KEY
+      description: BuiltWith API key (KEY).
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: BuiltWith API key or temporary bw- agent token in the Authorization header.
+externalDocs:
+  description: 'Source: BuiltWith llms.txt'
+  url: https://api.builtwith.com/llms.txt
+x-mcp:
+  endpoint: https://api.builtwith.com/mcp
+  server: builtwith
+  version: 1.3.0
+  transport: streamable-http
+  tools:
+  - domain-lookup
+  - domain-api
+  - domain-api-json
+  - change-api
+  - relationships-api
+  - free-api
+  - company-to-url
+  - tags-api
+  - recommendations-api
+  - redirects-api
+  - keywords-api
+  - keywords-search-api
+  - trends-api
+  - product-api
+  - trust-api
+  - financial-api
+  - social-api
+  - payment-balance
+  - payment-config
+  - payment-purchase
+  - vector-api
+  - ask-api
+  - ask-api-json
+  resources:
+  - ui://widget/domain-technologies.html
+  - ui://widget/ask-sites.html
+  prompts:
+  - analyze-tech-stack
+  - find-related-websites
+  - get-technology-recommendations
+  - research-company
+  - check-domain-trust
+  - discover-technologies-by-concept
+x-live-feed-websocket:
+  tag: LiveFeed
+  servers:
+  - url: wss://sync.builtwith.com
+  connection_endpoints:
+  - wss://sync.builtwith.com/wss/new?KEY=YOUR_KEY
+  - wss://sync.builtwith.com/wss/channel/{TECH}?KEY=YOUR_KEY
+  commands:
+  - action: subscribe
+    payload:
+      action: subscribe
+      channel: Shopify
+  - action: unsubscribe
+    payload:
+      action: unsubscribe
+      channel: Shopify
+  - action: list_subscriptions
+    payload:
+      action: list_subscriptions
