@@ -46,7 +46,7 @@ tags:
   - AI Agents
   - MCP
   - Agentic Commerce
-  - Real-time Data
+  - Real-Time Data
 tags_raw:
   - Technology Profiling
   - Lead Generation
@@ -157,7 +157,7 @@ apis:
   humanURL: https://api.builtwith.com/ask-api
   baseURL: https://api.builtwith.com/ask1
   tags:
-  - Natural Language
+  - Natural-Language
   - Artificial Intelligence
   - Domain Lookup
   tags_raw:
