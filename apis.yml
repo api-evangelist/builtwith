@@ -400,46 +400,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/builtwith-domain-lookup-api-openapi.yml
-- aid: builtwith:builtwith-domain-relationships-api
-  name: BuiltWith Domain Relationships API
-  description: Identify domain interconnections via shared identifiers
-  humanURL: https://api.builtwith.com/domain-api
-  baseURL: https://api.builtwith.com/v22
-  tags:
-  - Domain Relationships
-  properties:
-  - type: OpenAPI
-    url: openapi/builtwith-domain-relationships-api-openapi.yml
-- aid: builtwith:builtwith-free-lookup-api
-  name: BuiltWith Free Lookup API
-  description: Technology count lookups for free tier
-  humanURL: https://api.builtwith.com/domain-api
-  baseURL: https://api.builtwith.com/v22
-  tags:
-  - Free Lookup
-  properties:
-  - type: OpenAPI
-    url: openapi/builtwith-free-lookup-api-openapi.yml
-- aid: builtwith:builtwith-tag-lookup-api
-  name: BuiltWith Tag Lookup API
-  description: Lookup domains by IP or attribute identifier
-  humanURL: https://api.builtwith.com/domain-api
-  baseURL: https://api.builtwith.com/v22
-  tags:
-  - Tag Lookup
-  properties:
-  - type: OpenAPI
-    url: openapi/builtwith-tag-lookup-api-openapi.yml
-- aid: builtwith:builtwith-technology-changes-api
-  name: BuiltWith Technology Changes API
-  description: Track technology additions and removals on websites
-  humanURL: https://api.builtwith.com/domain-api
-  baseURL: https://api.builtwith.com/v22
-  tags:
-  - Technology Changes
-  properties:
-  - type: OpenAPI
-    url: openapi/builtwith-technology-changes-api-openapi.yml
 - aid: builtwith:builtwith-technology-lists-api
   name: BuiltWith Technology Lists API
   description: Retrieve websites using specific technologies
@@ -450,16 +410,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/builtwith-technology-lists-api-openapi.yml
-- aid: builtwith:builtwith-technology-trends-api
-  name: BuiltWith Technology Trends API
-  description: Technology adoption trends and market share data
-  humanURL: https://api.builtwith.com/domain-api
-  baseURL: https://api.builtwith.com/v22
-  tags:
-  - Technology Trends
-  properties:
-  - type: OpenAPI
-    url: openapi/builtwith-technology-trends-api-openapi.yml
 - aid: builtwith:builtwith-agentauth-api
   name: BuiltWith Agent Auth API
   description: The AgentAuth API from BuiltWith — 2 operation(s) for agentauth.
