@@ -30,13 +30,6 @@ paths:
                 $ref: '#/components/schemas/KeywordSearchApiV1Response'
 components:
   parameters:
-    offset:
-      name: OFFSET
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Opaque pagination offset from the previous response's NextOffset.
     limit:
       name: LIMIT
       in: query
@@ -54,6 +47,13 @@ components:
       schema:
         type: string
       description: Keyword to search for.
+    offset:
+      name: OFFSET
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Opaque pagination offset from the previous response's NextOffset.
   schemas:
     KeywordSearchApiV1Response:
       type: object

@@ -1,10 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: BuiltWith Change Bulk Processing Domain Lookup API
-  description: 'Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.
-
-    '
-  version: change1
+  title: BuiltWith Domain Domain Lookup API
+  description: Current and historical website technology information for single or multiple domains. Supports JSON, XML, and CSV response formats. Provides technology stack detection, metadata, attributes, and bulk processing capabilities across 491.9 million domains and 115,907 tracked web technologies.
+  version: v22
   contact:
     name: BuiltWith Support
     url: https://builtwith.com/contact
@@ -13,8 +11,8 @@ info:
     name: Commercial
     url: https://builtwith.com/plans
 servers:
-- url: https://api.builtwith.com/change1
-  description: BuiltWith Change API v1
+- url: https://api.builtwith.com/v22
+  description: BuiltWith Domain API v22
 security:
 - apiKeyQuery: []
 - apiKeyHeader: []
@@ -25,9 +23,7 @@ paths:
   /api.json:
     get:
       summary: Lookup domain technologies (JSON)
-      description: 'Returns the technology stack and metadata for one or more domains in JSON format. Supports up to 16 domains as a comma-separated list.
-
-        '
+      description: Returns the technology stack and metadata for one or more domains in JSON format. Supports up to 16 domains as a comma-separated list.
       operationId: getDomainTechnologiesJson
       tags:
       - Domain Lookup
@@ -122,112 +118,15 @@ paths:
               schema:
                 type: string
 components:
-  parameters:
-    CATEGORIES:
-      name: CATEGORIES
-      in: query
-      description: Set to '1' to return technology category list instead of domain data
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-    NOATTR:
-      name: NOATTR
-      in: query
-      description: Set to 'yes' to exclude technology attributes
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    HIDETEXT:
-      name: HIDETEXT
-      in: query
-      description: Set to 'yes' to exclude technology descriptions and links
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    NOPII:
-      name: NOPII
-      in: query
-      description: Set to 'yes' to remove personally identifiable information (names/emails)
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    LOOKUP:
-      name: LOOKUP
-      in: query
-      description: 'Domain or comma-separated list of up to 16 domains to look up. Use root domains only.
-
-        '
-      required: true
-      schema:
-        type: string
-        example: example.com
-    TRUST:
-      name: TRUST
-      in: query
-      description: Set to 'yes' to include trust/safety data (uses additional API credits)
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    LIVEONLY:
-      name: LIVEONLY
-      in: query
-      description: Set to 'yes' to return only currently active technologies
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    KEY:
-      name: KEY
-      in: query
-      description: Your BuiltWith API authentication key (UUID format)
-      required: false
-      schema:
-        type: string
-        format: uuid
-        example: 00000000-0000-0000-0000-000000000000
-    VERTICALS:
-      name: VERTICALS
-      in: query
-      description: Set to '1' to return vertical list instead of domain data
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-    FDRANGE:
-      name: FDRANGE
-      in: query
-      description: Filter by detection date range in YYYY-MM-DD|YYYY-MM-DD format
-      required: false
-      schema:
-        type: string
-        example: 2025-01-01|2026-01-01
-    NOMETA:
-      name: NOMETA
-      in: query
-      description: Set to 'yes' to skip address and company metadata
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
   schemas:
-    DomainResultItem:
+    DomainResult:
       type: object
+      description: Top-level response wrapper for domain technology lookups
       properties:
-        Result:
-          $ref: '#/components/schemas/Result'
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainResultItem'
     Technology:
       type: object
       description: A detected web technology
@@ -263,45 +162,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attribute'
-    DomainResult:
-      type: object
-      description: Top-level response wrapper for domain technology lookups
-      properties:
-        Results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainResultItem'
-    ErrorResponse:
-      type: object
-      properties:
-        Errors:
-          type: array
-          items:
-            type: object
-            properties:
-              Code:
-                type: integer
-              Message:
-                type: string
-    TechCategory:
-      type: object
-      properties:
-        Category:
-          type: string
-          example: CMS
-    Result:
-      type: object
-      properties:
-        Lookup:
-          type: string
-          description: The queried domain
-          example: example.com
-        Meta:
-          $ref: '#/components/schemas/DomainMeta'
-        Paths:
-          type: array
-          items:
-            $ref: '#/components/schemas/Path'
     Attribute:
       type: object
       description: Additional attribute data for a technology
@@ -310,6 +170,11 @@ components:
           type: string
         Value:
           type: string
+    DomainResultItem:
+      type: object
+      properties:
+        Result:
+          $ref: '#/components/schemas/Result'
     DomainMeta:
       type: object
       description: Company and domain metadata
@@ -338,6 +203,19 @@ components:
           type: array
           items:
             type: string
+    Result:
+      type: object
+      properties:
+        Lookup:
+          type: string
+          description: The queried domain
+          example: example.com
+        Meta:
+          $ref: '#/components/schemas/DomainMeta'
+        Paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/Path'
     Path:
       type: object
       properties:
@@ -348,17 +226,135 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Technology'
-  responses:
-    RateLimited:
-      description: 'Too many requests — max 10 req/sec or 8 concurrent requests exceeded
+    TechCategory:
+      type: object
+      properties:
+        Category:
+          type: string
+          example: CMS
+    ErrorResponse:
+      type: object
+      properties:
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: integer
+              Message:
+                type: string
+  parameters:
+    TRUST:
+      name: TRUST
+      in: query
+      description: Set to 'yes' to include trust/safety data (uses additional API credits)
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    KEY:
+      name: KEY
+      in: query
+      description: Your BuiltWith API authentication key (UUID format)
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: 00000000-0000-0000-0000-000000000000
+    NOATTR:
+      name: NOATTR
+      in: query
+      description: Set to 'yes' to exclude technology attributes
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    LOOKUP:
+      name: LOOKUP
+      in: query
+      description: 'Domain or comma-separated list of up to 16 domains to look up. Use root domains only.
 
         '
+      required: true
+      schema:
+        type: string
+        example: example.com
+    FDRANGE:
+      name: FDRANGE
+      in: query
+      description: Filter by detection date range in YYYY-MM-DD|YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        example: 2025-01-01|2026-01-01
+    LIVEONLY:
+      name: LIVEONLY
+      in: query
+      description: Set to 'yes' to return only currently active technologies
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    CATEGORIES:
+      name: CATEGORIES
+      in: query
+      description: Set to '1' to return technology category list instead of domain data
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+    VERTICALS:
+      name: VERTICALS
+      in: query
+      description: Set to '1' to return vertical list instead of domain data
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+    NOPII:
+      name: NOPII
+      in: query
+      description: Set to 'yes' to remove personally identifiable information (names/emails)
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    HIDETEXT:
+      name: HIDETEXT
+      in: query
+      description: Set to 'yes' to exclude technology descriptions and links
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    NOMETA:
+      name: NOMETA
+      in: query
+      description: Set to 'yes' to skip address and company metadata
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+  responses:
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized — invalid or missing API key
+    RateLimited:
+      description: 'Too many requests — max 10 req/sec or 8 concurrent requests exceeded
+
+        '
       content:
         application/json:
           schema:
@@ -374,11 +370,12 @@ components:
       type: apiKey
       in: query
       name: KEY
+      description: API key passed as a query parameter
     apiKeyHeader:
       type: apiKey
       in: header
       name: Authorization
-      description: 'Format: ''Authorization: API {key}'''
+      description: 'API key in header format: ''Authorization: API {key}'''
 externalDocs:
-  description: BuiltWith Change API Documentation
-  url: https://api.builtwith.com/change-api
+  description: BuiltWith Domain API Documentation
+  url: https://api.builtwith.com/domain-api

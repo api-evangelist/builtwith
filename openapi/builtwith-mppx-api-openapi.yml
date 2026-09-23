@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: BuiltWith Agent Stripe Credit Top-Up API via aliases Mppx API
+  title: BuiltWith Agent Stripe Credit Top-Up API via aliases Mppx…
   version: 1.1.0
   description: Authenticated aliases that charge an existing account's saved Stripe method and add account API credits. This is not x402 and does not use payment challenges.
 servers:
@@ -91,59 +91,17 @@ paths:
       tags:
       - Mppx
 components:
-  responses:
-    Conflict:
-      description: Idempotency key is in progress or conflicts with an earlier request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid Agent Billing Key
-      headers:
-        WWW-Authenticate:
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Validation failure
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    PaymentFailed:
-      description: Stripe payment failed or no chargeable payment method is on file
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Billing credential required, account suspended, or spending permission denied
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    ConfigurationResponse:
+    PurchaseRequest:
       type: object
+      additionalProperties: false
+      required:
+      - credits
       properties:
-        max_per_purchase:
+        credits:
           type: integer
-        max_monthly:
-          type: integer
-        monthly_purchased:
-          type: integer
-        monthly_remaining:
-          type: integer
-        monthly_reset_timezone:
-          const: UTC
-        purchase_increment:
-          const: 2000
-        idempotency_key_required:
-          const: true
+          minimum: 2000
+          multipleOf: 2000
     DiscoveryResponse:
       type: object
       properties:
@@ -195,16 +153,58 @@ components:
           type: string
         credits_available:
           type: number
-    PurchaseRequest:
+    ConfigurationResponse:
       type: object
-      additionalProperties: false
-      required:
-      - credits
       properties:
-        credits:
+        max_per_purchase:
           type: integer
-          minimum: 2000
-          multipleOf: 2000
+        max_monthly:
+          type: integer
+        monthly_purchased:
+          type: integer
+        monthly_remaining:
+          type: integer
+        monthly_reset_timezone:
+          const: UTC
+        purchase_increment:
+          const: 2000
+        idempotency_key_required:
+          const: true
+  responses:
+    PaymentFailed:
+      description: Stripe payment failed or no chargeable payment method is on file
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Billing credential required, account suspended, or spending permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Validation failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency key is in progress or conflicts with an earlier request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid Agent Billing Key
+      headers:
+        WWW-Authenticate:
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     agentBillingKey:
       type: http

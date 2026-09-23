@@ -27,6 +27,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/FreeApiV1Response'
 components:
+  parameters:
+    lookup:
+      name: LOOKUP
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Primary lookup value, typically a root domain (e.g. example.com).
   schemas:
     FreeGroupSummary:
       type: object
@@ -59,29 +67,6 @@ components:
           items:
             $ref: '#/components/schemas/FreeCategorySummary'
       additionalProperties: true
-    FreeApiV1Response:
-      type: object
-      required:
-      - domain
-      - first
-      - last
-      - groups
-      properties:
-        domain:
-          type: string
-        first:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        last:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/FreeGroupSummary'
-      additionalProperties: true
     FreeCategorySummary:
       type: object
       required:
@@ -108,14 +93,29 @@ components:
         name:
           type: string
       additionalProperties: true
-  parameters:
-    lookup:
-      name: LOOKUP
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Primary lookup value, typically a root domain (e.g. example.com).
+    FreeApiV1Response:
+      type: object
+      required:
+      - domain
+      - first
+      - last
+      - groups
+      properties:
+        domain:
+          type: string
+        first:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        last:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/FreeGroupSummary'
+      additionalProperties: true
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

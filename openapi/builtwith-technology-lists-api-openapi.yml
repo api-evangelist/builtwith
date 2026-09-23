@@ -1,10 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: BuiltWith Change Bulk Processing Technology Lists API
-  description: 'Track technology additions and removals on websites with business context. Returns AI-generated summaries explaining the business significance of technology changes. Credits are only consumed when changes are found.
-
-    '
-  version: change1
+  title: BuiltWith Lists Technology Lists API
+  description: Retrieve lists of websites using specific web technologies. Returns results in XML, JSON, TXT, CSV, and TSV formats with filtering by country, spend, revenue, followers, and page rank. Supports pagination via offset tokens.
+  version: lists12
   contact:
     name: BuiltWith Support
     url: https://builtwith.com/contact
@@ -13,8 +11,8 @@ info:
     name: Commercial
     url: https://builtwith.com/plans
 servers:
-- url: https://api.builtwith.com/change1
-  description: BuiltWith Change API v1
+- url: https://api.builtwith.com/lists12
+  description: BuiltWith Lists API v12
 security:
 - apiKeyQuery: []
 - apiKeyHeader: []
@@ -25,9 +23,7 @@ paths:
   /api.json:
     get:
       summary: Get technology website list (JSON)
-      description: 'Returns a paginated list of websites using the specified technology, with optional filters for country, spend, revenue, followers, and rank.
-
-        '
+      description: Returns a paginated list of websites using the specified technology, with optional filters for country, spend, revenue, followers, and rank.
       operationId: getTechListJson
       tags:
       - Technology Lists
@@ -133,106 +129,41 @@ paths:
               schema:
                 type: string
 components:
-  parameters:
-    SPEND:
-      name: SPEND
-      in: query
-      description: Filter by monthly tech spend using 'amount|operator' (e.g. 100|GT)
-      required: false
-      schema:
-        type: string
-        example: 100|GT
-    OFFSET:
-      name: OFFSET
-      in: query
-      description: Pagination anchor from the previous response's NextOffset field
-      required: false
-      schema:
-        type: string
-        example: oQEwEnH2FJuIzeXOEk2T
-    ALL:
-      name: ALL
-      in: query
-      description: Set to 'yes' to include historical data (incompatible with SINCE)
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    REVENUE:
-      name: REVENUE
-      in: query
-      description: Filter by eCommerce revenue using 'amount|operator'
-      required: false
-      schema:
-        type: string
-        example: 100000|GT
-    TECH:
-      name: TECH
-      in: query
-      description: Technology name (spaces replaced with dashes, e.g. Google-Analytics)
-      required: true
-      schema:
-        type: string
-        example: Shopify
-    META:
-      name: META
-      in: query
-      description: Set to 'yes' to include metadata (names, titles, social links)
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    SINCE:
-      name: SINCE
-      in: query
-      description: Filter for recent detections only ('30 Days Ago' or ISO date, incompatible with ALL)
-      required: false
-      schema:
-        type: string
-        example: 30 Days Ago
-    FOLLOWERS:
-      name: FOLLOWERS
-      in: query
-      description: Filter by social follower count using 'count|operator'
-      required: false
-      schema:
-        type: string
-        example: 10000|GTE
-    COUNTRY:
-      name: COUNTRY
-      in: query
-      description: ISO 3166-1 alpha-2 country code(s), comma-separated
-      required: false
-      schema:
-        type: string
-        example: US,AU,NZ
-    OTHERTECHS:
-      name: OTHERTECHS
-      in: query
-      description: Additional technologies to filter by (comma-separated, max 16)
-      required: false
-      schema:
-        type: string
-        example: Google-Analytics,Meta-Pixel
-    PAGERANK:
-      name: PAGERANK
-      in: query
-      description: Filter by traffic rank using 'rank|operator'
-      required: false
-      schema:
-        type: string
-        example: 1000000|LT
-    KEY:
-      name: KEY
-      in: query
-      required: false
-      schema:
-        type: string
-        format: uuid
-        example: 00000000-0000-0000-0000-000000000000
   schemas:
+    ListMeta:
+      type: object
+      description: Optional metadata returned when META=yes
+      properties:
+        Name:
+          type: string
+        Title:
+          type: string
+        Description:
+          type: string
+        Emails:
+          type: array
+          items:
+            type: string
+        Telephones:
+          type: array
+          items:
+            type: string
+        Social:
+          type: array
+          items:
+            type: string
+    ErrorResponse:
+      type: object
+      properties:
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: integer
+              Message:
+                type: string
     ListResultItem:
       type: object
       description: A website result from the lists API
@@ -289,40 +220,105 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ListResultItem'
-    ErrorResponse:
-      type: object
-      properties:
-        Errors:
-          type: array
-          items:
-            type: object
-            properties:
-              Code:
-                type: integer
-              Message:
-                type: string
-    ListMeta:
-      type: object
-      description: Optional metadata returned when META=yes
-      properties:
-        Name:
-          type: string
-        Title:
-          type: string
-        Description:
-          type: string
-        Emails:
-          type: array
-          items:
-            type: string
-        Telephones:
-          type: array
-          items:
-            type: string
-        Social:
-          type: array
-          items:
-            type: string
+  parameters:
+    ALL:
+      name: ALL
+      in: query
+      description: Set to 'yes' to include historical data (incompatible with SINCE)
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    REVENUE:
+      name: REVENUE
+      in: query
+      description: Filter by eCommerce revenue using 'amount|operator'
+      required: false
+      schema:
+        type: string
+        example: 100000|GT
+    COUNTRY:
+      name: COUNTRY
+      in: query
+      description: ISO 3166-1 alpha-2 country code(s), comma-separated
+      required: false
+      schema:
+        type: string
+        example: US,AU,NZ
+    SINCE:
+      name: SINCE
+      in: query
+      description: Filter for recent detections only ('30 Days Ago' or ISO date, incompatible with ALL)
+      required: false
+      schema:
+        type: string
+        example: 30 Days Ago
+    FOLLOWERS:
+      name: FOLLOWERS
+      in: query
+      description: Filter by social follower count using 'count|operator'
+      required: false
+      schema:
+        type: string
+        example: 10000|GTE
+    OTHERTECHS:
+      name: OTHERTECHS
+      in: query
+      description: Additional technologies to filter by (comma-separated, max 16)
+      required: false
+      schema:
+        type: string
+        example: Google-Analytics,Meta-Pixel
+    KEY:
+      name: KEY
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: 00000000-0000-0000-0000-000000000000
+    META:
+      name: META
+      in: query
+      description: Set to 'yes' to include metadata (names, titles, social links)
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    OFFSET:
+      name: OFFSET
+      in: query
+      description: Pagination anchor from the previous response's NextOffset field
+      required: false
+      schema:
+        type: string
+        example: oQEwEnH2FJuIzeXOEk2T
+    SPEND:
+      name: SPEND
+      in: query
+      description: Filter by monthly tech spend using 'amount|operator' (e.g. 100|GT)
+      required: false
+      schema:
+        type: string
+        example: 100|GT
+    TECH:
+      name: TECH
+      in: query
+      description: Technology name (spaces replaced with dashes, e.g. Google-Analytics)
+      required: true
+      schema:
+        type: string
+        example: Shopify
+    PAGERANK:
+      name: PAGERANK
+      in: query
+      description: Filter by traffic rank using 'rank|operator'
+      required: false
+      schema:
+        type: string
+        example: 1000000|LT
   responses:
     Unauthorized:
       description: Unauthorized — invalid or missing API key
@@ -347,5 +343,5 @@ components:
       name: Authorization
       description: 'Format: ''Authorization: API {key}'''
 externalDocs:
-  description: BuiltWith Change API Documentation
-  url: https://api.builtwith.com/change-api
+  description: BuiltWith Lists API Documentation
+  url: https://api.builtwith.com/lists-api

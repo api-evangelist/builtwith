@@ -28,18 +28,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/AnyJson'
 components:
-  schemas:
-    AnyJson:
-      description: A generic JSON payload.
-      oneOf:
-      - type: object
-        additionalProperties: true
-      - type: array
-        items: {}
-      - type: string
-      - type: number
-      - type: boolean
-      - type: 'null'
   parameters:
     since:
       name: SINCE
@@ -56,6 +44,18 @@ components:
       schema:
         type: string
       description: Primary lookup value, typically a root domain (e.g. example.com).
+  schemas:
+    AnyJson:
+      description: A generic JSON payload.
+      oneOf:
+      - type: object
+        additionalProperties: true
+      - type: array
+        items: {}
+      - type: string
+      - type: number
+      - type: boolean
+      - type: 'null'
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

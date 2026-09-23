@@ -54,6 +54,33 @@ paths:
                 $ref: '#/components/schemas/AgentAuthTokenResponse'
 components:
   schemas:
+    AgentAuthTokenRequest:
+      type: object
+      required:
+      - device_code
+      properties:
+        device_code:
+          type: string
+      additionalProperties: false
+    AgentAuthTokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Temporary bw- prefixed API token when authorization succeeds.
+        token_type:
+          type: string
+          example: bearer
+        expires_in:
+          type: integer
+          format: int32
+        error:
+          type: string
+          enum:
+          - authorization_pending
+          - access_denied
+          - expired_token
+      additionalProperties: true
     AgentAuthStartResponse:
       type: object
       required:
@@ -74,33 +101,6 @@ components:
           type: integer
           format: int32
       additionalProperties: true
-    AgentAuthTokenResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: Temporary bw- prefixed API token when authorization succeeds.
-        token_type:
-          type: string
-          example: bearer
-        expires_in:
-          type: integer
-          format: int32
-        error:
-          type: string
-          enum:
-          - authorization_pending
-          - access_denied
-          - expired_token
-      additionalProperties: true
-    AgentAuthTokenRequest:
-      type: object
-      required:
-      - device_code
-      properties:
-        device_code:
-          type: string
-      additionalProperties: false
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
