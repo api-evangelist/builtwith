@@ -29,6 +29,13 @@ paths:
                 $ref: '#/components/schemas/VectorSearchApiV1Response'
 components:
   parameters:
+    query:
+      name: QUERY
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Search query.
     vector_limit:
       name: LIMIT
       in: query
@@ -39,14 +46,20 @@ components:
         maximum: 100
         default: 10
       description: Vector Search result limit.
-    query:
-      name: QUERY
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Search query.
   schemas:
+    VectorSearchApiV1Response:
+      type: object
+      properties:
+        Query:
+          type: string
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/VectorSearchResult'
+        Errors:
+          type: array
+          items: {}
+      additionalProperties: true
     VectorSearchResult:
       type: object
       properties:
@@ -63,19 +76,6 @@ components:
           type: array
           items:
             type: string
-      additionalProperties: true
-    VectorSearchApiV1Response:
-      type: object
-      properties:
-        Query:
-          type: string
-        Results:
-          type: array
-          items:
-            $ref: '#/components/schemas/VectorSearchResult'
-        Errors:
-          type: array
-          items: {}
       additionalProperties: true
   securitySchemes:
     ApiKeyQuery:

@@ -92,16 +92,23 @@ paths:
       - Mppx
 components:
   schemas:
-    PurchaseRequest:
+    ConfigurationResponse:
       type: object
-      additionalProperties: false
-      required:
-      - credits
       properties:
-        credits:
+        max_per_purchase:
           type: integer
-          minimum: 2000
-          multipleOf: 2000
+        max_monthly:
+          type: integer
+        monthly_purchased:
+          type: integer
+        monthly_remaining:
+          type: integer
+        monthly_reset_timezone:
+          const: UTC
+        purchase_increment:
+          const: 2000
+        idempotency_key_required:
+          const: true
     DiscoveryResponse:
       type: object
       properties:
@@ -132,6 +139,16 @@ components:
           type: string
         details:
           type: object
+    PurchaseRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - credits
+      properties:
+        credits:
+          type: integer
+          minimum: 2000
+          multipleOf: 2000
     PurchaseResponse:
       type: object
       required:
@@ -153,32 +170,19 @@ components:
           type: string
         credits_available:
           type: number
-    ConfigurationResponse:
-      type: object
-      properties:
-        max_per_purchase:
-          type: integer
-        max_monthly:
-          type: integer
-        monthly_purchased:
-          type: integer
-        monthly_remaining:
-          type: integer
-        monthly_reset_timezone:
-          const: UTC
-        purchase_increment:
-          const: 2000
-        idempotency_key_required:
-          const: true
   responses:
-    PaymentFailed:
-      description: Stripe payment failed or no chargeable payment method is on file
+    Unauthorized:
+      description: Missing or invalid Agent Billing Key
+      headers:
+        WWW-Authenticate:
+          schema:
+            type: string
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Billing credential required, account suspended, or spending permission denied
+    PaymentFailed:
+      description: Stripe payment failed or no chargeable payment method is on file
       content:
         application/json:
           schema:
@@ -189,18 +193,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Idempotency key is in progress or conflicts with an earlier request
+    Forbidden:
+      description: Billing credential required, account suspended, or spending permission denied
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid Agent Billing Key
-      headers:
-        WWW-Authenticate:
-          schema:
-            type: string
+    Conflict:
+      description: Idempotency key is in progress or conflicts with an earlier request
       content:
         application/json:
           schema:

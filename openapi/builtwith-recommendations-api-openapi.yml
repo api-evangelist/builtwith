@@ -29,6 +29,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/RecommendationsApiV1Item'
 components:
+  parameters:
+    lookup:
+      name: LOOKUP
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Primary lookup value, typically a root domain (e.g. example.com).
   schemas:
     RecommendationsApiV1Item:
       type: object
@@ -74,14 +82,6 @@ components:
           type: number
           format: float
       additionalProperties: true
-  parameters:
-    lookup:
-      name: LOOKUP
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Primary lookup value, typically a root domain (e.g. example.com).
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

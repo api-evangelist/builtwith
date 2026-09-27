@@ -47,6 +47,8 @@ tags:
   - MCP
   - Agentic Commerce
   - Real-Time Data
+  - Real-Time
+  - A2A
 tags_raw:
   - Technology Profiling
   - Lead Generation
@@ -60,6 +62,8 @@ tags_raw:
   - Model Context Protocol
   - Agentic Commerce
   - Real-time Data
+  - Real-Time
+  - A2A
 apis:
 - name: BuiltWith Domain API
   description: >-
@@ -438,9 +442,10 @@ apis:
   humanURL: https://api.builtwith.com/domain-api
   baseURL: https://api.builtwith.com/v22
   tags:
-  - Agent Payments
+  - Agentic Payments
   tags_raw:
   - AgentPayments
+  - Agent Payments
   properties:
   - type: OpenAPI
     url: openapi/builtwith-agentpayments-api-openapi.yml
@@ -580,6 +585,8 @@ apis:
   humanURL: https://api.builtwith.com/domain-api
   baseURL: https://api.builtwith.com/v22
   tags:
+  - Finance
+  tags_raw:
   - Financial
   properties:
   - type: OpenAPI
@@ -1156,3 +1163,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 45
   pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://api.builtwith.com/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3.0"
+  control: 404

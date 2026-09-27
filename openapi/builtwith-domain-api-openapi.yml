@@ -147,27 +147,33 @@ paths:
                 $ref: '#/components/schemas/DomainApiV22Response'
 components:
   schemas:
-    DomainPath:
+    DomainApiV22Result:
       type: object
       properties:
-        Technologies:
+        SpendHistory:
           type: array
           items:
-            $ref: '#/components/schemas/TechnologyDetection'
-        FirstIndexed:
+            $ref: '#/components/schemas/SpendPoint'
+        IsDB:
+          description: String boolean in sample payloads (e.g. "True").
+          type: string
+        Spend:
           type: integer
           format: int64
-          description: Epoch milliseconds.
-        LastIndexed:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        Domain:
-          type: string
-        Url:
-          type: string
-        SubDomain:
-          type: string
+        Paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainPath'
+      additionalProperties: true
+    DomainApiV22Response:
+      type: object
+      required:
+      - Results
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainApiV22ResultsItem'
       additionalProperties: true
     SpendPoint:
       type: object
@@ -216,6 +222,50 @@ components:
               type: string
             ldrange:
               type: string
+    DomainPath:
+      type: object
+      properties:
+        Technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/TechnologyDetection'
+        FirstIndexed:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        LastIndexed:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        Domain:
+          type: string
+        Url:
+          type: string
+        SubDomain:
+          type: string
+      additionalProperties: true
+    DomainBulkJobResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+        status:
+          type: string
+        created_utc:
+          type: string
+          format: date-time
+        completed_utc:
+          type: string
+          format: date-time
+        result_url:
+          type: string
+        count:
+          type: integer
+          format: int32
+        sync_max:
+          type: integer
+          format: int32
+      additionalProperties: true
     DomainApiV22ResultsItem:
       type: object
       required:
@@ -223,16 +273,6 @@ components:
       properties:
         Result:
           $ref: '#/components/schemas/DomainApiV22Result'
-      additionalProperties: true
-    DomainApiV22Response:
-      type: object
-      required:
-      - Results
-      properties:
-        Results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainApiV22ResultsItem'
       additionalProperties: true
     TechnologyDetection:
       type: object
@@ -263,80 +303,9 @@ components:
           items:
             type: string
       additionalProperties: true
-    DomainApiV22Result:
-      type: object
-      properties:
-        SpendHistory:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpendPoint'
-        IsDB:
-          description: String boolean in sample payloads (e.g. "True").
-          type: string
-        Spend:
-          type: integer
-          format: int64
-        Paths:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainPath'
-      additionalProperties: true
-    DomainBulkJobResponse:
-      type: object
-      properties:
-        job_id:
-          type: string
-        status:
-          type: string
-        created_utc:
-          type: string
-          format: date-time
-        completed_utc:
-          type: string
-          format: date-time
-        result_url:
-          type: string
-        count:
-          type: integer
-          format: int32
-        sync_max:
-          type: integer
-          format: int32
-      additionalProperties: true
   parameters:
-    ip:
-      name: IP
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
-    nopii:
-      name: NOPII
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
     nometa:
       name: NOMETA
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
-    ldrange:
-      name: LDRANGE
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Domain API option. Exact format not specified in llms.txt.
-    noattr:
-      name: NOATTR
       in: query
       required: false
       schema:
@@ -350,21 +319,6 @@ components:
       schema:
         type: string
       description: Primary lookup value, typically a root domain (e.g. example.com).
-    liveonly:
-      name: LIVEONLY
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
-    job_id:
-      name: job_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Bulk Domain API job identifier.
     hidetext:
       name: HIDETEXT
       in: query
@@ -381,6 +335,22 @@ components:
         type: boolean
         default: false
       description: Domain API option.
+    liveonly:
+      name: LIVEONLY
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    noattr:
+      name: NOATTR
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
     fdrange:
       name: FDRANGE
       in: query
@@ -388,6 +358,36 @@ components:
       schema:
         type: string
       description: Domain API option. Exact format not specified in llms.txt.
+    job_id:
+      name: job_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Bulk Domain API job identifier.
+    nopii:
+      name: NOPII
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    ldrange:
+      name: LDRANGE
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Domain API option. Exact format not specified in llms.txt.
+    ip:
+      name: IP
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
     hidedl:
       name: HIDEDL
       in: query

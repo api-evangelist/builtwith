@@ -130,28 +130,17 @@ paths:
                 type: string
 components:
   schemas:
-    ListMeta:
+    ListsResult:
       type: object
-      description: Optional metadata returned when META=yes
       properties:
-        Name:
+        NextOffset:
           type: string
-        Title:
-          type: string
-        Description:
-          type: string
-        Emails:
+          description: Pagination anchor for the next page; 'END' indicates last page
+          example: oQEwEnH2FJuIzeXOEk2T
+        Results:
           type: array
           items:
-            type: string
-        Telephones:
-          type: array
-          items:
-            type: string
-        Social:
-          type: array
-          items:
-            type: string
+            $ref: '#/components/schemas/ListResultItem'
     ErrorResponse:
       type: object
       properties:
@@ -209,18 +198,45 @@ components:
           description: Country code
         Meta:
           $ref: '#/components/schemas/ListMeta'
-    ListsResult:
+    ListMeta:
       type: object
+      description: Optional metadata returned when META=yes
       properties:
-        NextOffset:
+        Name:
           type: string
-          description: Pagination anchor for the next page; 'END' indicates last page
-          example: oQEwEnH2FJuIzeXOEk2T
-        Results:
+        Title:
+          type: string
+        Description:
+          type: string
+        Emails:
           type: array
           items:
-            $ref: '#/components/schemas/ListResultItem'
+            type: string
+        Telephones:
+          type: array
+          items:
+            type: string
+        Social:
+          type: array
+          items:
+            type: string
   parameters:
+    REVENUE:
+      name: REVENUE
+      in: query
+      description: Filter by eCommerce revenue using 'amount|operator'
+      required: false
+      schema:
+        type: string
+        example: 100000|GT
+    OTHERTECHS:
+      name: OTHERTECHS
+      in: query
+      description: Additional technologies to filter by (comma-separated, max 16)
+      required: false
+      schema:
+        type: string
+        example: Google-Analytics,Meta-Pixel
     ALL:
       name: ALL
       in: query
@@ -230,54 +246,6 @@ components:
         type: string
         enum:
         - 'yes'
-    REVENUE:
-      name: REVENUE
-      in: query
-      description: Filter by eCommerce revenue using 'amount|operator'
-      required: false
-      schema:
-        type: string
-        example: 100000|GT
-    COUNTRY:
-      name: COUNTRY
-      in: query
-      description: ISO 3166-1 alpha-2 country code(s), comma-separated
-      required: false
-      schema:
-        type: string
-        example: US,AU,NZ
-    SINCE:
-      name: SINCE
-      in: query
-      description: Filter for recent detections only ('30 Days Ago' or ISO date, incompatible with ALL)
-      required: false
-      schema:
-        type: string
-        example: 30 Days Ago
-    FOLLOWERS:
-      name: FOLLOWERS
-      in: query
-      description: Filter by social follower count using 'count|operator'
-      required: false
-      schema:
-        type: string
-        example: 10000|GTE
-    OTHERTECHS:
-      name: OTHERTECHS
-      in: query
-      description: Additional technologies to filter by (comma-separated, max 16)
-      required: false
-      schema:
-        type: string
-        example: Google-Analytics,Meta-Pixel
-    KEY:
-      name: KEY
-      in: query
-      required: false
-      schema:
-        type: string
-        format: uuid
-        example: 00000000-0000-0000-0000-000000000000
     META:
       name: META
       in: query
@@ -295,6 +263,22 @@ components:
       schema:
         type: string
         example: oQEwEnH2FJuIzeXOEk2T
+    COUNTRY:
+      name: COUNTRY
+      in: query
+      description: ISO 3166-1 alpha-2 country code(s), comma-separated
+      required: false
+      schema:
+        type: string
+        example: US,AU,NZ
+    PAGERANK:
+      name: PAGERANK
+      in: query
+      description: Filter by traffic rank using 'rank|operator'
+      required: false
+      schema:
+        type: string
+        example: 1000000|LT
     SPEND:
       name: SPEND
       in: query
@@ -311,14 +295,30 @@ components:
       schema:
         type: string
         example: Shopify
-    PAGERANK:
-      name: PAGERANK
+    KEY:
+      name: KEY
       in: query
-      description: Filter by traffic rank using 'rank|operator'
       required: false
       schema:
         type: string
-        example: 1000000|LT
+        format: uuid
+        example: 00000000-0000-0000-0000-000000000000
+    SINCE:
+      name: SINCE
+      in: query
+      description: Filter for recent detections only ('30 Days Ago' or ISO date, incompatible with ALL)
+      required: false
+      schema:
+        type: string
+        example: 30 Days Ago
+    FOLLOWERS:
+      name: FOLLOWERS
+      in: query
+      description: Filter by social follower count using 'count|operator'
+      required: false
+      schema:
+        type: string
+        example: 10000|GTE
   responses:
     Unauthorized:
       description: Unauthorized — invalid or missing API key

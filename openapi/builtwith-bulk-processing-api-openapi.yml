@@ -50,20 +50,6 @@ paths:
                 - $ref: '#/components/schemas/BulkJobResponse'
 components:
   schemas:
-    TechCategory:
-      type: object
-      properties:
-        Category:
-          type: string
-          example: CMS
-    Attribute:
-      type: object
-      description: Additional attribute data for a technology
-      properties:
-        Field:
-          type: string
-        Value:
-          type: string
     DomainResult:
       type: object
       description: Top-level response wrapper for domain technology lookups
@@ -72,6 +58,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DomainResultItem'
+    Path:
+      type: object
+      properties:
+        Domain:
+          type: string
+          description: Sub-domain or path scanned
+        Technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Technology'
     BulkJobResponse:
       type: object
       description: Async job reference for large bulk batches
@@ -86,11 +82,63 @@ components:
           - processing
           - complete
           - error
+    BulkRequest:
+      type: object
+      required:
+      - KEY
+      - LOOKUP
+      properties:
+        KEY:
+          type: string
+          format: uuid
+          description: API authentication key
+        LOOKUP:
+          type: array
+          items:
+            type: string
+          description: List of domains to look up
+          maxItems: 500
     DomainResultItem:
       type: object
       properties:
         Result:
           $ref: '#/components/schemas/Result'
+    Attribute:
+      type: object
+      description: Additional attribute data for a technology
+      properties:
+        Field:
+          type: string
+        Value:
+          type: string
+    DomainMeta:
+      type: object
+      description: Company and domain metadata
+      properties:
+        CompanyName:
+          type: string
+        Vertical:
+          type: string
+        Telephones:
+          type: array
+          items:
+            type: string
+        Emails:
+          type: array
+          items:
+            type: string
+        City:
+          type: string
+        State:
+          type: string
+        Postcode:
+          type: string
+        Country:
+          type: string
+        Names:
+          type: array
+          items:
+            type: string
     Technology:
       type: object
       description: A detected web technology
@@ -126,50 +174,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attribute'
-    BulkRequest:
-      type: object
-      required:
-      - KEY
-      - LOOKUP
-      properties:
-        KEY:
-          type: string
-          format: uuid
-          description: API authentication key
-        LOOKUP:
-          type: array
-          items:
-            type: string
-          description: List of domains to look up
-          maxItems: 500
-    DomainMeta:
-      type: object
-      description: Company and domain metadata
-      properties:
-        CompanyName:
-          type: string
-        Vertical:
-          type: string
-        Telephones:
-          type: array
-          items:
-            type: string
-        Emails:
-          type: array
-          items:
-            type: string
-        City:
-          type: string
-        State:
-          type: string
-        Postcode:
-          type: string
-        Country:
-          type: string
-        Names:
-          type: array
-          items:
-            type: string
     Result:
       type: object
       properties:
@@ -183,16 +187,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Path'
-    Path:
+    TechCategory:
       type: object
       properties:
-        Domain:
+        Category:
           type: string
-          description: Sub-domain or path scanned
-        Technologies:
-          type: array
-          items:
-            $ref: '#/components/schemas/Technology'
+          example: CMS
   securitySchemes:
     apiKeyQuery:
       type: apiKey

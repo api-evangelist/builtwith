@@ -29,31 +29,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/KeywordSearchApiV1Response'
 components:
-  parameters:
-    limit:
-      name: LIMIT
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 16
-        maximum: 1000
-        default: 100
-      description: Keyword Search result limit.
-    keyword:
-      name: KEYWORD
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Keyword to search for.
-    offset:
-      name: OFFSET
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Opaque pagination offset from the previous response's NextOffset.
   schemas:
     KeywordSearchApiV1Response:
       type: object
@@ -67,6 +42,31 @@ components:
         NextOffset:
           type: string
       additionalProperties: true
+  parameters:
+    keyword:
+      name: KEYWORD
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Keyword to search for.
+    limit:
+      name: LIMIT
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 16
+        maximum: 1000
+        default: 100
+      description: Keyword Search result limit.
+    offset:
+      name: OFFSET
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Opaque pagination offset from the previous response's NextOffset.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
