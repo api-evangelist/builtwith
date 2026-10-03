@@ -130,6 +130,28 @@ paths:
                 type: string
 components:
   schemas:
+    ListMeta:
+      type: object
+      description: Optional metadata returned when META=yes
+      properties:
+        Name:
+          type: string
+        Title:
+          type: string
+        Description:
+          type: string
+        Emails:
+          type: array
+          items:
+            type: string
+        Telephones:
+          type: array
+          items:
+            type: string
+        Social:
+          type: array
+          items:
+            type: string
     ListsResult:
       type: object
       properties:
@@ -198,63 +220,31 @@ components:
           description: Country code
         Meta:
           $ref: '#/components/schemas/ListMeta'
-    ListMeta:
-      type: object
-      description: Optional metadata returned when META=yes
-      properties:
-        Name:
-          type: string
-        Title:
-          type: string
-        Description:
-          type: string
-        Emails:
-          type: array
-          items:
-            type: string
-        Telephones:
-          type: array
-          items:
-            type: string
-        Social:
-          type: array
-          items:
-            type: string
   parameters:
-    REVENUE:
-      name: REVENUE
+    PAGERANK:
+      name: PAGERANK
       in: query
-      description: Filter by eCommerce revenue using 'amount|operator'
+      description: Filter by traffic rank using 'rank|operator'
       required: false
       schema:
         type: string
-        example: 100000|GT
-    OTHERTECHS:
-      name: OTHERTECHS
+        example: 1000000|LT
+    FOLLOWERS:
+      name: FOLLOWERS
       in: query
-      description: Additional technologies to filter by (comma-separated, max 16)
+      description: Filter by social follower count using 'count|operator'
       required: false
       schema:
         type: string
-        example: Google-Analytics,Meta-Pixel
-    ALL:
-      name: ALL
+        example: 10000|GTE
+    TECH:
+      name: TECH
       in: query
-      description: Set to 'yes' to include historical data (incompatible with SINCE)
-      required: false
+      description: Technology name (spaces replaced with dashes, e.g. Google-Analytics)
+      required: true
       schema:
         type: string
-        enum:
-        - 'yes'
-    META:
-      name: META
-      in: query
-      description: Set to 'yes' to include metadata (names, titles, social links)
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
+        example: Shopify
     OFFSET:
       name: OFFSET
       in: query
@@ -271,14 +261,23 @@ components:
       schema:
         type: string
         example: US,AU,NZ
-    PAGERANK:
-      name: PAGERANK
+    REVENUE:
+      name: REVENUE
       in: query
-      description: Filter by traffic rank using 'rank|operator'
+      description: Filter by eCommerce revenue using 'amount|operator'
       required: false
       schema:
         type: string
-        example: 1000000|LT
+        example: 100000|GT
+    ALL:
+      name: ALL
+      in: query
+      description: Set to 'yes' to include historical data (incompatible with SINCE)
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
     SPEND:
       name: SPEND
       in: query
@@ -287,22 +286,6 @@ components:
       schema:
         type: string
         example: 100|GT
-    TECH:
-      name: TECH
-      in: query
-      description: Technology name (spaces replaced with dashes, e.g. Google-Analytics)
-      required: true
-      schema:
-        type: string
-        example: Shopify
-    KEY:
-      name: KEY
-      in: query
-      required: false
-      schema:
-        type: string
-        format: uuid
-        example: 00000000-0000-0000-0000-000000000000
     SINCE:
       name: SINCE
       in: query
@@ -311,14 +294,31 @@ components:
       schema:
         type: string
         example: 30 Days Ago
-    FOLLOWERS:
-      name: FOLLOWERS
+    OTHERTECHS:
+      name: OTHERTECHS
       in: query
-      description: Filter by social follower count using 'count|operator'
+      description: Additional technologies to filter by (comma-separated, max 16)
       required: false
       schema:
         type: string
-        example: 10000|GTE
+        example: Google-Analytics,Meta-Pixel
+    KEY:
+      name: KEY
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: 00000000-0000-0000-0000-000000000000
+    META:
+      name: META
+      in: query
+      description: Set to 'yes' to include metadata (names, titles, social links)
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
   responses:
     Unauthorized:
       description: Unauthorized — invalid or missing API key

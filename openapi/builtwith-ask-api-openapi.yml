@@ -31,14 +31,6 @@ paths:
                 $ref: '#/components/schemas/AskApiV1Response'
 components:
   parameters:
-    commit:
-      name: COMMIT
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: For Ask API, set true to request a committed/full report. OpenAI MCP requests ignore this and stay in preview mode.
     meta:
       name: META
       in: query
@@ -47,13 +39,6 @@ components:
         type: boolean
         default: false
       description: Set true to include metadata in Ask API results.
-    nextOffset:
-      name: NEXTOFFSET
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Pagination offset from the previous response's NextOffset.
     query:
       name: QUERY
       in: query
@@ -61,6 +46,21 @@ components:
       schema:
         type: string
       description: Search query.
+    commit:
+      name: COMMIT
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: For Ask API, set true to request a committed/full report. OpenAI MCP requests ignore this and stay in preview mode.
+    nextOffset:
+      name: NEXTOFFSET
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Pagination offset from the previous response's NextOffset.
   schemas:
     AskApiV1Response:
       type: object

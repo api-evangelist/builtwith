@@ -27,14 +27,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/AnyJson'
 components:
-  parameters:
-    tech:
-      name: TECH
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Technology name (e.g. Shopify, WordPress).
   schemas:
     AnyJson:
       description: A generic JSON payload.
@@ -47,6 +39,14 @@ components:
       - type: number
       - type: boolean
       - type: 'null'
+  parameters:
+    tech:
+      name: TECH
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Technology name (e.g. Shopify, WordPress).
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

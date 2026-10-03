@@ -28,22 +28,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/AnyJson'
 components:
-  parameters:
-    lookup:
-      name: LOOKUP
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Primary lookup value, typically a root domain (e.g. example.com).
-    since:
-      name: SINCE
-      in: query
-      required: false
-      schema:
-        type: string
-        default: 3 months
-      description: Natural language date range, such as last+month.
   schemas:
     AnyJson:
       description: A generic JSON payload.
@@ -56,6 +40,22 @@ components:
       - type: number
       - type: boolean
       - type: 'null'
+  parameters:
+    since:
+      name: SINCE
+      in: query
+      required: false
+      schema:
+        type: string
+        default: 3 months
+      description: Natural language date range, such as last+month.
+    lookup:
+      name: LOOKUP
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Primary lookup value, typically a root domain (e.g. example.com).
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

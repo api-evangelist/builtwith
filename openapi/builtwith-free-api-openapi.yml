@@ -54,6 +54,29 @@ components:
         name:
           type: string
       additionalProperties: true
+    FreeApiV1Response:
+      type: object
+      required:
+      - domain
+      - first
+      - last
+      - groups
+      properties:
+        domain:
+          type: string
+        first:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        last:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/FreeGroupSummary'
+      additionalProperties: true
     FreeGroupSummary:
       type: object
       required:
@@ -84,29 +107,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FreeCategorySummary'
-      additionalProperties: true
-    FreeApiV1Response:
-      type: object
-      required:
-      - domain
-      - first
-      - last
-      - groups
-      properties:
-        domain:
-          type: string
-        first:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        last:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/FreeGroupSummary'
       additionalProperties: true
   parameters:
     lookup:

@@ -118,143 +118,7 @@ paths:
               schema:
                 type: string
 components:
-  parameters:
-    HIDETEXT:
-      name: HIDETEXT
-      in: query
-      description: Set to 'yes' to exclude technology descriptions and links
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    FDRANGE:
-      name: FDRANGE
-      in: query
-      description: Filter by detection date range in YYYY-MM-DD|YYYY-MM-DD format
-      required: false
-      schema:
-        type: string
-        example: 2025-01-01|2026-01-01
-    NOATTR:
-      name: NOATTR
-      in: query
-      description: Set to 'yes' to exclude technology attributes
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    NOMETA:
-      name: NOMETA
-      in: query
-      description: Set to 'yes' to skip address and company metadata
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    LIVEONLY:
-      name: LIVEONLY
-      in: query
-      description: Set to 'yes' to return only currently active technologies
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    LOOKUP:
-      name: LOOKUP
-      in: query
-      description: 'Domain or comma-separated list of up to 16 domains to look up. Use root domains only.
-
-        '
-      required: true
-      schema:
-        type: string
-        example: example.com
-    VERTICALS:
-      name: VERTICALS
-      in: query
-      description: Set to '1' to return vertical list instead of domain data
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-    KEY:
-      name: KEY
-      in: query
-      description: Your BuiltWith API authentication key (UUID format)
-      required: false
-      schema:
-        type: string
-        format: uuid
-        example: 00000000-0000-0000-0000-000000000000
-    NOPII:
-      name: NOPII
-      in: query
-      description: Set to 'yes' to remove personally identifiable information (names/emails)
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    TRUST:
-      name: TRUST
-      in: query
-      description: Set to 'yes' to include trust/safety data (uses additional API credits)
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    CATEGORIES:
-      name: CATEGORIES
-      in: query
-      description: Set to '1' to return technology category list instead of domain data
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
   schemas:
-    Attribute:
-      type: object
-      description: Additional attribute data for a technology
-      properties:
-        Field:
-          type: string
-        Value:
-          type: string
-    DomainMeta:
-      type: object
-      description: Company and domain metadata
-      properties:
-        CompanyName:
-          type: string
-        Vertical:
-          type: string
-        Telephones:
-          type: array
-          items:
-            type: string
-        Emails:
-          type: array
-          items:
-            type: string
-        City:
-          type: string
-        State:
-          type: string
-        Postcode:
-          type: string
-        Country:
-          type: string
-        Names:
-          type: array
-          items:
-            type: string
     Result:
       type: object
       properties:
@@ -268,30 +132,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Path'
-    TechCategory:
-      type: object
-      properties:
-        Category:
-          type: string
-          example: CMS
-    Path:
-      type: object
-      properties:
-        Domain:
-          type: string
-          description: Sub-domain or path scanned
-        Technologies:
-          type: array
-          items:
-            $ref: '#/components/schemas/Technology'
-    DomainResult:
-      type: object
-      description: Top-level response wrapper for domain technology lookups
-      properties:
-        Results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainResultItem'
     ErrorResponse:
       type: object
       properties:
@@ -304,11 +144,14 @@ components:
                 type: integer
               Message:
                 type: string
-    DomainResultItem:
+    Attribute:
       type: object
+      description: Additional attribute data for a technology
       properties:
-        Result:
-          $ref: '#/components/schemas/Result'
+        Field:
+          type: string
+        Value:
+          type: string
     Technology:
       type: object
       description: A detected web technology
@@ -344,6 +187,163 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attribute'
+    DomainResult:
+      type: object
+      description: Top-level response wrapper for domain technology lookups
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainResultItem'
+    Path:
+      type: object
+      properties:
+        Domain:
+          type: string
+          description: Sub-domain or path scanned
+        Technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Technology'
+    TechCategory:
+      type: object
+      properties:
+        Category:
+          type: string
+          example: CMS
+    DomainMeta:
+      type: object
+      description: Company and domain metadata
+      properties:
+        CompanyName:
+          type: string
+        Vertical:
+          type: string
+        Telephones:
+          type: array
+          items:
+            type: string
+        Emails:
+          type: array
+          items:
+            type: string
+        City:
+          type: string
+        State:
+          type: string
+        Postcode:
+          type: string
+        Country:
+          type: string
+        Names:
+          type: array
+          items:
+            type: string
+    DomainResultItem:
+      type: object
+      properties:
+        Result:
+          $ref: '#/components/schemas/Result'
+  parameters:
+    NOMETA:
+      name: NOMETA
+      in: query
+      description: Set to 'yes' to skip address and company metadata
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    KEY:
+      name: KEY
+      in: query
+      description: Your BuiltWith API authentication key (UUID format)
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: 00000000-0000-0000-0000-000000000000
+    LOOKUP:
+      name: LOOKUP
+      in: query
+      description: 'Domain or comma-separated list of up to 16 domains to look up. Use root domains only.
+
+        '
+      required: true
+      schema:
+        type: string
+        example: example.com
+    HIDETEXT:
+      name: HIDETEXT
+      in: query
+      description: Set to 'yes' to exclude technology descriptions and links
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    NOPII:
+      name: NOPII
+      in: query
+      description: Set to 'yes' to remove personally identifiable information (names/emails)
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    NOATTR:
+      name: NOATTR
+      in: query
+      description: Set to 'yes' to exclude technology attributes
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    VERTICALS:
+      name: VERTICALS
+      in: query
+      description: Set to '1' to return vertical list instead of domain data
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+    LIVEONLY:
+      name: LIVEONLY
+      in: query
+      description: Set to 'yes' to return only currently active technologies
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    FDRANGE:
+      name: FDRANGE
+      in: query
+      description: Filter by detection date range in YYYY-MM-DD|YYYY-MM-DD format
+      required: false
+      schema:
+        type: string
+        example: 2025-01-01|2026-01-01
+    CATEGORIES:
+      name: CATEGORIES
+      in: query
+      description: Set to '1' to return technology category list instead of domain data
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+    TRUST:
+      name: TRUST
+      in: query
+      description: Set to 'yes' to include trust/safety data (uses additional API credits)
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
   responses:
     RateLimited:
       description: 'Too many requests — max 10 req/sec or 8 concurrent requests exceeded

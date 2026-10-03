@@ -50,38 +50,19 @@ paths:
                 - $ref: '#/components/schemas/BulkJobResponse'
 components:
   schemas:
-    DomainResult:
+    Result:
       type: object
-      description: Top-level response wrapper for domain technology lookups
       properties:
-        Results:
+        Lookup:
+          type: string
+          description: The queried domain
+          example: example.com
+        Meta:
+          $ref: '#/components/schemas/DomainMeta'
+        Paths:
           type: array
           items:
-            $ref: '#/components/schemas/DomainResultItem'
-    Path:
-      type: object
-      properties:
-        Domain:
-          type: string
-          description: Sub-domain or path scanned
-        Technologies:
-          type: array
-          items:
-            $ref: '#/components/schemas/Technology'
-    BulkJobResponse:
-      type: object
-      description: Async job reference for large bulk batches
-      properties:
-        JobId:
-          type: string
-          description: Job identifier for polling status
-        Status:
-          type: string
-          enum:
-          - queued
-          - processing
-          - complete
-          - error
+            $ref: '#/components/schemas/Path'
     BulkRequest:
       type: object
       required:
@@ -98,19 +79,6 @@ components:
             type: string
           description: List of domains to look up
           maxItems: 500
-    DomainResultItem:
-      type: object
-      properties:
-        Result:
-          $ref: '#/components/schemas/Result'
-    Attribute:
-      type: object
-      description: Additional attribute data for a technology
-      properties:
-        Field:
-          type: string
-        Value:
-          type: string
     DomainMeta:
       type: object
       description: Company and domain metadata
@@ -139,6 +107,28 @@ components:
           type: array
           items:
             type: string
+    BulkJobResponse:
+      type: object
+      description: Async job reference for large bulk batches
+      properties:
+        JobId:
+          type: string
+          description: Job identifier for polling status
+        Status:
+          type: string
+          enum:
+          - queued
+          - processing
+          - complete
+          - error
+    Attribute:
+      type: object
+      description: Additional attribute data for a technology
+      properties:
+        Field:
+          type: string
+        Value:
+          type: string
     Technology:
       type: object
       description: A detected web technology
@@ -174,19 +164,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attribute'
-    Result:
+    DomainResult:
       type: object
+      description: Top-level response wrapper for domain technology lookups
       properties:
-        Lookup:
-          type: string
-          description: The queried domain
-          example: example.com
-        Meta:
-          $ref: '#/components/schemas/DomainMeta'
-        Paths:
+        Results:
           type: array
           items:
-            $ref: '#/components/schemas/Path'
+            $ref: '#/components/schemas/DomainResultItem'
+    Path:
+      type: object
+      properties:
+        Domain:
+          type: string
+          description: Sub-domain or path scanned
+        Technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Technology'
+    DomainResultItem:
+      type: object
+      properties:
+        Result:
+          $ref: '#/components/schemas/Result'
     TechCategory:
       type: object
       properties:

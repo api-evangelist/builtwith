@@ -29,32 +29,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/RecommendationsApiV1Item'
 components:
-  parameters:
-    lookup:
-      name: LOOKUP
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Primary lookup value, typically a root domain (e.g. example.com).
   schemas:
-    RecommendationsApiV1Item:
-      type: object
-      required:
-      - Domain
-      - Compiled
-      - Recommendations
-      properties:
-        Domain:
-          type: string
-        Compiled:
-          type: string
-          description: Date wrapper string in sample payload, e.g. "/Date(1749427200000)/".
-        Recommendations:
-          type: array
-          items:
-            $ref: '#/components/schemas/RecommendationItem'
-      additionalProperties: true
     RecommendationItem:
       type: object
       required:
@@ -82,6 +57,31 @@ components:
           type: number
           format: float
       additionalProperties: true
+    RecommendationsApiV1Item:
+      type: object
+      required:
+      - Domain
+      - Compiled
+      - Recommendations
+      properties:
+        Domain:
+          type: string
+        Compiled:
+          type: string
+          description: Date wrapper string in sample payload, e.g. "/Date(1749427200000)/".
+        Recommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecommendationItem'
+      additionalProperties: true
+  parameters:
+    lookup:
+      name: LOOKUP
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Primary lookup value, typically a root domain (e.g. example.com).
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

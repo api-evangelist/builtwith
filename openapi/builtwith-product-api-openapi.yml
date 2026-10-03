@@ -27,14 +27,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/AnyJson'
 components:
-  parameters:
-    query:
-      name: QUERY
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Search query.
   schemas:
     AnyJson:
       description: A generic JSON payload.
@@ -47,6 +39,14 @@ components:
       - type: number
       - type: boolean
       - type: 'null'
+  parameters:
+    query:
+      name: QUERY
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Search query.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
