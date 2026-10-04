@@ -31,21 +31,6 @@ paths:
                 $ref: '#/components/schemas/AskApiV1Response'
 components:
   parameters:
-    meta:
-      name: META
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Set true to include metadata in Ask API results.
-    query:
-      name: QUERY
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Search query.
     commit:
       name: COMMIT
       in: query
@@ -54,6 +39,21 @@ components:
         type: boolean
         default: false
       description: For Ask API, set true to request a committed/full report. OpenAI MCP requests ignore this and stay in preview mode.
+    query:
+      name: QUERY
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Search query.
+    meta:
+      name: META
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Set true to include metadata in Ask API results.
     nextOffset:
       name: NEXTOFFSET
       in: query

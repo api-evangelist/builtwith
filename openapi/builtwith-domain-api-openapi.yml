@@ -147,45 +147,8 @@ paths:
                 $ref: '#/components/schemas/DomainApiV22Response'
 components:
   parameters:
-    job_id:
-      name: job_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Bulk Domain API job identifier.
-    fdrange:
-      name: FDRANGE
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Domain API option. Exact format not specified in llms.txt.
-    ip:
-      name: IP
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
-    nopii:
-      name: NOPII
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
-    lookup:
-      name: LOOKUP
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Primary lookup value, typically a root domain (e.g. example.com).
-    trust:
-      name: TRUST
+    liveonly:
+      name: LIVEONLY
       in: query
       required: false
       schema:
@@ -200,14 +163,28 @@ components:
         type: boolean
         default: false
       description: Domain API option.
-    liveonly:
-      name: LIVEONLY
+    fdrange:
+      name: FDRANGE
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Domain API option. Exact format not specified in llms.txt.
+    trust:
+      name: TRUST
       in: query
       required: false
       schema:
         type: boolean
         default: false
       description: Domain API option.
+    job_id:
+      name: job_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Bulk Domain API job identifier.
     ldrange:
       name: LDRANGE
       in: query
@@ -215,16 +192,8 @@ components:
       schema:
         type: string
       description: Domain API option. Exact format not specified in llms.txt.
-    nometa:
-      name: NOMETA
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
-    hidedl:
-      name: HIDEDL
+    ip:
+      name: IP
       in: query
       required: false
       schema:
@@ -239,7 +208,143 @@ components:
         type: boolean
         default: false
       description: Domain API option.
+    hidedl:
+      name: HIDEDL
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    nometa:
+      name: NOMETA
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    lookup:
+      name: LOOKUP
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Primary lookup value, typically a root domain (e.g. example.com).
+    nopii:
+      name: NOPII
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
   schemas:
+    TechnologyDetection:
+      type: object
+      properties:
+        Name:
+          type: string
+        Description:
+          type: string
+        Link:
+          type: string
+        Parent:
+          type: string
+        Tag:
+          type: string
+        FirstDetected:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        LastDetected:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        IsPremium:
+          description: String boolean in sample payloads (e.g. "No").
+          type: string
+        Categories:
+          type: array
+          items:
+            type: string
+      additionalProperties: true
+    DomainApiV22ResultsItem:
+      type: object
+      required:
+      - Result
+      properties:
+        Result:
+          $ref: '#/components/schemas/DomainApiV22Result'
+      additionalProperties: true
+    DomainApiV22Response:
+      type: object
+      required:
+      - Results
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainApiV22ResultsItem'
+      additionalProperties: true
+    DomainBulkJobResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+        status:
+          type: string
+        created_utc:
+          type: string
+          format: date-time
+        completed_utc:
+          type: string
+          format: date-time
+        result_url:
+          type: string
+        count:
+          type: integer
+          format: int32
+        sync_max:
+          type: integer
+          format: int32
+      additionalProperties: true
+    DomainPath:
+      type: object
+      properties:
+        Technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/TechnologyDetection'
+        FirstIndexed:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        LastIndexed:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        Domain:
+          type: string
+        Url:
+          type: string
+        SubDomain:
+          type: string
+      additionalProperties: true
+    SpendPoint:
+      type: object
+      required:
+      - D
+      - S
+      properties:
+        D:
+          description: Epoch milliseconds.
+          type: integer
+          format: int64
+        S:
+          type: integer
+          format: int64
+      additionalProperties: false
     DomainBulkRequest:
       type: object
       additionalProperties: false
@@ -273,67 +378,6 @@ components:
               type: string
             ldrange:
               type: string
-    DomainPath:
-      type: object
-      properties:
-        Technologies:
-          type: array
-          items:
-            $ref: '#/components/schemas/TechnologyDetection'
-        FirstIndexed:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        LastIndexed:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        Domain:
-          type: string
-        Url:
-          type: string
-        SubDomain:
-          type: string
-      additionalProperties: true
-    TechnologyDetection:
-      type: object
-      properties:
-        Name:
-          type: string
-        Description:
-          type: string
-        Link:
-          type: string
-        Parent:
-          type: string
-        Tag:
-          type: string
-        FirstDetected:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        LastDetected:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        IsPremium:
-          description: String boolean in sample payloads (e.g. "No").
-          type: string
-        Categories:
-          type: array
-          items:
-            type: string
-      additionalProperties: true
-    DomainApiV22Response:
-      type: object
-      required:
-      - Results
-      properties:
-        Results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainApiV22ResultsItem'
-      additionalProperties: true
     DomainApiV22Result:
       type: object
       properties:
@@ -351,50 +395,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DomainPath'
-      additionalProperties: true
-    DomainBulkJobResponse:
-      type: object
-      properties:
-        job_id:
-          type: string
-        status:
-          type: string
-        created_utc:
-          type: string
-          format: date-time
-        completed_utc:
-          type: string
-          format: date-time
-        result_url:
-          type: string
-        count:
-          type: integer
-          format: int32
-        sync_max:
-          type: integer
-          format: int32
-      additionalProperties: true
-    SpendPoint:
-      type: object
-      required:
-      - D
-      - S
-      properties:
-        D:
-          description: Epoch milliseconds.
-          type: integer
-          format: int64
-        S:
-          type: integer
-          format: int64
-      additionalProperties: false
-    DomainApiV22ResultsItem:
-      type: object
-      required:
-      - Result
-      properties:
-        Result:
-          $ref: '#/components/schemas/DomainApiV22Result'
       additionalProperties: true
   securitySchemes:
     ApiKeyQuery:

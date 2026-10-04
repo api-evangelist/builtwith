@@ -29,6 +29,19 @@ paths:
                 $ref: '#/components/schemas/VectorSearchApiV1Response'
 components:
   schemas:
+    VectorSearchApiV1Response:
+      type: object
+      properties:
+        Query:
+          type: string
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/VectorSearchResult'
+        Errors:
+          type: array
+          items: {}
+      additionalProperties: true
     VectorSearchResult:
       type: object
       properties:
@@ -45,19 +58,6 @@ components:
           type: array
           items:
             type: string
-      additionalProperties: true
-    VectorSearchApiV1Response:
-      type: object
-      properties:
-        Query:
-          type: string
-        Results:
-          type: array
-          items:
-            $ref: '#/components/schemas/VectorSearchResult'
-        Errors:
-          type: array
-          items: {}
       additionalProperties: true
   parameters:
     vector_limit:

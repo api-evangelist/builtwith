@@ -50,6 +50,24 @@ paths:
                 - $ref: '#/components/schemas/BulkJobResponse'
 components:
   schemas:
+    Path:
+      type: object
+      properties:
+        Domain:
+          type: string
+          description: Sub-domain or path scanned
+        Technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Technology'
+    Attribute:
+      type: object
+      description: Additional attribute data for a technology
+      properties:
+        Field:
+          type: string
+        Value:
+          type: string
     Result:
       type: object
       properties:
@@ -63,22 +81,46 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Path'
-    BulkRequest:
+    Technology:
       type: object
-      required:
-      - KEY
-      - LOOKUP
+      description: A detected web technology
       properties:
-        KEY:
+        Name:
           type: string
-          format: uuid
-          description: API authentication key
-        LOOKUP:
+          example: WordPress
+        Description:
+          type: string
+        Link:
+          type: string
+          format: uri
+        Tag:
+          type: string
+          description: Primary technology category tag
+          example: cms
+        Categories:
           type: array
           items:
-            type: string
-          description: List of domains to look up
-          maxItems: 500
+            $ref: '#/components/schemas/TechCategory'
+        FirstDetected:
+          type: integer
+          format: int64
+          description: Unix timestamp (ms) of first detection
+        LastDetected:
+          type: integer
+          format: int64
+          description: Unix timestamp (ms) of last detection
+        Live:
+          type: boolean
+          description: Whether the technology is currently active
+        Attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attribute'
+    DomainResultItem:
+      type: object
+      properties:
+        Result:
+          $ref: '#/components/schemas/Result'
     DomainMeta:
       type: object
       description: Company and domain metadata
@@ -121,49 +163,12 @@ components:
           - processing
           - complete
           - error
-    Attribute:
+    TechCategory:
       type: object
-      description: Additional attribute data for a technology
       properties:
-        Field:
+        Category:
           type: string
-        Value:
-          type: string
-    Technology:
-      type: object
-      description: A detected web technology
-      properties:
-        Name:
-          type: string
-          example: WordPress
-        Description:
-          type: string
-        Link:
-          type: string
-          format: uri
-        Tag:
-          type: string
-          description: Primary technology category tag
-          example: cms
-        Categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/TechCategory'
-        FirstDetected:
-          type: integer
-          format: int64
-          description: Unix timestamp (ms) of first detection
-        LastDetected:
-          type: integer
-          format: int64
-          description: Unix timestamp (ms) of last detection
-        Live:
-          type: boolean
-          description: Whether the technology is currently active
-        Attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attribute'
+          example: CMS
     DomainResult:
       type: object
       description: Top-level response wrapper for domain technology lookups
@@ -172,27 +177,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DomainResultItem'
-    Path:
+    BulkRequest:
       type: object
+      required:
+      - KEY
+      - LOOKUP
       properties:
-        Domain:
+        KEY:
           type: string
-          description: Sub-domain or path scanned
-        Technologies:
+          format: uuid
+          description: API authentication key
+        LOOKUP:
           type: array
           items:
-            $ref: '#/components/schemas/Technology'
-    DomainResultItem:
-      type: object
-      properties:
-        Result:
-          $ref: '#/components/schemas/Result'
-    TechCategory:
-      type: object
-      properties:
-        Category:
-          type: string
-          example: CMS
+            type: string
+          description: List of domains to look up
+          maxItems: 500
   securitySchemes:
     apiKeyQuery:
       type: apiKey

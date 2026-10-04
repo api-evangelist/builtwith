@@ -91,57 +91,7 @@ paths:
       tags:
       - Mppx
 components:
-  responses:
-    Conflict:
-      description: Idempotency key is in progress or conflicts with an earlier request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Validation failure
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    PaymentFailed:
-      description: Stripe payment failed or no chargeable payment method is on file
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Billing credential required, account suspended, or spending permission denied
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid Agent Billing Key
-      headers:
-        WWW-Authenticate:
-          schema:
-            type: string
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      required:
-      - success
-      - code
-      - error
-      properties:
-        success:
-          const: false
-        code:
-          type: string
-        error:
-          type: string
-        details:
-          type: object
     DiscoveryResponse:
       type: object
       properties:
@@ -157,6 +107,21 @@ components:
           type: number
         credits_available:
           type: number
+    Error:
+      type: object
+      required:
+      - success
+      - code
+      - error
+      properties:
+        success:
+          const: false
+        code:
+          type: string
+        error:
+          type: string
+        details:
+          type: object
     PurchaseRequest:
       type: object
       additionalProperties: false
@@ -205,6 +170,41 @@ components:
           type: string
         credits_available:
           type: number
+  responses:
+    Forbidden:
+      description: Billing credential required, account suspended, or spending permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    PaymentFailed:
+      description: Stripe payment failed or no chargeable payment method is on file
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid Agent Billing Key
+      headers:
+        WWW-Authenticate:
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Validation failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency key is in progress or conflicts with an earlier request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     agentBillingKey:
       type: http

@@ -28,6 +28,28 @@ paths:
                 $ref: '#/components/schemas/TrustApiV1Response'
 components:
   schemas:
+    TrustApiV1Response:
+      type: object
+      required:
+      - Domain
+      - DBRecord
+      - LiveRecord
+      - Status
+      properties:
+        Domain:
+          type: string
+        DBRecord:
+          $ref: '#/components/schemas/TrustDbRecord'
+        LiveRecord:
+          description: Null in sample payload.
+          oneOf:
+          - type: 'null'
+          - type: object
+            additionalProperties: true
+        Status:
+          type: integer
+          format: int32
+      additionalProperties: true
     TrustDbRecord:
       type: object
       required:
@@ -69,28 +91,6 @@ components:
           type: boolean
         DBIndexed:
           type: boolean
-      additionalProperties: true
-    TrustApiV1Response:
-      type: object
-      required:
-      - Domain
-      - DBRecord
-      - LiveRecord
-      - Status
-      properties:
-        Domain:
-          type: string
-        DBRecord:
-          $ref: '#/components/schemas/TrustDbRecord'
-        LiveRecord:
-          description: Null in sample payload.
-          oneOf:
-          - type: 'null'
-          - type: object
-            additionalProperties: true
-        Status:
-          type: integer
-          format: int32
       additionalProperties: true
   parameters:
     lookup:

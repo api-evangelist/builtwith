@@ -132,26 +132,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Path'
-    ErrorResponse:
+    TechCategory:
       type: object
       properties:
-        Errors:
-          type: array
-          items:
-            type: object
-            properties:
-              Code:
-                type: integer
-              Message:
-                type: string
-    Attribute:
-      type: object
-      description: Additional attribute data for a technology
-      properties:
-        Field:
+        Category:
           type: string
-        Value:
-          type: string
+          example: CMS
     Technology:
       type: object
       description: A detected web technology
@@ -187,30 +173,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attribute'
-    DomainResult:
-      type: object
-      description: Top-level response wrapper for domain technology lookups
-      properties:
-        Results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainResultItem'
-    Path:
-      type: object
-      properties:
-        Domain:
-          type: string
-          description: Sub-domain or path scanned
-        Technologies:
-          type: array
-          items:
-            $ref: '#/components/schemas/Technology'
-    TechCategory:
-      type: object
-      properties:
-        Category:
-          type: string
-          example: CMS
     DomainMeta:
       type: object
       description: Company and domain metadata
@@ -239,30 +201,107 @@ components:
           type: array
           items:
             type: string
+    DomainResult:
+      type: object
+      description: Top-level response wrapper for domain technology lookups
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainResultItem'
+    Path:
+      type: object
+      properties:
+        Domain:
+          type: string
+          description: Sub-domain or path scanned
+        Technologies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Technology'
+    Attribute:
+      type: object
+      description: Additional attribute data for a technology
+      properties:
+        Field:
+          type: string
+        Value:
+          type: string
     DomainResultItem:
       type: object
       properties:
         Result:
           $ref: '#/components/schemas/Result'
+    ErrorResponse:
+      type: object
+      properties:
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: integer
+              Message:
+                type: string
+  responses:
+    Unauthorized:
+      description: Unauthorized — invalid or missing API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — invalid parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimited:
+      description: 'Too many requests — max 10 req/sec or 8 concurrent requests exceeded
+
+        '
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
-    NOMETA:
-      name: NOMETA
+    HIDETEXT:
+      name: HIDETEXT
       in: query
-      description: Set to 'yes' to skip address and company metadata
+      description: Set to 'yes' to exclude technology descriptions and links
       required: false
       schema:
         type: string
         enum:
         - 'yes'
-    KEY:
-      name: KEY
+    LIVEONLY:
+      name: LIVEONLY
       in: query
-      description: Your BuiltWith API authentication key (UUID format)
+      description: Set to 'yes' to return only currently active technologies
       required: false
       schema:
         type: string
-        format: uuid
-        example: 00000000-0000-0000-0000-000000000000
+        enum:
+        - 'yes'
+    CATEGORIES:
+      name: CATEGORIES
+      in: query
+      description: Set to '1' to return technology category list instead of domain data
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+    VERTICALS:
+      name: VERTICALS
+      in: query
+      description: Set to '1' to return vertical list instead of domain data
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
     LOOKUP:
       name: LOOKUP
       in: query
@@ -273,19 +312,18 @@ components:
       schema:
         type: string
         example: example.com
-    HIDETEXT:
-      name: HIDETEXT
+    FDRANGE:
+      name: FDRANGE
       in: query
-      description: Set to 'yes' to exclude technology descriptions and links
+      description: Filter by detection date range in YYYY-MM-DD|YYYY-MM-DD format
       required: false
       schema:
         type: string
-        enum:
-        - 'yes'
-    NOPII:
-      name: NOPII
+        example: 2025-01-01|2026-01-01
+    NOMETA:
+      name: NOMETA
       in: query
-      description: Set to 'yes' to remove personally identifiable information (names/emails)
+      description: Set to 'yes' to skip address and company metadata
       required: false
       schema:
         type: string
@@ -300,41 +338,6 @@ components:
         type: string
         enum:
         - 'yes'
-    VERTICALS:
-      name: VERTICALS
-      in: query
-      description: Set to '1' to return vertical list instead of domain data
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
-    LIVEONLY:
-      name: LIVEONLY
-      in: query
-      description: Set to 'yes' to return only currently active technologies
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    FDRANGE:
-      name: FDRANGE
-      in: query
-      description: Filter by detection date range in YYYY-MM-DD|YYYY-MM-DD format
-      required: false
-      schema:
-        type: string
-        example: 2025-01-01|2026-01-01
-    CATEGORIES:
-      name: CATEGORIES
-      in: query
-      description: Set to '1' to return technology category list instead of domain data
-      required: false
-      schema:
-        type: integer
-        enum:
-        - 1
     TRUST:
       name: TRUST
       in: query
@@ -344,27 +347,24 @@ components:
         type: string
         enum:
         - 'yes'
-  responses:
-    RateLimited:
-      description: 'Too many requests — max 10 req/sec or 8 concurrent requests exceeded
-
-        '
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized — invalid or missing API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — invalid parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+    NOPII:
+      name: NOPII
+      in: query
+      description: Set to 'yes' to remove personally identifiable information (names/emails)
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    KEY:
+      name: KEY
+      in: query
+      description: Your BuiltWith API authentication key (UUID format)
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: 00000000-0000-0000-0000-000000000000
   securitySchemes:
     apiKeyQuery:
       type: apiKey
