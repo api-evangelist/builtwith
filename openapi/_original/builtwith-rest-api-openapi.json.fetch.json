@@ -1,0 +1,12 @@
+{
+ "url": "https://builtwith.com/.well-known/openai.json",
+ "requested_url": "https://builtwith.com/.well-known/openai.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 45664,
+ "sha256": "235523aa30a1ac42ff8070da8bbc6e711f3a222b57a8002af73f3f6c04a580a2",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

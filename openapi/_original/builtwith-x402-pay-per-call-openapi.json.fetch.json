@@ -1,0 +1,12 @@
+{
+ "url": "https://api.builtwith.com/openapi.json",
+ "requested_url": "https://api.builtwith.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 25133,
+ "sha256": "128fc6ec8424d643430df928e442234965fd2e140fee48b4483fb10155755e89",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
