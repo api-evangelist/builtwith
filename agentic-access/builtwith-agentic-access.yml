@@ -1,4 +1,4 @@
-generated: '2026-09-16'
+generated: '2026-09-23'
 method: generated
 source: openapi/builtwith-agentauth-api-openapi.yml, openapi/builtwith-agentpayments-api-openapi.yml,
   openapi/builtwith-ask-api-openapi.yml, openapi/builtwith-bulk-processing-api-openapi.yml,
@@ -20,12 +20,12 @@ description: Recommended x-agentic-access execution contracts, classified heuris
 summary:
   operations: 55
   by_action_class:
-    acting: 20
-    connected: 35
+    acting: 10
+    connected: 45
   by_consequence:
-    write: 15
-    read: 35
-    physical: 5
+    write: 6
+    read: 45
+    physical: 4
   human_in_the_loop_required: 0
 operations:
 - path: /agent-auth/start
@@ -138,68 +138,42 @@ operations:
   method: post
   operationId: findRelatedWebsites
   x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /agent/company-domains
   method: post
   operationId: findCompanyDomains
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /agent/tags
   method: post
   operationId: findDomainsByTag
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /agent/company-identifiers
   method: post
   operationId: getCompanyIdentifiers
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /ctu3/api.json
   method: get
   operationId: company_to_url_v3
@@ -276,34 +250,22 @@ operations:
   method: post
   operationId: getDomainRedirects
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /agent/keywords
   method: post
   operationId: getDomainKeywords
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api.json
   method: get
   operationId: getDomainTechnologiesJson
@@ -542,18 +504,12 @@ operations:
   method: post
   operationId: searchTechnologies
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /agent/domain
   method: get
   operationId: lookupDomainTechnologies
@@ -568,18 +524,12 @@ operations:
   method: post
   operationId: getDomainTechnologyChanges
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /agent/recommendations
   method: post
   operationId: recommendTechnologies
@@ -660,18 +610,12 @@ operations:
   method: post
   operationId: getDomainTrust
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /trustv1/api.json
   method: get
   operationId: trust_v1
@@ -696,15 +640,9 @@ operations:
   method: post
   operationId: askForWebsites
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none

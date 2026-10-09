@@ -159,3 +159,48 @@ plans:
     apiAccess:
       - name: Dedicated Domain Live API
         url: https://api.builtwith.com/dedicated-domain-live-api
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  - subscription
+  units: []
+  plans:
+  - name: Free
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Advanced
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Basic
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Team
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Dedicated Domain Live API
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
