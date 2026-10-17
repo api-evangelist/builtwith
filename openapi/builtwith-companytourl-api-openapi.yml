@@ -29,6 +29,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/CompanyToUrlItem'
 components:
+  parameters:
+    company:
+      name: COMPANY
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Company name to discover domains.
   schemas:
     CompanyToUrlItem:
       type: object
@@ -73,14 +81,6 @@ components:
           items:
             type: string
       additionalProperties: true
-  parameters:
-    company:
-      name: COMPANY
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Company name to discover domains.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

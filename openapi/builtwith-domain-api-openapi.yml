@@ -147,53 +147,8 @@ paths:
                 $ref: '#/components/schemas/DomainApiV22Response'
 components:
   parameters:
-    liveonly:
-      name: LIVEONLY
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
     noattr:
       name: NOATTR
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
-    fdrange:
-      name: FDRANGE
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Domain API option. Exact format not specified in llms.txt.
-    trust:
-      name: TRUST
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
-    job_id:
-      name: job_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Bulk Domain API job identifier.
-    ldrange:
-      name: LDRANGE
-      in: query
-      required: false
-      schema:
-        type: string
-      description: Domain API option. Exact format not specified in llms.txt.
-    ip:
-      name: IP
       in: query
       required: false
       schema:
@@ -208,6 +163,66 @@ components:
         type: boolean
         default: false
       description: Domain API option.
+    trust:
+      name: TRUST
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    ldrange:
+      name: LDRANGE
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Domain API option. Exact format not specified in llms.txt.
+    liveonly:
+      name: LIVEONLY
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    job_id:
+      name: job_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Bulk Domain API job identifier.
+    lookup:
+      name: LOOKUP
+      in: query
+      required: true
+      schema:
+        type: string
+      description: Primary lookup value, typically a root domain (e.g. example.com).
+    ip:
+      name: IP
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    nopii:
+      name: NOPII
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: Domain API option.
+    fdrange:
+      name: FDRANGE
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Domain API option. Exact format not specified in llms.txt.
     hidedl:
       name: HIDEDL
       in: query
@@ -224,22 +239,47 @@ components:
         type: boolean
         default: false
       description: Domain API option.
-    lookup:
-      name: LOOKUP
-      in: query
-      required: true
-      schema:
-        type: string
-      description: Primary lookup value, typically a root domain (e.g. example.com).
-    nopii:
-      name: NOPII
-      in: query
-      required: false
-      schema:
-        type: boolean
-        default: false
-      description: Domain API option.
   schemas:
+    DomainBulkJobResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+        status:
+          type: string
+        created_utc:
+          type: string
+          format: date-time
+        completed_utc:
+          type: string
+          format: date-time
+        result_url:
+          type: string
+        count:
+          type: integer
+          format: int32
+        sync_max:
+          type: integer
+          format: int32
+      additionalProperties: true
+    DomainApiV22Response:
+      type: object
+      required:
+      - Results
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainApiV22ResultsItem'
+      additionalProperties: true
+    DomainApiV22ResultsItem:
+      type: object
+      required:
+      - Result
+      properties:
+        Result:
+          $ref: '#/components/schemas/DomainApiV22Result'
+      additionalProperties: true
     TechnologyDetection:
       type: object
       properties:
@@ -268,46 +308,6 @@ components:
           type: array
           items:
             type: string
-      additionalProperties: true
-    DomainApiV22ResultsItem:
-      type: object
-      required:
-      - Result
-      properties:
-        Result:
-          $ref: '#/components/schemas/DomainApiV22Result'
-      additionalProperties: true
-    DomainApiV22Response:
-      type: object
-      required:
-      - Results
-      properties:
-        Results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainApiV22ResultsItem'
-      additionalProperties: true
-    DomainBulkJobResponse:
-      type: object
-      properties:
-        job_id:
-          type: string
-        status:
-          type: string
-        created_utc:
-          type: string
-          format: date-time
-        completed_utc:
-          type: string
-          format: date-time
-        result_url:
-          type: string
-        count:
-          type: integer
-          format: int32
-        sync_max:
-          type: integer
-          format: int32
       additionalProperties: true
     DomainPath:
       type: object

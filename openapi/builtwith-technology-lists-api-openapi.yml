@@ -130,6 +130,79 @@ paths:
                 type: string
 components:
   parameters:
+    REVENUE:
+      name: REVENUE
+      in: query
+      description: Filter by eCommerce revenue using 'amount|operator'
+      required: false
+      schema:
+        type: string
+        example: 100000|GT
+    KEY:
+      name: KEY
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+        example: 00000000-0000-0000-0000-000000000000
+    META:
+      name: META
+      in: query
+      description: Set to 'yes' to include metadata (names, titles, social links)
+      required: false
+      schema:
+        type: string
+        enum:
+        - 'yes'
+    SPEND:
+      name: SPEND
+      in: query
+      description: Filter by monthly tech spend using 'amount|operator' (e.g. 100|GT)
+      required: false
+      schema:
+        type: string
+        example: 100|GT
+    OTHERTECHS:
+      name: OTHERTECHS
+      in: query
+      description: Additional technologies to filter by (comma-separated, max 16)
+      required: false
+      schema:
+        type: string
+        example: Google-Analytics,Meta-Pixel
+    COUNTRY:
+      name: COUNTRY
+      in: query
+      description: ISO 3166-1 alpha-2 country code(s), comma-separated
+      required: false
+      schema:
+        type: string
+        example: US,AU,NZ
+    PAGERANK:
+      name: PAGERANK
+      in: query
+      description: Filter by traffic rank using 'rank|operator'
+      required: false
+      schema:
+        type: string
+        example: 1000000|LT
+    FOLLOWERS:
+      name: FOLLOWERS
+      in: query
+      description: Filter by social follower count using 'count|operator'
+      required: false
+      schema:
+        type: string
+        example: 10000|GTE
+    OFFSET:
+      name: OFFSET
+      in: query
+      description: Pagination anchor from the previous response's NextOffset field
+      required: false
+      schema:
+        type: string
+        example: oQEwEnH2FJuIzeXOEk2T
     ALL:
       name: ALL
       in: query
@@ -155,91 +228,7 @@ components:
       schema:
         type: string
         example: Shopify
-    META:
-      name: META
-      in: query
-      description: Set to 'yes' to include metadata (names, titles, social links)
-      required: false
-      schema:
-        type: string
-        enum:
-        - 'yes'
-    PAGERANK:
-      name: PAGERANK
-      in: query
-      description: Filter by traffic rank using 'rank|operator'
-      required: false
-      schema:
-        type: string
-        example: 1000000|LT
-    SPEND:
-      name: SPEND
-      in: query
-      description: Filter by monthly tech spend using 'amount|operator' (e.g. 100|GT)
-      required: false
-      schema:
-        type: string
-        example: 100|GT
-    COUNTRY:
-      name: COUNTRY
-      in: query
-      description: ISO 3166-1 alpha-2 country code(s), comma-separated
-      required: false
-      schema:
-        type: string
-        example: US,AU,NZ
-    REVENUE:
-      name: REVENUE
-      in: query
-      description: Filter by eCommerce revenue using 'amount|operator'
-      required: false
-      schema:
-        type: string
-        example: 100000|GT
-    OFFSET:
-      name: OFFSET
-      in: query
-      description: Pagination anchor from the previous response's NextOffset field
-      required: false
-      schema:
-        type: string
-        example: oQEwEnH2FJuIzeXOEk2T
-    KEY:
-      name: KEY
-      in: query
-      required: false
-      schema:
-        type: string
-        format: uuid
-        example: 00000000-0000-0000-0000-000000000000
-    OTHERTECHS:
-      name: OTHERTECHS
-      in: query
-      description: Additional technologies to filter by (comma-separated, max 16)
-      required: false
-      schema:
-        type: string
-        example: Google-Analytics,Meta-Pixel
-    FOLLOWERS:
-      name: FOLLOWERS
-      in: query
-      description: Filter by social follower count using 'count|operator'
-      required: false
-      schema:
-        type: string
-        example: 10000|GTE
   schemas:
-    ListsResult:
-      type: object
-      properties:
-        NextOffset:
-          type: string
-          description: Pagination anchor for the next page; 'END' indicates last page
-          example: oQEwEnH2FJuIzeXOEk2T
-        Results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ListResultItem'
     ListResultItem:
       type: object
       description: A website result from the lists API
@@ -285,6 +274,29 @@ components:
           description: Country code
         Meta:
           $ref: '#/components/schemas/ListMeta'
+    ErrorResponse:
+      type: object
+      properties:
+        Errors:
+          type: array
+          items:
+            type: object
+            properties:
+              Code:
+                type: integer
+              Message:
+                type: string
+    ListsResult:
+      type: object
+      properties:
+        NextOffset:
+          type: string
+          description: Pagination anchor for the next page; 'END' indicates last page
+          example: oQEwEnH2FJuIzeXOEk2T
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListResultItem'
     ListMeta:
       type: object
       description: Optional metadata returned when META=yes
@@ -307,18 +319,6 @@ components:
           type: array
           items:
             type: string
-    ErrorResponse:
-      type: object
-      properties:
-        Errors:
-          type: array
-          items:
-            type: object
-            properties:
-              Code:
-                type: integer
-              Message:
-                type: string
   responses:
     Unauthorized:
       description: Unauthorized — invalid or missing API key

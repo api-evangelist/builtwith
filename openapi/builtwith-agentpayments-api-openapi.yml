@@ -73,15 +73,6 @@ paths:
                 $ref: '#/components/schemas/AnyJson'
 components:
   schemas:
-    AgentPaymentPurchaseRequest:
-      type: object
-      required:
-      - credits
-      properties:
-        credits:
-          type: integer
-          minimum: 2000
-      additionalProperties: false
     AnyJson:
       description: A generic JSON payload.
       oneOf:
@@ -93,6 +84,15 @@ components:
       - type: number
       - type: boolean
       - type: 'null'
+    AgentPaymentPurchaseRequest:
+      type: object
+      required:
+      - credits
+      properties:
+        credits:
+          type: integer
+          minimum: 2000
+      additionalProperties: false
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

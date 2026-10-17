@@ -92,21 +92,6 @@ paths:
       - Mppx
 components:
   schemas:
-    DiscoveryResponse:
-      type: object
-      properties:
-        service:
-          type: string
-        payment_processor:
-          const: Stripe saved payment method
-        is_x402:
-          const: false
-        credits_total:
-          type: number
-        credits_used:
-          type: number
-        credits_available:
-          type: number
     Error:
       type: object
       required:
@@ -170,15 +155,24 @@ components:
           type: string
         credits_available:
           type: number
+    DiscoveryResponse:
+      type: object
+      properties:
+        service:
+          type: string
+        payment_processor:
+          const: Stripe saved payment method
+        is_x402:
+          const: false
+        credits_total:
+          type: number
+        credits_used:
+          type: number
+        credits_available:
+          type: number
   responses:
-    Forbidden:
-      description: Billing credential required, account suspended, or spending permission denied
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    PaymentFailed:
-      description: Stripe payment failed or no chargeable payment method is on file
+    Conflict:
+      description: Idempotency key is in progress or conflicts with an earlier request
       content:
         application/json:
           schema:
@@ -193,14 +187,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Validation failure
+    PaymentFailed:
+      description: Stripe payment failed or no chargeable payment method is on file
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Conflict:
-      description: Idempotency key is in progress or conflicts with an earlier request
+    Forbidden:
+      description: Billing credential required, account suspended, or spending permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Validation failure
       content:
         application/json:
           schema:

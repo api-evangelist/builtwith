@@ -60,27 +60,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Technology'
-    Attribute:
-      type: object
-      description: Additional attribute data for a technology
-      properties:
-        Field:
-          type: string
-        Value:
-          type: string
-    Result:
-      type: object
-      properties:
-        Lookup:
-          type: string
-          description: The queried domain
-          example: example.com
-        Meta:
-          $ref: '#/components/schemas/DomainMeta'
-        Paths:
-          type: array
-          items:
-            $ref: '#/components/schemas/Path'
     Technology:
       type: object
       description: A detected web technology
@@ -116,11 +95,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attribute'
-    DomainResultItem:
-      type: object
-      properties:
-        Result:
-          $ref: '#/components/schemas/Result'
     DomainMeta:
       type: object
       description: Company and domain metadata
@@ -163,20 +137,33 @@ components:
           - processing
           - complete
           - error
+    Attribute:
+      type: object
+      description: Additional attribute data for a technology
+      properties:
+        Field:
+          type: string
+        Value:
+          type: string
+    Result:
+      type: object
+      properties:
+        Lookup:
+          type: string
+          description: The queried domain
+          example: example.com
+        Meta:
+          $ref: '#/components/schemas/DomainMeta'
+        Paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/Path'
     TechCategory:
       type: object
       properties:
         Category:
           type: string
           example: CMS
-    DomainResult:
-      type: object
-      description: Top-level response wrapper for domain technology lookups
-      properties:
-        Results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainResultItem'
     BulkRequest:
       type: object
       required:
@@ -193,6 +180,19 @@ components:
             type: string
           description: List of domains to look up
           maxItems: 500
+    DomainResult:
+      type: object
+      description: Top-level response wrapper for domain technology lookups
+      properties:
+        Results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainResultItem'
+    DomainResultItem:
+      type: object
+      properties:
+        Result:
+          $ref: '#/components/schemas/Result'
   securitySchemes:
     apiKeyQuery:
       type: apiKey

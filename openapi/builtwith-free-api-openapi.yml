@@ -28,55 +28,6 @@ paths:
                 $ref: '#/components/schemas/FreeApiV1Response'
 components:
   schemas:
-    FreeCategorySummary:
-      type: object
-      required:
-      - live
-      - dead
-      - latest
-      - oldest
-      - name
-      properties:
-        live:
-          type: integer
-          format: int64
-        dead:
-          type: integer
-          format: int64
-        latest:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        oldest:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        name:
-          type: string
-      additionalProperties: true
-    FreeApiV1Response:
-      type: object
-      required:
-      - domain
-      - first
-      - last
-      - groups
-      properties:
-        domain:
-          type: string
-        first:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        last:
-          type: integer
-          format: int64
-          description: Epoch milliseconds.
-        groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/FreeGroupSummary'
-      additionalProperties: true
     FreeGroupSummary:
       type: object
       required:
@@ -107,6 +58,55 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FreeCategorySummary'
+      additionalProperties: true
+    FreeApiV1Response:
+      type: object
+      required:
+      - domain
+      - first
+      - last
+      - groups
+      properties:
+        domain:
+          type: string
+        first:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        last:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/FreeGroupSummary'
+      additionalProperties: true
+    FreeCategorySummary:
+      type: object
+      required:
+      - live
+      - dead
+      - latest
+      - oldest
+      - name
+      properties:
+        live:
+          type: integer
+          format: int64
+        dead:
+          type: integer
+          format: int64
+        latest:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        oldest:
+          type: integer
+          format: int64
+          description: Epoch milliseconds.
+        name:
+          type: string
       additionalProperties: true
   parameters:
     lookup:
