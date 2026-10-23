@@ -258,3 +258,9 @@ x-discovery:
 x-x402-discovery: https://api.builtwith.com/.well-known/x402
 x-agentcash-guidance:
   llmsTxtUrl: https://api.builtwith.com/llms.txt
+x-provenance:
+  method: harvested
+  publisher: BuiltWith
+  source: https://api.builtwith.com/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)

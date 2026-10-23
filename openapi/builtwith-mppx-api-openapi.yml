@@ -213,3 +213,9 @@ components:
 externalDocs:
   description: Agent Stripe Credit Top-Up documentation
   url: https://api.builtwith.com/agent-payment-api
+x-provenance:
+  method: harvested
+  publisher: BuiltWith
+  source: https://api.builtwith.com/mppx/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
