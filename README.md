@@ -66,61 +66,259 @@
 
 Technology profiling and lead generation platform with a REST API for detecting technologies used by websites, tracking technology trends, and identifying technology adoption across 491.9 million domains and 115,907 tracked web technologies.
 
-## Overview
+**Areas:** Technology Profiling · Lead Generation · Web Intelligence · Technology Detection · Website Analysis · Market Research · Technographics · Sales Intelligence · AI Agents · MCP · Agentic Commerce · Real-Time Data
 
-BuiltWith provides a suite of APIs enabling developers, sales teams, and market researchers to query the technology stack of any website, discover leads based on technology usage, track adoption trends, and analyze website interconnections. The platform covers data from 2000 to the present, updated weekly.
+## BuiltWith on APIs.io
 
-## APIs
+Everything profiled for BuiltWith is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/builtwith/](https://apis.io/providers/builtwith/)** — or go straight to one of the APIs or properties below.
 
-- **Domain API** - Current and historical technology profiles for any domain
-- **Lists API** - Lists of websites using specific technologies
-- **Trends API** - Technology adoption trends over time
-- **Change API** - Technology additions and removals with business context
-- **Relationships API** - Website interconnection data
-- **Free API** - Basic technology counts, no cost
-- **Ask API** - Natural language domain lookups
-- **Live Feed API** - Real-time WebSocket technology detections
-- **Company to URL API** - Resolve company names to domains
-- **Tags API** - Related domains by IP and attributes
-- **Recommendations API** - Technology suggestions based on profiles
-- **Keywords API** - Websites using specific keywords
-- **Keyword Search API** - Search websites by keyword content
-- **Vector Search API** - Semantic technology searches
-- **Redirects API** - Website redirect chain data
-- **Product API** - eCommerce product lookups
-- **Trust API** - Website trustworthiness assessment
-- **Financial API** - SEC and Companies House financial data
-- **Bulk Domain API** - Batch domain processing
-- **MCP API** - Model Context Protocol integration for AI assistants
-- **Agent Payment API** - Autonomous credit management for AI agents
+### APIs (52)
 
-## Authentication
+- [BuiltWith Domain API](https://apis.io/apis/builtwith/builtwith-domain-api/) — Current and historical website technology information for single or multiple domains with support for JSON, XML, and CSV formats.
+- [BuiltWith Lists API](https://apis.io/apis/builtwith/builtwith-lists-api/) — Retrieve lists of websites using specific web technologies in XML, JSON, TXT, CSV, and TSV formats.
+- [BuiltWith Trends API](https://apis.io/apis/builtwith/builtwith-trends-api/) — Access technology trend data showing adoption and growth of web technologies over time.
+- [BuiltWith Change API](https://apis.io/apis/builtwith/builtwith-change-api/) — Track technology additions and removals on websites with business context in JSON format.
+- [BuiltWith Relationships API](https://apis.io/apis/builtwith/builtwith-relationships-api/) — Website interconnection data revealing domain relationships via shared IPs, analytics, and other attributes.
+- [BuiltWith Free API](https://apis.io/apis/builtwith/builtwith-free-api/) — Free tier API providing technology group counts and last-updated timestamps for website domains.
+- [BuiltWith Ask API](https://apis.io/apis/builtwith/builtwith-ask-api/) — Natural language website lookups returning technology profile data in JSON and CSV formats.
+- [BuiltWith Live Feed API](https://apis.io/apis/builtwith/builtwith-live-feed-api/) — Real-time WebSocket feed of technology detections as they happen across the web.
+- [BuiltWith Company to URL API](https://apis.io/apis/builtwith/builtwith-company-to-url-api/) — Resolve company names to their associated domain names in JSON and XML formats.
+- [BuiltWith Tags API](https://apis.io/apis/builtwith/builtwith-tags-api/) — Retrieve related domains associated with IPs and other website attributes.
+- [BuiltWith Recommendations API](https://apis.io/apis/builtwith/builtwith-recommendations-api/) — Get technology suggestions based on a website's existing technology profile.
+- [BuiltWith Keywords API](https://apis.io/apis/builtwith/builtwith-keywords-api/) — Find websites that use specific keywords in their content.
+- [BuiltWith Keyword Search API](https://apis.io/apis/builtwith/builtwith-keyword-search-api/) — Search websites by keyword content returning results in JSON and CSV formats.
+- [BuiltWith Vector Search API](https://apis.io/apis/builtwith/builtwith-vector-search-api/) — Text-based technology searches using vector embeddings for semantic similarity matching.
+- [BuiltWith Redirects API](https://apis.io/apis/builtwith/builtwith-redirects-api/) — Access website redirect chain data to understand domain redirect patterns.
+- [BuiltWith Product API](https://apis.io/apis/builtwith/builtwith-product-api/) — eCommerce product lookup for identifying products and merchants across the web.
+- [BuiltWith Trust API](https://apis.io/apis/builtwith/builtwith-trust-api/) — Website trustworthiness assessment providing reliability and safety scores for domains.
+- [BuiltWith Financial API](https://apis.io/apis/builtwith/builtwith-financial-api/) — Access financial data from SEC Edgar and UK Companies House filings for domains, including revenue, assets, and equity data.
+- [BuiltWith Bulk Domain API](https://apis.io/apis/builtwith/builtwith-bulk-domain-api/) — Batch domain processing for high-volume technology lookups across large domain lists.
+- [BuiltWith MCP API](https://apis.io/apis/builtwith/builtwith-mcp-api/) — Model Context Protocol server integration enabling AI assistants to query BuiltWith technology detection data natively.
+- [BuiltWith Bulk Processing API](https://apis.io/apis/builtwith/builtwith-bulk-processing-api/) — Asynchronous batch domain processing
+- [BuiltWith Domain Lookup API](https://apis.io/apis/builtwith/builtwith-domain-lookup-api/) — Single or multi-domain technology detection endpoints
+- [BuiltWith Technology Lists API](https://apis.io/apis/builtwith/builtwith-technology-lists-api/) — Retrieve websites using specific technologies
+- [BuiltWith Agent Auth API](https://apis.io/apis/builtwith/builtwith-agentauth-api/) — The AgentAuth API from BuiltWith — 2 operation(s) for agentauth.
+- [BuiltWith Agent Payments API](https://apis.io/apis/builtwith/builtwith-agentpayments-api/) — The AgentPayments API from BuiltWith — 3 operation(s) for agentpayments.
+- [BuiltWith Ask API](https://apis.io/apis/builtwith/builtwith-ask-api/) — The Ask API from BuiltWith — 1 operation(s) for ask.
+- [BuiltWith Change API](https://apis.io/apis/builtwith/builtwith-change-api/) — The Change API from BuiltWith — 1 operation(s) for change.
+- [BuiltWith Company Research API](https://apis.io/apis/builtwith/builtwith-company-research-api/) — The Company Research API from BuiltWith — 4 operation(s) for company research.
+- [BuiltWith Company To URL API](https://apis.io/apis/builtwith/builtwith-companytourl-api/) — The CompanyToUrl API from BuiltWith — 1 operation(s) for companytourl.
+- [BuiltWith Domain API](https://apis.io/apis/builtwith/builtwith-domain-api/) — The Domain API from BuiltWith — 4 operation(s) for domain.
+- [BuiltWith Domain Intelligence API](https://apis.io/apis/builtwith/builtwith-domain-intelligence-api/) — The Domain Intelligence API from BuiltWith — 2 operation(s) for domain intelligence.
+- [BuiltWith Financial API](https://apis.io/apis/builtwith/builtwith-financial-api/) — The Financial API from BuiltWith — 1 operation(s) for financial.
+- [BuiltWith Free API](https://apis.io/apis/builtwith/builtwith-free-api/) — The Free API from BuiltWith — 1 operation(s) for free.
+- [BuiltWith Keywords API](https://apis.io/apis/builtwith/builtwith-keywords-api/) — The Keywords API from BuiltWith — 1 operation(s) for keywords.
+- [BuiltWith Keyword Search API](https://apis.io/apis/builtwith/builtwith-keywordsearch-api/) — The KeywordSearch API from BuiltWith — 1 operation(s) for keywordsearch.
+- [BuiltWith List Passes API](https://apis.io/apis/builtwith/builtwith-list-passes-api/) — The List Passes API from BuiltWith — 2 operation(s) for list passes.
+- [BuiltWith Lists API](https://apis.io/apis/builtwith/builtwith-lists-api/) — The Lists API from BuiltWith — 1 operation(s) for lists.
+- [BuiltWith Meta API](https://apis.io/apis/builtwith/builtwith-meta-api/) — The Meta API from BuiltWith — 2 operation(s) for meta.
+- [BuiltWith Mppx API](https://apis.io/apis/builtwith/builtwith-mppx-api/) — The Mppx API from BuiltWith — 3 operation(s) for mppx.
+- [BuiltWith Product API](https://apis.io/apis/builtwith/builtwith-product-api/) — The Product API from BuiltWith — 1 operation(s) for product.
+- [BuiltWith Recommendations API](https://apis.io/apis/builtwith/builtwith-recommendations-api/) — The Recommendations API from BuiltWith — 1 operation(s) for recommendations.
+- [BuiltWith Redirects API](https://apis.io/apis/builtwith/builtwith-redirects-api/) — The Redirects API from BuiltWith — 1 operation(s) for redirects.
+- [BuiltWith Relationships API](https://apis.io/apis/builtwith/builtwith-relationships-api/) — The Relationships API from BuiltWith — 1 operation(s) for relationships.
+- [BuiltWith Social API](https://apis.io/apis/builtwith/builtwith-social-api/) — The Social API from BuiltWith — 1 operation(s) for social.
+- [BuiltWith Tags API](https://apis.io/apis/builtwith/builtwith-tags-api/) — The Tags API from BuiltWith — 1 operation(s) for tags.
+- [BuiltWith Technology Discovery API](https://apis.io/apis/builtwith/builtwith-technology-discovery-api/) — The Technology Discovery API from BuiltWith — 1 operation(s) for technology discovery.
+- [BuiltWith Technology Intelligence API](https://apis.io/apis/builtwith/builtwith-technology-intelligence-api/) — The Technology Intelligence API from BuiltWith — 3 operation(s) for technology intelligence.
+- [BuiltWith Trends API](https://apis.io/apis/builtwith/builtwith-trends-api/) — The Trends API from BuiltWith — 1 operation(s) for trends.
+- [BuiltWith Trust and Risk API](https://apis.io/apis/builtwith/builtwith-trust-and-risk-api/) — The Trust and Risk API from BuiltWith — 1 operation(s) for trust and risk.
+- [BuiltWith Trust API](https://apis.io/apis/builtwith/builtwith-trust-api/) — The Trust API from BuiltWith — 1 operation(s) for trust.
+- [BuiltWith Vector API](https://apis.io/apis/builtwith/builtwith-vector-api/) — The Vector API from BuiltWith — 1 operation(s) for vector.
+- [BuiltWith Website Search API](https://apis.io/apis/builtwith/builtwith-website-search-api/) — The Website Search API from BuiltWith — 1 operation(s) for website search.
 
-All API endpoints require an API key passed as a `KEY` query parameter or `Authorization: API {key}` HTTP header. Keys are obtained by signing up at [builtwith.com](https://builtwith.com).
+### Published properties
 
-## Pricing
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-| Plan | Price | API Credits |
-|------|-------|-------------|
-| Free | $0 | Limited (Free API only) |
-| Advanced | $144/year | Individual lookups |
-| Basic | $295/month | 2,000 upload credits/month |
-| Pro | $495/month | 20,000 upload credits/month |
-| Team | $995/month | 1.2M API credits/year |
-| Enterprise | Contact | Custom |
+#### AsyncAPI (1)
 
-## Resources
+Event-driven and webhook contracts.
+
+- [BuiltWith Live Feed API](https://apis.io/asyncapis/builtwith/builtwith-live-feed-asyncapi/)
+
+#### Event channels (2)
+
+Individual events and webhooks the provider emits.
+
+- [/wss/channel/{technology}](https://apis.io/channels/builtwith/wss-channel-technology/)
+- [/wss/new](https://apis.io/channels/builtwith/wss-new/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [builtwith](https://apis.io/servers/builtwith/builtwith/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Builtwith Agentic Access](https://apis.io/agentic-access/builtwith/builtwith-agentic-access/)
+
+#### JSON Schema (3)
+
+The data models the API reads and writes.
+
+- [BuiltWith Change API Result](https://apis.io/schemas/builtwith/builtwith-change/)
+- [BuiltWith Domain API Result](https://apis.io/schemas/builtwith/builtwith-domain/)
+- [BuiltWith Lists API Result](https://apis.io/schemas/builtwith/builtwith-lists/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Builtwith Context](https://apis.io/jsonld/builtwith/builtwith-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [BuiltWith API Vocabulary](https://apis.io/vocabularies/builtwith/builtwith-vocabulary/)
+
+#### Examples (4)
+
+Example requests and responses.
+
+- [Builtwith Change Example](https://apis.io/examples/builtwith/builtwith-change-example/)
+- [Builtwith Domain Example](https://apis.io/examples/builtwith/builtwith-domain-example/)
+- [Builtwith Lists Example](https://apis.io/examples/builtwith/builtwith-lists-example/)
+- [Builtwith Trends Example](https://apis.io/examples/builtwith/builtwith-trends-example/)
+
+#### Collections (8)
+
+Postman and Open Collection request collections.
+
+- [BuiltWith Change Bulk Processing API](https://apis.io/collections/builtwith/open-builtwith-bulk-processing-api/)
+- [BuiltWith Change Bulk Processing Domain Lookup API](https://apis.io/collections/builtwith/open-builtwith-domain-lookup-api/)
+- [BuiltWith Change Bulk Processing Domain Relationships API](https://apis.io/collections/builtwith/open-builtwith-domain-relationships-api/)
+- [BuiltWith Change Bulk Processing Free Lookup API](https://apis.io/collections/builtwith/open-builtwith-free-lookup-api/)
+- [BuiltWith Change Bulk Processing Tag Lookup API](https://apis.io/collections/builtwith/open-builtwith-tag-lookup-api/)
+- [BuiltWith Change Bulk Processing Technology Changes API](https://apis.io/collections/builtwith/open-builtwith-technology-changes-api/)
+- [BuiltWith Change Bulk Processing Technology Lists API](https://apis.io/collections/builtwith/open-builtwith-technology-lists-api/)
+- [BuiltWith Change Bulk Processing Technology Trends API](https://apis.io/collections/builtwith/open-builtwith-technology-trends-api/)
+
+#### Overlays (11)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Builtwith Agent Stripe Topup Overlay](https://apis.io/overlays/builtwith/builtwith-agent-stripe-topup-overlay/)
+- [Builtwith Bulk Processing Api Overlay](https://apis.io/overlays/builtwith/builtwith-bulk-processing-api-overlay/)
+- [Builtwith Domain Lookup Api Overlay](https://apis.io/overlays/builtwith/builtwith-domain-lookup-api-overlay/)
+- [Builtwith Domain Relationships Api Overlay](https://apis.io/overlays/builtwith/builtwith-domain-relationships-api-overlay/)
+- [Builtwith Free Lookup Api Overlay](https://apis.io/overlays/builtwith/builtwith-free-lookup-api-overlay/)
+- [Builtwith Rest Api Overlay](https://apis.io/overlays/builtwith/builtwith-rest-api-overlay/)
+- [Builtwith Tag Lookup Api Overlay](https://apis.io/overlays/builtwith/builtwith-tag-lookup-api-overlay/)
+- [Builtwith Technology Changes Api Overlay](https://apis.io/overlays/builtwith/builtwith-technology-changes-api-overlay/)
+- [Builtwith Technology Lists Api Overlay](https://apis.io/overlays/builtwith/builtwith-technology-lists-api-overlay/)
+- [Builtwith Technology Trends Api Overlay](https://apis.io/overlays/builtwith/builtwith-technology-trends-api-overlay/)
+- [Builtwith X402 Pay Per Call Overlay](https://apis.io/overlays/builtwith/builtwith-x402-pay-per-call-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [BuiltWith — jsonschema rules](https://apis.io/rules/builtwith/builtwith-jsonschema-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Builtwith Authentication](https://apis.io/security/builtwith/builtwith-authentication/)
+- [Builtwith Domain Security](https://apis.io/security/builtwith/builtwith-domain-security/)
+- [Builtwith Vulnerability Disclosure](https://apis.io/security/builtwith/builtwith-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Builtwith Scopes](https://apis.io/scopes/builtwith/builtwith-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Builtwith Plans Pricing](https://apis.io/plans/builtwith/builtwith-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Builtwith Rate Limits](https://apis.io/rate-limits/builtwith/builtwith-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Builtwith Finops](https://apis.io/finops/builtwith/builtwith-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://builtwith.com/)
-- [API Documentation](https://api.builtwith.com/)
-- [Knowledge Base](https://kb.builtwith.com/)
+- [Documentation](https://api.builtwith.com/)
+- [API reference](https://api.builtwith.com/domain-api)
 - [Pricing](https://builtwith.com/plans)
+- [Sign up](https://builtwith.com/signup)
+- [Support](https://builtwith.com/contact)
 - [Blog](https://blog.builtwith.com/)
+- [Security](https://builtwith.com/.well-known/security.txt)
+- [Terms of service](https://builtwith.com/terms)
+- [Privacy policy](https://builtwith.com/privacy)
 - [GitHub](https://github.com/builtwith)
-- [Postman Workspace](https://www.postman.com/builtwithcom/builtwith/overview)
-- [X / Twitter](https://x.com/builtwith)
-- [LinkedIn](https://www.linkedin.com/company/builtwith)
 
-## Maintainer
+## API Evangelist rating
 
-Kin Lane - kin@apievangelist.com
+**Kin Score 54.0** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 80.0 |
+| Contract quality | 64.9 |
+| Contract governance | 41.7 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 44.7 |
+
+**Agent readiness 47.4** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | verified |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | conformant |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 32.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/builtwith/](https://apis.io/providers/builtwith/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for BuiltWith: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/builtwith/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
